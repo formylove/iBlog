@@ -1,0 +1,18 @@
+html等页面资源文件需要放在根目录或者webcontent根目录下,
+浏览器访问无需加webcontent路径
+web.xml中配置无需加webcontent路径,如pages/jsp/login.jsp("/"可加可不加)
+struts配置:/pages/jsp/hello.jsp(/必须的)
+不支持struts,web.xml热部署
+io相对路径:String path = "webcontent/web-inf/hi.html";
+filter相对路径,不要把跟路径src加上:main.src.action.filter.AccessFilter
+content-root大小写不能错,可以省略斜线
+网址中加几个斜杠不影响http://localhost:8080/VNB///pages/jsp/hi.html
+网址区分大小写
+actionsupport的action类有execute()函数的话默认执行execute,除非删掉
+设置properties 编码:window-->preferences -->General  -->Content Types ，然后选择Java Properties File
+actionsupport只能执行excute()函数，去掉 
+2.3.4struts包不许执行excute，而2.3.16需要
+jsp资源位置以WebRoot为根目录,如js/jquery-validate.js
+html资源需要使用相对目录,如../../js/bootstrap.css
+js库的使用也要求按顺序放入,jquery最前,其他在后.引用与使用要有先后顺序
+页面元素显示有问题,可能是html版本问题,将<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">改成<!DOCTYPE HTML >就好了

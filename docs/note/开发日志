@@ -1,0 +1,50 @@
+11.26 一直提示struts过滤器缺失，原来是web.xml为老版的2.5,注意不要把web.xml 位置放错，放在web-info下面
+11.30 TINYINT	如果tinyInt1isBit配置属性被设置成true并且存储大小为1时，那么转换成java.lang.Boolean，否则转换为java.lang.Integer
+			在generate getter field 中设置自动生成get	method
+			最近 遇到一个很郁闷的问题   <div><s:property value="addInfo"></div> 这个属性值明明是有html标签字符串的，为撒就不能解析成html标签呢 ？
+ 			后来查找才知道 <s:property value="addInfo" escape="false"/> 标签里需要加一个属性才能把html字符串解析成html标签
+ 			
+/ 表示根目录下的aaa文件   
+./aaa 表示当前目录下的aaa文件
+../aaa 表示上级目录下的aaa文件
+../../aaa 表示上上级目录下的aaa文件
+bbb/aaa 表示当前目录下的bbb文件夹下的aaa文件   
+函数没找到，访问权限的问题，改成public
+jsp java 变量name要相同
+
+1. 什么是单例多例:
+所谓单例就是所有的请求都用一个对象来处理，比如我们常用的service和dao层的对象通常都是单例的，而多例则指每个请求用一个新的对象来处理，比如action;
+多个线程应该是调用的同一个对象的同一个方法：
+如果方法里无成员变量，那么不受任何影响
+如果方法里有成员变量，只有读操作，不受影响 
+
+useUnicode=true&characterEncoding=UTF-8 utf-8编码写入数据库
+12.4、set一个字段
+在表t_test中设置第二条记录（bs为2）的password为'***'。
+update t_test t
+   set t.password = '***'
+ where t.bs = 2;
+ 
+2、set多个字段
+在表t_test中设置第一条记录（bs为1）的password为'*'、remark为'*'。
+update t_test t
+   set t.password = '*', t.remark = '*'
+ where t.bs = 1;
+ 
+3、set null值
+在表t_test中设置第三条记录（bs为3）的password为null、remark为null。
+update t_test t
+   set t.password = null, t.remark = null
+ where t.bs = 3;
+ 
+ 
+ INSERT INTO 表名称 VALUES (值1, 值2,....)
+
+我们也可以指定所要插入数据的列：
+
+INSERT INTO table_name (列1, 列2,...) VALUES (值1, 值2,....)	
+   for (Iterator it =  map1.keySet().iterator();it.hasNext();)
+   {
+    Object key = it.next();
+    System.out.println( key+"="+ map1.get(key));
+   }

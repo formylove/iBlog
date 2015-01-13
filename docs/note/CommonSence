@@ -1,0 +1,1 @@
+servlet理论上可以处理多种形式的请求响应形式http只是其中之一所以HttpServletRequest HttpServletResponse分别是ServletRequest和ServletResponse的之类
