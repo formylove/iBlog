@@ -6,11 +6,13 @@
 			</a>
 			<div class="nav" >
 				<ul class="clearfix">
+					<li><a href="http://www.luoo.net/music/">文字</a></li>
 					<li><a href="http://www.luoo.net/music/">技术</a></li>
 					<li><a href="http://www.luoo.net/musician/">心情</a></li>
-					<li><a href="http://www.luoo.net/event/">趣味</a></li>
 					<li><a href="http://www.luoo.net/app/">梦呓 </a></li>				
+					<li><a href="http://www.luoo.net/app/">札记 </a></li>				
 					<li><a href="http://www.luoo.net/app/">留言</a></li>				
+					<li><a href="http://www.luoo.net/app/">图鉴</a></li>				
 				</ul>
 
 			</div>

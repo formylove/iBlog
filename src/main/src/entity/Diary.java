@@ -11,7 +11,6 @@ int category;
 String content;
 boolean original_flag;
 String original_link;
-String email;
 String create_date;
 String create_time;
 boolean del_flag;
@@ -73,12 +72,7 @@ public String getOriginal_link() {
 public void setOriginal_link(String original_link) {
 	this.original_link = original_link;
 }
-public String getEmail() {
-	return email;
-}
-public void setEmail(String email) {
-	this.email = email;
-}
+
 public String getCreate_time() {
 	return create_time;
 }

@@ -26,7 +26,7 @@ public class DBtest {
 //		System.out.println(results);
 //		System.out.println(res.get(0).getLabel());
 //		System.out.println(res.get(0).isDel_flag());
-		String sql2="INSERT INTO `diary` (`content`) VALUES ( ?)";
+		String sql2="INSERT INTO `user` (`user_name`) VALUES ( ?)";
 		Object[] params={"¹þ¹þ222"};
 		SqlUtils.executeUpdate(sql2, params);
 	}

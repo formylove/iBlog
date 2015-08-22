@@ -3,7 +3,7 @@ package main.src.common;
 import java.io.*;
 
 public class IPParser {
-	private String DbPath = "/home/hachi/workspace4iblog/iBlog/WebContent/date/QQWry.Dat"; // 纯真IP数据库地址
+	private String DbPath = "/home/hachi/workspace4iblog/iBlog/WebContent/data/QQWry.Dat"; // 纯真IP数据库地址
 
 	private String Country, LocalStr;
 

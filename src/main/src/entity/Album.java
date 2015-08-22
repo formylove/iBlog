@@ -11,7 +11,6 @@ String city_from;
 String create_date;
 String create_time;
 int authority;
-int level;
 boolean del_flag;
 
 public int getId() {
@@ -73,12 +72,6 @@ public int getAuthority() {
 }
 public void setAuthority(int authority) {
 	this.authority = authority;
-}
-public int getLevel() {
-	return level;
-}
-public void setLevel(int level) {
-	this.level = level;
 }
 public boolean isDel_flag() {
 	return del_flag;

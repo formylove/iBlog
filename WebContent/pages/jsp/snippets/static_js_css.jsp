@@ -2,11 +2,17 @@
 <base href="<%=MessageUtils.getMessageFromUrl("base")%>"/>
 
 <%String importParams=(String)request.getAttribute("importParams"); %>
-<%if(importParams.indexOf("jquery")>=0){ %>
+
+<%
+if(importParams!=null){
+if(importParams.indexOf("jquery")>=0){ %>
 <script type="text/javascript" src="js/jquery.js"></script>
 <%}
 if(importParams.indexOf("Jcrop.js")>=0){ %>
 <script type="text/javascript" src="Jcrop/js/jquery.Jcrop.js"></script>
+<%}
+if(importParams.indexOf("flexSlider.js")>=0){ %>
+<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
 <%}
 if(importParams.indexOf("Jcrop.css")>=0){ %>
 <link href="Jcrop/css/jquery.Jcrop.css" type="text/css" rel="stylesheet">
@@ -37,4 +43,4 @@ if(importParams.indexOf("vol.css")>=0){ %>
 <%}
 if(importParams.indexOf("luoo.js")>=0){ %>
 <script src="js/luoo.js"></script>
-<%}%>
+<%}}%>

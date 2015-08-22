@@ -6,7 +6,7 @@ int user_id;
 String profile;
 String content;
 int target;
-int favour_cnt=33;
+int favour_cnt;
 int append;
 String create_date;
 String create_time;

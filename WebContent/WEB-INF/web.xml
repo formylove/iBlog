@@ -9,7 +9,7 @@
      Special property group for JSP Configuration JSP example.  
      </description>  
      <display-name>JSPConfiguration</display-name>  
-     <url-pattern>*.html</url-pattern>  
+     <url-pattern>*.jdsp</url-pattern>  
      <el-ignored>true</el-ignored>  
      <page-encoding>UTF-8</page-encoding>  
      <scripting-invalid>false</scripting-invalid>  
@@ -51,7 +51,7 @@
 	</error-page>
 	
 	<welcome-file-list>
-		<welcome-file>/pages/jsp/homepage.jsp</welcome-file>
+		<welcome-file>/pages/jsp/homepage/homepage.jsp</welcome-file>
 	</welcome-file-list>
 	
 </web-app> 
