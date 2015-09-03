@@ -35,11 +35,17 @@ if(importParams.indexOf("upload2.js")>=0){ %>
 if(importParams.indexOf("ajaxfile.js")>=0){ %>
 <script src="js/ajaxfileupload.js"></script>
 <%}
+if(importParams.indexOf("ckeditor.js")>=0){ %>
+<script src="ckeditor/ckeditor.js"></script>
+<%}
 if(importParams.indexOf("common.css")>=0){ %>
 <link href="css/common.css" type="text/css" rel="stylesheet">
 <%}
 if(importParams.indexOf("vol.css")>=0){ %>
 <link href="css/vol.css" type="text/css" rel="stylesheet">
+<%}
+if(importParams.indexOf("diary.css")>=0){ %>
+<link href="css/diary.css" type="text/css" rel="stylesheet">
 <%}
 if(importParams.indexOf("luoo.js")>=0){ %>
 <script src="js/luoo.js"></script>

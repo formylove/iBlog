@@ -32,7 +32,7 @@ public class UrlFilter implements Filter{
 //			Log.print("in");
 		String diaryId=	url.substring(url.length()-4);
 		HttpServletResponse response=(HttpServletResponse) res;
-		response.sendRedirect("../filter/diaryAction.action?method:loadDiary&id="+diaryId);
+		response.sendRedirect("../action/diaryAction.action?method:loadDiary&id="+diaryId);
 		}else if(url.indexOf("hidddd", 0)>=0){
 			Log.print("in");
 			req.getRequestDispatcher("/pages/jsp/hi.html").forward(req, res);

@@ -2,6 +2,9 @@
 	border-radius:8px;
 }
 
+.cursor-pointer:hover{
+	cursor:pointer;
+}
 
 .common-icons {
     display: inline-block;
@@ -2516,3 +2519,4 @@ html[xmlns] .slides {
     margin-top: -30px;
     margin-bottom: 15px
 }
+

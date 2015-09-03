@@ -1,450 +1,472 @@
-
-<%@ page language="java"
-	import="java.util.*,main.src.entity.*,main.src.service.*;"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+    
+<!DOCTYPE HTML>
+<html>
 <head>
-<meta name="viewport" content="width=device-width" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><s:property value="diary.title" />| Aurora个人博客|个人网站</title>
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="pingback" href="http://www.xuecaijie.com/xmlrpc.php" />
-<!--[if IE]><style type="text/css">.tagcloud a{background:#4A4A4A;}</style><![endif]-->
-<script type="text/javascript"
-	src="http://www.xuecaijie.com/wp-content/themes/frontopen2/jquery.js"></script>
-<script type="text/javascript">
-	$(function() {
-		mod_txt = '#';
-	});
-</script>
-<script type="text/javascript"
-	src="http://www.xuecaijie.com/wp-content/themes/frontopen2/frontopen.js"></script>
-
-<link href="images/style.css" rel="stylesheet">
-	<script src="js/jquery.min.js" type="text/javascript"></script>
-	<script type="text/javascript" src="js/gotop.js"></script>
-
-	<link rel="alternate" type="application/rss+xml"
-		title="Aurora个人博客|个人网站 &raquo; Feed"
-		href="http://www.xuecaijie.com/feed" />
-	<link rel="alternate" type="application/rss+xml"
-		title="Aurora个人博客|个人网站 &raquo; 评论Feed"
-		href="http://www.xuecaijie.com/comments/feed" />
-	<link rel='stylesheet' id='edd-styles-css'
-		href='http://www.xuecaijie.com/wp-content/plugins/easy-digital-downloads/templates/edd.min.css?ver=2.1.7'
-		type='text/css' media='all' />
-	<script type="text/javascript" src="http://static.duoshuo.com/embed.js"
-		charset="UTF-8" async="async"></script>
-	<script type='text/javascript'
-		src='http://www.xuecaijie.com/wp-includes/js/jquery/jquery.js?ver=1.10.2'></script>
-	<script type='text/javascript'
-		src='http://www.xuecaijie.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
-	<script type='text/javascript'
-		src='http://www.xuecaijie.com/wp-includes/js/swfobject.js?ver=2.2-20120417'></script>
-	<script type='text/javascript'
-		src='http://www.xuecaijie.com/wp-content/plugins/page-flip-image-gallery/js/flippingbook.js?ver=0.5.10'></script>
-	<script type='text/javascript'
-		src='http://www.xuecaijie.com/wp-includes/js/comment-reply.min.js?ver=3.6.1'></script>
-	<script type='text/javascript'
-		src='http://www.xuecaijie.com/wp-content/plugins/easy-digital-downloads/assets/js/edd-ajax.min.js?ver=2.1.7'></script>
-	<link rel='prev' title='打印机能搜到但无法共享，提示打印机未连接服务器'
-	
-		href='http://www.xuecaijie.com/318.html' />
-	<meta name="generator" content="Easy Digital Downloads v2.1.7" />
-
-	<!-- All in One SEO Pack 2.2.3.1 by Michael Torbert of Semper Fi Web Design[315,365] -->
-	<meta name="description" itemprop="description"
-		content="准备工作： 1、配置防火墙，开启80端口、3306端口 vi /etc/sysconfig/iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT #允许80端口通过防火墙 -A INPUT -m state" />
-
-	<meta name="keywords" itemprop="keywords"
-		content="搭建lamp环境,lamp环境,linux" />
-
-	<link rel="canonical" href="http://www.xuecaijie.com/320.html" />
-	<!-- /all in one seo pack -->
-	<link rel="stylesheet" type="text/css" media="all"
-		href="http://www.xuecaijie.com/wp-content/themes/frontopen2/style.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title><s:property value="diary.title"/></title>
+<%request.setAttribute("importParams", "jquery|index.js|diary.css|common.css|luoo.js|end"); %>
+<%@ include file="snippets/static_js_css.jsp" %>
 </head>
+<body>
+<%@ include file="./snippets/navigator.jsp" %>
+<div class="container ct-sm" style="min-height: 221px;">	
+		<nav class="article-nav">
+			<a href="essays/" class="nav-back">
+				<i class="icon-back"></i>
+				返回专栏首页
+			</a>
+		</nav>
+		<div class="essay-detail-wrapper">	
+			<h1 class="essay-title"><s:property value="diary.title"/></h1>
+			<script type="text/javascript">
+			var deleteDiary = function(){
+				 $.ajax({
+					 url:"diaryAction.action?method:deleteDiary&id=<s:property value='diary.id'/>",
+					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
+					 type:'post',
+					 success:function(data){
+						 document.getElementById("delete").className="hidden";
+						 document.getElementById("recover").className="cursor-pointer";
+						 alert('文章删除成功');
+					 }
+				 });
+			};
+			
+			var recoverDiary = function(){
+				 $.ajax({
+					 url:"diaryAction.action?method:recoverDiary&id=<s:property value='diary.id'/>",
+					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
+					 type:'post',
+					 success:function(data){
+						 document.getElementById("recover").className="hidden";
+						 document.getElementById("delete").className="cursor-pointer";
+						 alert('文章恢复成功');
+					 }
+				 });
+			};
+			
+			var like = function(){
+				 $.ajax({
+					 url:"diaryAction.action?method:like&id=<s:property value='diary.id'/>",
+					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
+					 type:'post',
+					 success:function(data){
+						 document.getElementById("like").className="icon-essay-fav hidden";
+						 document.getElementById("liked").className="icon-essay-faved";
+						 document.getElementById("favorcnt").innerText=parseInt(document.getElementById("favorcnt").innerText)+1;
+					 }
+				 });
+			};
+			
+			var undoLike = function(){
+				 $.ajax({
+					 url:"diaryAction.action?method:undoLike&id=<s:property value='diary.id'/>",
+					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
+					 type:'post',
+					 success:function(data){
+						 document.getElementById("like").className="icon-essay-fav";
+						 document.getElementById("liked").className="icon-essay-faved hidden";
+						 document.getElementById("favorcnt").innerText=parseInt(document.getElementById("favorcnt").innerText)-1;
+					 }
+				 });
+			};
+			
+			</script>
+			<p class="essay-meta">
+			
+				<span class="cursor-pointer" onclick="window.location.href='diaryAction.action?method:editDiary&id=<s:property value='diary.id'/>'">修改</span>・
+				<s:if test="diary.del_flag==false"><span id="delete" onclick="deleteDiary();" class="cursor-pointer">删除</span><span id="recover" class="hidden" onclick="recoverDiary();">恢复</span></s:if>
+				<s:else><span id="delete" class="hidden" onclick="deleteDiary();">删除</span><span id="recover" onclick="recoverDiary();" class="cursor-pointer">恢复</span></s:else>
+				・<s:if test="diary.original_flag">[原创]</s:if><s:else>[转发自]</s:else>&nbsp;
+				作者・<span><s:property value="diary.author"/></span>・<span><s:if test="!diary.original_flag"><a href="<s:property value="diary.original_link"/>"><font color="red">[原文链接]</font></a></s:if><s:else>[原创]</s:else></span>・<s:property value="diary.create_date"/></p>
+		
+		<div class="essay-music">
+							<div class="vol-tracklist" id="luooPlayerPlaylist">
+								<ul>
+					
+						<li class="track-item rounded" id="track12098">
+							<div class="track-wrapper clearfix">							
+								<div class="btn-play">
+									<span class="btn-control">
+										<i class="icon icon-status-play" style="display: none;"></i>
+										<i class="icon icon-status-pause" style="display: inline-block;"></i>
+									</span>
+									<a href="javascript:;" rel="nofollow" class="trackname">01. welcome to utopia</a>
+									<div class="artist">惘闻</div>
+								</div>
+								
+								<a href="javascript:;" rel="nofollow" class="icon icon-info" data-sid="12098" style="visibility: visible;"></a>
+													
+								<a href="javascript:;" rel="nofollow" class="btn-action-share icon icon-share" data-app="single" data-id="12098" data-text="推荐惘闻的歌曲welcome to utopia（分享自@落网）" data-img="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/albums/6764/cover.jpg?imageView2/1/w/580/h/580" style="visibility: visible;">
+								</a>
 
-<body class="single single-post postid-320 single-format-standard"
-	class="home">
-	<div class="loading"></div>
-	<div class="header marauto">
-		<span class="logo"> <a href="http://www.xuecaijie.com/"
-			title="Aurora个人博客|个人网站" rel="home"><b class="bclass">Aurora♥个人博客</b></a>
-			<i>一个专注于IT技术的优秀个人博客网站</i></span>
-
-		<form role="search" method="get" id="searchform"
-			action="http://www.xuecaijie.com/">
-			<span class="search"> <input name="s" id="s" type="text"
-				class="input" value="输入你要找的关键词" onclick="this.value = '';"
-				style="color: #999"
-				onkeypress="javascript:if(event.keyCode == 13){query(this.value);}"
-				x-webkit-speech="" />
-				<button id="searchsubmit" class="btn">搜索</button>
-			</span>
-		</form>
-		<p class="m960tips">
-			<a id="tclose">X 我知道了</a>TIPS:左右滑动导航栏可以查看更多栏目<img class="csan"
-				src="http://www.xuecaijie.com/wp-content/themes/frontopen2/images/csan.gif"
-				width="27" height="14" />
-			<div id="bakg"></div>
-		</p>
-		<div class="cls"></div>
-	</div>
-
-	<div class="nav marauto">
-		<div class="tig">
-			<a
-				href="http://t.qq.com/xuecaijie7780?pgv_ref=im.perinfo.perinfo.icon"
-				target="_blank" rel="nofollow" title="腾讯微博"><span class="sub">腾讯微博</span></a>
-			<a target="_blank"
-				href="http://shang.qq.com/wpa/qunwpa?idkey=0992e8424635cc63b57ce41a0674c3d1cb59b80fbefe86caa8ecec5d8af1b7ba"><img
-				border="0" src="http://pub.idqqimg.com/wpa/images/group.png"
-				alt="IT技术交流群" title="IT技术交流群"></a>
-
-		</div>
-
-		<div class="navlist">
-			<dl>
-				<dt>
-					<a href="http://www.xuecaijie.com/wenzhangguidang" title="文章归档"
-						target="_self" class="nav_button" style="opacity: 0.7;" rel=""><img
-						src="http://www.xuecaijie.com/wp-content/themes/frontopen2/images/dsj.gif"
-						width="45" height="45"></a>
-				</dt>
-				<dd>文章归档</dd>
-			</dl>
-			<dl>
-				<dt>
-					<a href="http://www.xuecaijie.com/gerenziliao" title="博主档案"
-						target="_self" class="nav_button" style="opacity: 0.7;" rel=""><img
-						src="http://www.xuecaijie.com/wp-content/themes/frontopen2/images/nav_1.gif"
-						width="45" height="45"></a>
-				</dt>
-				<dd>博主档案</dd>
-			</dl>
-			<dl>
-				<dt>
-					<a href="http://www.xuecaijie.com/ziyuan" title="资源共享"
-						target="_self" class="nav_button" style="opacity: 0.7;"
-						rel="nofollow"><img
-						src="http://www.xuecaijie.com/wp-content/themes/frontopen2/images/tools.gif"
-						width="45" height="45"></a>
-				</dt>
-				<dd>资源共享</dd>
-			</dl>
-			<dl>
-				<dt>
-					<a
-						href="http://wpa.qq.com/msgrd?v=3&uin=963370407&site=qq&menu=yes"
-						title="联系博主" target="_blank" class="nav_button"
-						style="opacity: 0.7;" rel="nofollow"><img
-						src="http://www.xuecaijie.com/wp-content/themes/frontopen2/images/qq1.gif"
-						width="45" height="45"></a>
-				</dt>
-				<dd>联系博主</dd>
-			</dl>
-			<dl>
-				<dt>
-					<a href="http://www.xuecaijie.com/liuyanban" title="留言板"
-						target="_self" class="nav_button" style="opacity: 0.7;" rel=""><img
-						src="http://www.xuecaijie.com/wp-content/themes/frontopen2/images/tutorial.gif"
-						width="45" height="45"></a>
-				</dt>
-				<dd>留言板</dd>
-			</dl>
-
-			<div class="cls"></div>
-		</div>
-
-	</div>
-	<div class="navcon marauto">
-		<div class="menu-header">
-			<ul id="menu-nav1" class="menu">
-				<li id="menu-item-7"
-					class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-7"><a
-					href="http://www.xuecaijie.com">首页</a></li>
-				<li id="menu-item-15"
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15"><a
-					href="http://www.xuecaijie.com/websheji">web前端</a>
-					<ul class="sub-menu">
-						<li id="menu-item-10"
-							class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10"><a
-							href="http://www.xuecaijie.com/websheji/htmlcssdiv">HTML+CSS</a></li>
-						<li id="menu-item-12"
-							class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-12"><a
-							href="http://www.xuecaijie.com/websheji/javascript">Javascript</a></li>
-					</ul></li>
-				<li id="menu-item-13"
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13"><a
-					href="http://www.xuecaijie.com/phpmysql">PHP+Mysql</a></li>
-				<li id="menu-item-9"
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9"><a
-					href="http://www.xuecaijie.com/cms">CMS建站</a>
-					<ul class="sub-menu">
-						<li id="menu-item-8"
-							class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-8"><a
-							href="http://www.xuecaijie.com/cms/phpcms">PHPCMS</a></li>
-						<li id="menu-item-16"
-							class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16"><a
-							href="http://www.xuecaijie.com/cms/empirecms">帝国CMS</a></li>
-						<li id="menu-item-21"
-							class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-21"><a
-							href="http://www.xuecaijie.com/cms/dedecms">织梦CMS</a></li>
-						<li id="menu-item-115"
-							class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-115"><a
-							href="http://www.xuecaijie.com/cms/discuz">Discuz</a></li>
-					</ul></li>
-				<li id="menu-item-14"
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14"><a
-					href="http://www.xuecaijie.com/seo">SEO</a></li>
-				<li id="menu-item-18"
-					class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-18"><a
-					href="http://www.xuecaijie.com/server">服务器运维</a></li>
-				<li id="menu-item-11"
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11"><a
-					href="http://www.xuecaijie.com/itjishu">IT技术杂谈</a></li>
-				<li id="menu-item-17"
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-17"><a
-					href="http://www.xuecaijie.com/life">心情随笔</a></li>
-				<li id="menu-item-65"
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-65"><a
-					href="http://www.xuecaijie.com/picture">相册</a></li>
-			</ul>
-		</div>
-		<div class="menu-header-m mIco">
-			<ul id="remen_ul" class="menu-header-m">
-				<li
-					class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-7"><a
-					href="http://www.xuecaijie.com">首页</a></li>
-				<li
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15"><a
-					href="http://www.xuecaijie.com/websheji">web前端</a></li>
-				<li
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-13"><a
-					href="http://www.xuecaijie.com/phpmysql">PHP+Mysql</a></li>
-				<li
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9"><a
-					href="http://www.xuecaijie.com/cms">CMS建站</a></li>
-				<li
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14"><a
-					href="http://www.xuecaijie.com/seo">SEO</a></li>
-				<li
-					class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-18"><a
-					href="http://www.xuecaijie.com/server">服务器运维</a></li>
-				<li
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11"><a
-					href="http://www.xuecaijie.com/itjishu">IT技术杂谈</a></li>
-				<li
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-17"><a
-					href="http://www.xuecaijie.com/life">心情随笔</a></li>
-				<li
-					class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-65"><a
-					href="http://www.xuecaijie.com/picture">相册</a></li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="conter marauto">
-		<script type="text/javascript">
-			$('.loading').animate({
-				'width' : '33%'
-			}, 50);
-		</script>
-		<div id="container">
-			<div id="content" role="main" style="width: 96%">
-
-
-
-				<div class="mbx">
-					<a href="http://www.xuecaijie.com" class="gray">首页</a> > <a
-						href="http://www.xuecaijie.com/server" title="查看服务器运维中的全部文章"><s:property
-							value="category" /></a> >
-					<s:property value="diary.title" />
-				</div>
-
-				<div id="post-320"
-					class="post-320 post type-post status-publish format-standard hentry category-server tag-linux">
-					<div class="c-top2" id="post-55">
-						<div class="datetime">
-							<s:property value="diary.create_date" />
-							<br />
-							<s:property value="diary.create_time" />
+								<a href="javascript:;" rel="nofollow" class="btn-action-like icon icon-fav" data-id="12098" data-type="single" data-cback="single_like_callback" style="visibility: visible;">
+								</a>
+								<div class="duration" style="display: block;">
+									<span class="current-time">00:00</span>
+									<span>/</span>
+									<span class="total-time">00:00</span>
+								</div>
+							</div>
+		
+						</li>
+						
+							</ul>
+							<div>
+								<div id="luooPlayerContent" style="width: 0px; height: 0px;"><img id="jp_poster_0" style="width: 0px; height: 0px; display: inline;" src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/albums/6764/cover.jpg?imageView2/1/w/580/h/580"><audio id="jp_audio_0" preload="metadata" src="http://emo.luoo.net/low/2014/0612_01.mp3"></audio></div>
+								<div class="jp-playlist" style="display:none;">
+									<ul style="display: block;"><li class="jp-playlist-current"><div><a href="javascript:;" class="jp-playlist-item-remove" style="display: none;">×</a><a href="javascript:;" class="jp-playlist-item jp-playlist-current" tabindex="1">welcome to utopia <span class="jp-artist">by 惘闻</span></a></div></li></ul>
+								</div>
+							</div>	
 						</div>
-						<div class="tit">
-							<h1 class="entry-title">
-								<s:property value="diary.title" />
-							</h1>
-							<div class="entry-meta iititle2">
-								<span class="i2"><a
-									href="http://www.xuecaijie.com/author/admin" title="由Aurora发布"
-									rel="author">Aurora</a></span><span class="i1"><a
-									href="http://www.xuecaijie.com/server" title="查看服务器运维中的全部文章"
-									rel="category tag">服务器运维</a></span><span class="i3"><a
-									href="http://www.xuecaijie.com/320.html#comments"
-									class="ds-thread-count" data-thread-key="320"
-									title="《<s:property value="diary.title"/>》上的评论">6 条评论</a></span>
+					</div>
+					<div class="essay-content">
+					<s:property value="diary.content" escape="false"/>
+				<br>
+				<br>
+				<br>
+					 </div>
+			<!-- 点赞区 -->		 
+		<div class="essay-share">
+				<a href="javascript:;" >
+					<span id="like" class="icon-essay-fav"  onclick="like();" style="margin-right:5px;" ></span>
+					<span id="liked" class="icon-essay-faved hidden"  onclick="undoLike();" style="margin-right:5px;" ></span>
+					<span id="favorcnt"><s:property value="diary.favor_cnt"/></span>
+				</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="javascript:;" class="btn-share btn-action-share" data-app="essay" data-id="520'" data-text="这篇文章值得一读【惘闻：艺术与声音的即兴合作——奇迹寻踪】（分享自@落网）" data-img="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/essays/201508/55d5b1119b303.jpg" title="分享">
+					<span class="icon-essay-share"></span>
+				</a>
+			</div>			 
+			<!-- 作者信息 -->		 
+					 
+					 <div class="essay-author-wrapper clearfix">
+				<div class="essay-author">
+					<p class="title">
+						文章作者
+					</p>
+					
+						<div class="clearfix">
+							<a href="http://www.luoo.net/author/essays/656733" class="avatar-wrapper">
+								<img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/avatars/u656733_1430279362.png?imageView2/1/w/128/h/128" alt="eyelight" class="avatar rounded">
+							</a>
+							<div class="essay-author-info">
+								<div class="cell">
+									<a href="http://www.luoo.net/author/essays/656733" class="essay-author-name">
+										<s:property value="diary.author"/>
+									</a>
+									<p class="essay-author-sign">想來生活無非是痛苦和美麗</p>
+								</div>
 							</div>
 						</div>
-						<div class="cls"></div>
-					</div>
-					<!-- .entry-meta -->
-
-					<div class="entry-content">
-						<s:property value="diary.content" escape="false"/>
-						<!-- .entry-content -->
-						<!-- .entry-utility -->
-					</div>
-					<!-- #post-## -->
-					<div class="c-bot">
-						<span class="cb_bq"><a
-							href="http://www.xuecaijie.com/tag/linux" rel="tag"><s:property
-									value="category" /></a></span>
-						<div class="cls"></div>
-					</div>
-					<br />
-					<div id="nav-below" class="navigation">
-						<div class="nav-previous">
-							<a href="http://www.xuecaijie.com/318.html" rel="prev"><span
-								class="meta-nav">&lArr;</span> 打印机能搜到但无法共享，提示打印机未连接服务器</a>
-						</div>
-						<div class="nav-next"></div>
-					</div>
-
-
-					<a name="comments"></a>
-
-					<div class="ds-thread" data-thread-key="320" data-author-key="1"
-						data-title="<s:property value="diary.title"/>"
-						data-url="http://www.xuecaijie.com/320.html"></div>
-
-					<script type="text/javascript">
-						if (typeof DUOSHUO !== 'undefined')
-							DUOSHUO.EmbedThread('.ds-thread');
-					</script>
-					<div id="ds-ssr">
-
-<br/>
-						<ol id="commentlist">
-							<s:iterator var="comment" value="comments" status="status">
-								<li class="comment even thread-even depth-1" id="li-comment-313">
-									<article id="comment-313" class="comment"> 
-									<footer class="comment-meta"> <cite class="comment-author vcard"> 
-										<span class="fn"><a href='http://www.henghost.com/' rel='external nofollow' class='url'>
-												<%
-													int user_id = ((Comment) request.getAttribute("comment"))
-																.getUser_id();
-														String name = UserService.getUserName(user_id);
-												%><%=name%></a></span>
-										on <a rel="nofollow"	href="http://www.xuecaijie.com/320.html#comment-313">
-										<time pubdate 	datetime="<s:property value="comment.create_date"/>T<s:property value="#comment.create_time"/>">
-											<s:property value="#comment.create_date" /> at <s:property	value="#comment.create_time" /></time></a> <span class="says">said:</span>
-									</cite><!-- .comment-author .vcard --> </footer>
-
-									<div class="comment-content">
-										<p>
-											<s:property value="#comment.content" />
-										</p>
-									</div>
-
-									</article>
-									<!-- #comment-## -->
-								</li>
-								<!-- #comment-## -->
-							</s:iterator>
-						</ol>
-						<script type="text/javascript">
-						var convey=function(){
-							$.ajax({
-								url:'../../diaryAction.action?method:saveComment',
-								type:'post',
-								contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
-								data:'message='+$('#message').val()+'&user_id='+$('#user_id').val()+'&article_id='+$('#article_id').val()+'&append='+$('#append').val(),
-								success:function(data){
-									
-									alert(data.comment.content);
-									
-								}
-								
-								
-							});
-							
-							
-						} ;
-						
-						
-						</script>
-						<form method="post">
-							<input type="hidden" value="<s:property value="user.id"/>" id="user_id"/>
-								<input type="hidden" value="<s:property value="diary.id"/>" id="article_id"/>
-								 <input type="hidden" value="0" id="append"/>
-								 <div class="ds-textarea-wrapper ds-rounded-top"	>
-											<textarea placeholder="说点什么吧…" title="Ctrl+Enter快捷提交"	name="message" id="message"></textarea>
-											<pre class="ds-hidden-text"></pre>
 										</div>
-										<div class="ds-post-toolbar">
-											<div class="ds-post-options ds-gradient-bg">
-												<span class="ds-sync"></span>
-											</div>
-											<button type="button" onclick="convey();" class="ds-post-button">发布</button>
-											<div class="ds-toolbar-buttons">
-												<a title="插入表情" class="ds-toolbar-button ds-add-emote"></a>
-											</div>
-										</div>
-						</form>
-
+				<div class="copyright">
+					<p class="title">
+						版权声明
+					</p>
+					<div class="copyright-ct">
+						「夜网」专栏内文章，如果侵权，联系站主，立即删除
 					</div>
 				</div>
-				<!-- #content -->
 			</div>
-			<!-- #container -->
-			<script type="text/javascript">
-				$('.loading').animate({
-					'width' : '55%'
-				}, 50);
-			</script>
+	</div>	
+		
+		<div class="comment-wrapper">
+		<div class="comment-editor">
+				<a href="javascript:;" class="avatar-wrapper" id="commentAvatarHolder" rel="nofollow">
+					<img src="http://s.luoo.net/img/avatar.gif" alt="" class="avatar rounded">
+				</a>
+				<div class="editor-wrapper">
+					<form action="http://www.luoo.net/comment/add" id="commentForm">
+						<div class="editor rounded">
+							<div class="reply-wrapper">
+								<a href="javascript:;" class="reply-at-user" id="replyAtUser">@xxx：</a>
+								<span id="replyQuotes"></span>
+								<a href="javascript:;" class="cancle-reply" title="取消回复">×</a>
+							</div>
+							
+							<textarea name="content" spellcheck="false" id="commentEditor" autocomplete="off"></textarea>
 
+						</div>
+						
+						<div class="toolbar rounded clearfix">
+							<div class="sns-sync">
+								同步到
+								<a href="http://www.luoo.net/comment/sync/weibo" rel="nofollow" class="sns-item btn-action-comment-sync">
+									<span class="icon-share-weibo"></span>
+									<input type="hidden" name="sync[weibo]" value="0" class="input-comment-sync">
+								</a>
+								<a href="http://www.luoo.net/comment/sync/douban" rel="nofollow" class="sns-item btn-action-comment-sync">
+									<span class="icon-share-douban"></span>
+									<input type="hidden" name="sync[douban]" value="0" class="input-comment-sync">
+								</a>
+								<a href="http://www.luoo.net/comment/sync/tweibo" rel="nofollow" class="sns-item btn-action-comment-sync">
+									<span class="icon-tweibo"></span>
+									<input type="hidden" name="sync[tweibo]" value="0" class="input-comment-sync">
+								</a>
+							</div>
+							<button class="btn btn-positive btn-not-ready rounded" id="commentSubmit" data-tipid="commentSubmitDialog" data-remote="http://www.luoo.net/login/dialog" data-width="235">发布</button>
+						</div>
 
-
-			<script type="text/javascript">
-				$('.loading').animate({
-					'width' : '78%'
-				}, 50);
-			</script>
-
+						<input type="hidden" name="app_id" value="2">
+						<input type="hidden" name="res_id" value="520">
+						<input type="hidden" id="txtCommentAt" name="comment_at" value="0">
+					</form>
+				<!-- editor-wrapper end-->
+			</div>
+		
 		</div>
-		<!-- #main -->
+		
+		
+		
+		
+		<span id="commentSortText">最新评论</span>
+		<span class="icon-sort-menu">▼</span>
+		
+		
+<div class="comment-list" id="commentList">
+                <div id="commentItems"><div class="item">
+                    
 
-		<div class="cls"></div>
+                    <a href="http://www.luoo.net/user/631826" class="avatar-wrapper" target="_blank">
+                        <img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/avatars/u631826_1437626193.png?imageView2/1/w/128/h/128" alt="Rubystone" class="avatar rounded">
+                    </a>
+                    <div class="item-wrapper">
+                        <div class="helper">
+                            <a href="http://www.luoo.net/user/631826" class="username" target="_blank">Rubystone</a>
+                            
+                            <div class="more">
+                                    <span class="icon-more">
+                                        ▼
+                                        <span class="more-menu">
+                                            
+                                            <a href="javascript:void(0);" class="comment-more-item btn-report" data-res="260389" data-app="5" data-tipid="commentReportDialog260389" data-width="235" rel="nofollow"><span class="icon-report"></span><span class="report-status"> 举报</span></a>
+                                        </span>
+                                    </span>
+                            </div>
+                            
+                        </div>
+                        <div class="comment-ct">
+                            
+                                <p class="the-comment" data-vote="1" data-ct="1440157312">图片很帅！</p>
+                            
+                        </div>
+                        <div class="helper clearfix">
+                            2015-08-21
+                            <a class="ln-comment-from" href="http://www.luoo.net/app/" target="_blank"> 来自落网客户端</a>
+                            
+                            <a data-res="260389" data-app="5" data-tipid="commentVoteDialog260389" data-width="235" class="btn-vote btn-action-vote" href="javascript:void(0);" rel="nofollow"><i class="icon-vote"></i> <span>赞</span></a>
+                            <a href="javascript:void(0);" class="btn-reply btn-action-reply" data-res="260389" data-user="Rubystone">
+                                <span class="icon-reply"></span>
+                                回复
+                            </a>
+                            <span class="vote-count" data-count="1">1赞</span>
+                            
+                        </div>
+                        
+                            <div class="sub-comment clearfix ">
+                                <span class="arrows"></span>
 
+                                <form action="http://www.luoo.net/comment/add" class="editor-wrapper hide form-comment-at">
+                                    <div class="editor">
+                                        <textarea name="content" class="editor-comment-at" spellcheck="false" autocomplete="off"></textarea>
+                                    </div>
 
+                                    <div class="toolbar clearfix">
+                                        <div class="btn-group">
+                                            <a href="javascript:void(0);" class="btn-link btn-action-cancel">取消</a>
+                                            <button class="btn btn-positive btn-not-ready rounded btn-at-comment-submit" data-tipid="commentSubmitDialog" data-remote="http://www.luoo.net/login/dialog" data-width="235">发布</button>
+                                        </div>
+                                    </div>
 
+                                    <input type="hidden" name="app_id" value="2">
+                                    <input type="hidden" name="res_id" value="520">
+                                    <input type="hidden" name="comment_at" value="260389">
+                                </form>
+                                <div class="clearfix items">
 
+                                <div class="item">
+                    
+                    <a href="http://www.luoo.net/user/656733" class="avatar-wrapper" target="_blank">
+                        <img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/avatars/u656733_1430279362.png?imageView2/1/w/128/h/128" alt="eyelight" class="avatar rounded">
+                    </a>
+                    <div class="item-wrapper">
+                        <a href="http://www.luoo.net/user/656733" class="username" target="_blank">eyelight</a>
+                        <div class="comment-ct">
+                            
+                                <p class="the-comment" data-vote="" data-ct="1440159976">一定要找這部片子來看喔！</p>
+                            
+                        </div>
+                        <div class="helper clearfix">
+                            2015-08-21
+                            
+                            <a data-res="260399" data-app="5" data-tipid="commentVoteDialog260399" data-width="235" class="btn-vote btn-action-vote hide" href="javascript:void(0);" rel="nofollow"><i class="icon-vote"></i> <span>赞</span></a>
+                            <a href="javascript:void(0);" class="btn-reply btn-action-reply hide" data-res="260399" data-user="eyelight">
+                                <span class="icon-reply"></span>
+                                回复
+                            </a>
+                            <a href="javascript:void(0);" class="comment-more-item btn-report hide" data-res="260399" data-app="5" data-tipid="commentReportDialog260399" data-width="235" rel="nofollow"><span class="icon-report"></span><span class="report-status"> 举报</span></a>
+                            
+                            <span class="vote-count" style="display:none;" data-count="0">0赞</span>
+                            
+                        </div>
+                    </div>
+                    <form action="http://www.luoo.net/comment/add" class="editor-wrapper form-comment-at hide">
+                        <div class="editor">
+                            <textarea name="content" class="editor-comment-at" spellcheck="false" autocomplete="off"></textarea>
+                        </div>
 
-	</div>
-	<!-- #wrapper -->
+                        <div class="toolbar clearfix">
+                            <div class="btn-group">
+                                <a href="javascript:void(0);" class="btn-link btn-action-cancel-at">取消</a>
+                                <button class="btn btn-positive btn-not-ready rounded btn-at-comment-submit" data-tipid="commentSubmitDialog" data-remote="http://www.luoo.net/login/dialog" data-width="235">评论</button>
+                            </div>
+                        </div>
 
+                        <input type="hidden" name="app_id" value="2">
+                        <input type="hidden" name="res_id" value="520">
+                        <input type="hidden" name="comment_at" value="260399">
+                    </form>
+                </div></div>
+                                
+                            </div>
+                        
+                    </div>
+                </div><div class="item">
+                    
 
+                    <a href="http://www.luoo.net/user/807254" class="avatar-wrapper" target="_blank">
+                        <img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/avatars/u807254_1435631476.jpg?imageView2/1/w/128/h/128" alt="不酷少年" class="avatar rounded">
+                    </a>
+                    <div class="item-wrapper">
+                        <div class="helper">
+                            <a href="http://www.luoo.net/user/807254" class="username" target="_blank">不酷少年</a>
+                            
+                            <div class="more">
+                                    <span class="icon-more">
+                                        ▼
+                                        <span class="more-menu">
+                                            
+                                            <a href="javascript:void(0);" class="comment-more-item btn-report" data-res="260364" data-app="5" data-tipid="commentReportDialog260364" data-width="235" rel="nofollow"><span class="icon-report"></span><span class="report-status"> 举报</span></a>
+                                        </span>
+                                    </span>
+                            </div>
+                            
+                        </div>
+                        <div class="comment-ct">
+                            
+                                <p class="the-comment" data-vote="1" data-ct="1440148321">在乐视官网看了两遍，听了一遍，每次都有不一样的感动，惘闻真的是在不断挑战自己，激发更多的创作火花，为国内后摇团在创作上刷新了新的一页。</p>
+                            
+                        </div>
+                        <div class="helper clearfix">
+                            2015-08-21
+                            
+                            
+                            <a data-res="260364" data-app="5" data-tipid="commentVoteDialog260364" data-width="235" class="btn-vote btn-action-vote" href="javascript:void(0);" rel="nofollow"><i class="icon-vote"></i> <span>赞</span></a>
+                            <a href="javascript:void(0);" class="btn-reply btn-action-reply" data-res="260364" data-user="不酷少年">
+                                <span class="icon-reply"></span>
+                                回复
+                            </a>
+                            <span class="vote-count" data-count="1">1赞</span>
+                            
+                        </div>
+                        
+                            <div class="sub-comment clearfix ">
+                                <span class="arrows"></span>
 
+                                <form action="http://www.luoo.net/comment/add" class="editor-wrapper hide form-comment-at">
+                                    <div class="editor">
+                                        <textarea name="content" class="editor-comment-at" spellcheck="false" autocomplete="off"></textarea>
+                                    </div>
 
+                                    <div class="toolbar clearfix">
+                                        <div class="btn-group">
+                                            <a href="javascript:void(0);" class="btn-link btn-action-cancel">取消</a>
+                                            <button class="btn btn-positive btn-not-ready rounded btn-at-comment-submit" data-tipid="commentSubmitDialog" data-remote="http://www.luoo.net/login/dialog" data-width="235">发布</button>
+                                        </div>
+                                    </div>
 
-	<!-- GOTOP -->
-	<div id="code"></div>
-	<div id="code_img"></div>
-	<a id="gotop" href="javascript:void(0)"></a>
-	<!-- GOTOP -->
+                                    <input type="hidden" name="app_id" value="2">
+                                    <input type="hidden" name="res_id" value="520">
+                                    <input type="hidden" name="comment_at" value="260364">
+                                </form>
+                                <div class="clearfix items">
+
+                                <div class="item">
+                    
+                    <a href="http://www.luoo.net/user/656733" class="avatar-wrapper" target="_blank">
+                        <img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/avatars/u656733_1430279362.png?imageView2/1/w/128/h/128" alt="eyelight" class="avatar rounded">
+                    </a>
+                    <div class="item-wrapper">
+                        <a href="http://www.luoo.net/user/656733" class="username" target="_blank">eyelight</a>
+                        <div class="comment-ct">
+                            
+                                <p class="the-comment" data-vote="" data-ct="1440150329">看出来你真的很用心去揣摩音乐背后的东西</p>
+                            
+                        </div>
+                        <div class="helper clearfix">
+                            2015-08-21
+                            
+                            <a data-res="260372" data-app="5" data-tipid="commentVoteDialog260372" data-width="235" class="btn-vote btn-action-vote hide" href="javascript:void(0);" rel="nofollow"><i class="icon-vote"></i> <span>赞</span></a>
+                            <a href="javascript:void(0);" class="btn-reply btn-action-reply hide" data-res="260372" data-user="eyelight">
+                                <span class="icon-reply"></span>
+                                回复
+                            </a>
+                            <a href="javascript:void(0);" class="comment-more-item btn-report hide" data-res="260372" data-app="5" data-tipid="commentReportDialog260372" data-width="235" rel="nofollow"><span class="icon-report"></span><span class="report-status"> 举报</span></a>
+                            
+                            <span class="vote-count" style="display:none;" data-count="0">0赞</span>
+                            
+                        </div>
+                    </div>
+                    <form action="http://www.luoo.net/comment/add" class="editor-wrapper form-comment-at hide">
+                        <div class="editor">
+                            <textarea name="content" class="editor-comment-at" spellcheck="false" autocomplete="off"></textarea>
+                        </div>
+
+                        <div class="toolbar clearfix">
+                            <div class="btn-group">
+                                <a href="javascript:void(0);" class="btn-link btn-action-cancel-at">取消</a>
+                                <button class="btn btn-positive btn-not-ready rounded btn-at-comment-submit" data-tipid="commentSubmitDialog" data-remote="http://www.luoo.net/login/dialog" data-width="235">评论</button>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="app_id" value="2">
+                        <input type="hidden" name="res_id" value="520">
+                        <input type="hidden" name="comment_at" value="260372">
+                    </form>
+                </div></div>
+                                
+                            </div>
+                        
+                    </div>
+                </div></div>
+                <div class="paginator" id="paginator"><a class="previous disabled" rel="nofollow" href="javascript:void(0);">上一页</a><a class="page actived" rel="nofollow" href="javascript:void(0);">1</a><a class="next disabled" rel="nofollow" href="javascript:void(0);">下一页</a></div>
+
+                
+
+                
+			</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</div>
+		</div>
+		
+<%@ include file="snippets/footer.jsp" %>
 </body>
-<script
-	src="http://www.xuecaijie.com/wp-content/themes/frontopen2/include/ai.js"></script>
-<script
-	src="http://www.xuecaijie.com/wp-content/themes/frontopen2/include/slip.js"></script>
-<script
-	src="http://www.xuecaijie.com/wp-content/themes/frontopen2/include/page.js"></script>
 </html>
-<script type="text/javascript">
-	$('.loading').animate({
-		'width' : '100%'
-	}, 50);
-</script>

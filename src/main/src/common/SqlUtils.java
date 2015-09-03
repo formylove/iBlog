@@ -1,5 +1,7 @@
 package main.src.common;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,6 +22,8 @@ import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+
+import main.src.entity.Diary;
 
 public class SqlUtils {
 	static String url = null;
@@ -123,6 +127,66 @@ public class SqlUtils {
 		return count;
 	}
 
+	public static int executeInsert(Map<String, Object> data, String tableName) {
+		String columns = "";
+		String values = "";
+		for (Entry<String, Object> datum : data.entrySet()) {
+			if(null==datum.getValue() || "undefined".equalsIgnoreCase(datum.getValue().toString()) || "".equalsIgnoreCase(datum.getValue().toString()))
+			{
+				continue;
+			}
+			columns =columns + datum.getKey() + ",";
+			if(datum.getValue().getClass()==String.class){
+				values =values + "'" + datum.getValue() + "',";
+			}
+			else{
+				values =values + datum.getValue() + ",";
+			}
+		}
+		columns = columns.substring(0, columns.length() - 1);
+		values = values.substring(0, values.length() - 1);
+		String sql = "insert into " + tableName + "(" + columns + ")" 	+ "values(" + values + ")";
+		return executeUpdate(sql, null);
+	}
+	
+	public static int executeInsert(Object entity) {
+		String columns = "";
+		String values = "";
+		Class class_ = entity.getClass();
+		for(Field field:class_.getDeclaredFields()){
+			if(field.getType() == String.class){
+				try {
+					if(null == BeanUtils.getProperty(entity, field.getName()) || "".equalsIgnoreCase(BeanUtils.getProperty(entity, field.getName())))
+					{
+						continue;
+					}else{
+						columns =columns + field.getName() + ",";
+						values =values + "'" +BeanUtils.getProperty(entity, field.getName()) + "',";
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else{
+				columns =columns + field.getName() + ",";
+				try {
+					values =values + BeanUtils.getProperty(entity, field.getName()) + ",";
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		String tableName = null;
+		if(class_.getSuperclass() == Object.class){
+			tableName = class_.getSimpleName();
+		}else{
+			tableName = class_.getSuperclass().getSimpleName();
+		}
+		
+		columns = columns.substring(0, columns.length() - 1);
+		values = values.substring(0, values.length() - 1);
+		String sql = "insert into " + tableName + " (" + columns + ")" 	+ " values(" + values + ")";
+		return executeUpdate(sql, null);
+	}
 	// bean×ª»»Æ÷
 	@SuppressWarnings("unchecked")
 	public static List<Object> MaptoBean(List<Map<String, Object>> resultSet,
@@ -176,39 +240,62 @@ public class SqlUtils {
 			{
 				sql = sql + datum.getKey() + "='" + datum.getValue() + "',";
 			}else{
-				sql = sql + datum.getKey() + "='" + datum.getValue() + "',";
+				sql = sql + datum.getKey() + "=" + datum.getValue() + ",";
 			}
 		}
 		sql = sql.substring(0, sql.length() - 1)+" where "+condition;
 		Log.print(sql);
 		return executeUpdate(sql, null);
 	}
-
-	public static int executeInsert(Map<String, Object> data, String tableName) {
-		String columns = "";
-		String values = "";
-		for (Entry<String, Object> datum : data.entrySet()) {
-			if(null==datum.getValue() || "undefined".equalsIgnoreCase(datum.getValue().toString()) || "".equalsIgnoreCase(datum.getValue().toString()))
-			{
-				continue;
+	
+	public static int executeUpdate(String condition ,Object entity) {
+			Class class_ = entity.getClass();
+			String tableName = null;
+			if(class_.getSuperclass() == Object.class){
+				tableName = class_.getSimpleName();
+			}else{
+				tableName = class_.getSuperclass().getSimpleName();
 			}
-			columns =columns + datum.getKey() + ",";
-			if(datum.getValue().getClass()==String.class){
-				values =values + "'" + datum.getValue() + "',";
+			String sql = "update " + tableName + " set ";
+			for(Field field:class_.getDeclaredFields()){
+				if(field.getType() == String.class){
+					try {
+						if(null == BeanUtils.getProperty(entity, field.getName()) || "".equalsIgnoreCase(BeanUtils.getProperty(entity, field.getName())))
+						{
+							continue;
+						}else{
+							sql = sql + field.getName() + "='" + BeanUtils.getProperty(entity, field.getName()) + "',";
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					try {
+						sql = sql + field.getName() + "=" + BeanUtils.getProperty(entity, field.getName()) + ",";
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
-			else{
-				values =values + datum.getValue() + ",";
-			}
-		}
-		columns = columns.substring(0, columns.length() - 1);
-		values = values.substring(0, values.length() - 1);
-		String sql = "insert into " + tableName + "(" + columns + ")" 	+ "values(" + values + ")";
-		return executeUpdate(sql, null);
+			sql = sql.substring(0, sql.length() - 1)+" where "+condition;
+			Log.print(sql);
+			return executeUpdate(sql, null);
 	}
+
+	
+	
+	
+	
+	
 	public static int executeDelete(String tableName,String condition) {
 		String sql="delete from "+tableName+" where "+condition;
 		return executeUpdate(sql, null);
 	}
+	
+	
+	
+	
+	
 	
 	
 	public static void main(String args[]) {

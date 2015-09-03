@@ -1,23 +1,77 @@
 package main.src.entity;
 
+import main.src.common.TimeManager;
+
 public class Diary {
 	
 int id;
 String title;
+String subtitle;
 String author;
+String author_link;
+String author_desc;
 String profile;
 String label;
 int category;
 String content;
+int read_cnt;
+int favor_cnt;
 boolean original_flag;
 String original_link;
+int music;
+String portrait;
 String create_date;
 String create_time;
+int authority;
 boolean del_flag;
-int read_cnt;
 
+public Diary(){
+	setCreate_date(TimeManager.getDate());
+	setCreate_time(TimeManager.getTime());
+}
 
-
+public String getSubtitle() {
+	return subtitle;
+}
+public void setSubtitle(String subtitle) {
+	this.subtitle = subtitle;
+}
+public String getAuthor_link() {
+	return author_link;
+}
+public void setAuthor_link(String author_link) {
+	this.author_link = author_link;
+}
+public String getAuthor_desc() {
+	return author_desc;
+}
+public void setAuthor_desc(String author_desc) {
+	this.author_desc = author_desc;
+}
+public int getMusic() {
+	return music;
+}
+public void setMusic(int music) {
+	this.music = music;
+}
+public String getPortrait() {
+	return portrait;
+}
+public void setPortrait(String portrait) {
+	this.portrait = portrait;
+}
+public int getAuthority() {
+	return authority;
+}
+public void setAuthority(int authority) {
+	this.authority = authority;
+}
+public int getFavor_cnt() {
+	return favor_cnt;
+}
+public void setFavor_cnt(int favor_cnt) {
+	this.favor_cnt = favor_cnt;
+}
 public String getProfile() {
 	return profile;
 }

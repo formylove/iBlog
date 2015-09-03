@@ -32,9 +32,6 @@
 		<action name="commentAction" class="main.src.action.CommentAction">
 			<result name="success">/pages/jsp/saved.jsp</result>
 		</action>
-		<action name="forwardAction" class="main.src.action.ForwardAction">
-			<result name="success">/pages/jsp/saved.jsp</result>
-		</action>
 		
 
 
@@ -44,10 +41,17 @@
 	
 
 		<package name="default2" extends="json-default">  
+		<action name="forwardAction" class="main.src.action.ForwardAction">
+			<result name="success" type="json"></result>
+		</action>
 		<action name="diaryAction" class="main.src.action.DiaryAction">
 			<result name="diarypage">/pages/jsp/diary.jsp</result>
 			<result name="editdiary">/pages/jsp/editDiary.jsp</result>
 			<result name="success">/pages/jsp/saved.jsp</result>
+			<result name="deleted">/pages/jsp/deletedConfirmation.jsp</result>
+			<result name="reduplicative" type="json"></result>
+			<result name="recovered" type="json"></result>
+			<result name="like" type="json"></result>
 		</action>
 		
 		<action name="categoryAction" class="main.src.action.CategoryAction">

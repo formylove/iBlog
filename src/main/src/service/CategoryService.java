@@ -44,7 +44,7 @@ public class CategoryService {
 		return getCategory(id).getLevel();
 	}
 	public static List<Category> getAllCategories(boolean idValid){
-		String sql="select * from category where id<>3000"+(idValid?" and del_flag<>1":"");
+		String sql="select * from category where id<>5000"+(idValid?" and del_flag<>1":"");
 		@SuppressWarnings("unchecked")
 		List<Category> categories=(List<Category>) SqlUtils.executeQuery(sql, null,Category.class);
 		return categories;

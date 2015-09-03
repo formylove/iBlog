@@ -1,1 +1,24 @@
-<span>well done</span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+</head>
+<script language="vbscript">
+ sub go()
+  location.href = document.f.se.value
+ end sub
+</script>
+<body>
+<form name="f" method="post">
+<input type = "text ">
+<select name="se" size="1">
+ <option selected="selected">请选择</option>
+ <option value="http://www.baidu.com">百度</option>
+ <option value="http://www.sohu.com">搜狐</option>
+</select>
+<input type="button" value="搜索" onclick="go()" />
+</form>
+
+</body>
+</html>

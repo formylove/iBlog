@@ -16,3 +16,4 @@ jsp资源位置以WebRoot为根目录,如js/jquery-validate.js
 html资源需要使用相对目录,如../../js/bootstrap.css
 js库的使用也要求按顺序放入,jquery最前,其他在后.引用与使用要有先后顺序
 页面元素显示有问题,可能是html版本问题,将<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">改成<!DOCTYPE HTML >就好了
+js正则表达式：//形式，/需要转义，“”形式‘“需要转义

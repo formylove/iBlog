@@ -1,106 +1,113 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://ckeditor.com" prefix="ckeditor" %>
-    <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+   <%@ taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html>
+<html>
 <head>
-<title>编辑文章 - Aurora博客 - CSDN.NET</title>
-<script type="text/javascript" src="../../js/jquery.js"></script>
-<script type="text/javascript" src="../../ckeditor/ckeditor.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link type="text/css" rel="Stylesheet" href="http://csdnimg.cn/pig/blog/write/css/main.css" />
-    <!--new top-->
-<link type='text/css' rel='Stylesheet' href='http://csdnimg.cn/pig/blog/write/css/write.css' />
-<link type='text/css' rel='Stylesheet' href='http://csdnimg.cn/pig/blog/write/css/jquery.autocomplete.css' />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>文章编辑</title>
+<%request.setAttribute("importParams", "jquery|index.js|common.css|luoo.js|ckeditor.js|end"); %>
+<%@ include file="snippets/static_js_css.jsp" %>
 </head>
-
 <body>
-     <!--new top-->
-     <!--new top-->
-    <div id="wrap">
+<%@ include file="./snippets/navigator.jsp" %>
 
-        <div class="head">
+<div class="container index-ct" style="min-height: 221px;">	
 
-            <div class="user_info">
-                <dl>
-                    <dt><a href="http://my.csdn.net/"><img src="http://avatar.csdn.net/A/D/2/3_ansyxx.jpg" alt="ansyxx" /></a></dt>
-                    <dd>
-                        <ul>
-                            <li class="user_name"><a href="http://my.csdn.net/" class="user_name">ansyxx</a><span>ansyxx的专栏</span></li>
-                            <li class="feed_link"><a href="http://my.csdn.net/">个人主页</a>|<a href="http://blog.csdn.net/ansyxx">我的博客</a></li>
-                        </ul>
-                    </dd>
-                </dl>
-            </div>
-
-            <div style="float:right; margin-top:20px; color:Red;">
-                
-            </div>
-        </div>
-
-        <div class="tabs_header">
-            <ul id="ul_tab" class="tabs">
-                <li id="tab_postedit" style="display:none;"><a href="/postedit"><span>发表文章</span></a></li>
-                <li id="tab_import" style="display:none;"><a href="/import"><span>博客搬家</span></a></li>
-                <li><a href="/postlist"><span>文章管理</span></a></li>
-                <li><a href="/category"><span>类别管理</span></a></li>
-                <li><a href="/feedback"><span>评论管理</span></a></li>
-                <li><a href="/configure"><span>博客配置</span></a></li>
-                <li><a href="/configure/column"><span>博客栏目</span></a></li>
-                <li><a href="/postlist/0/all/draft"><span>草稿箱</span></a></li>
-                <li><a href="/postlist/0/all/deleted"><span>回收站</span></a></li>
-                <li id="btn_postedit" class="write"><a href="/postedit" class="t_button">写新文章</a></li>
-                <li id="btn_import" class="write"><a href="/import" class="t_button">博客搬家</a></li>
-            </ul>
-        </div>
-
-<form action="<s:url action='diaryAction?method:saveDiary'/>" method="post">
-<p class="subtit">文章标题<span style="color: green; margin-left: 18px; display: none">尊重原创，请保证您的文章为原创作品</span>
-<input type="hidden" id="userinfo1" value="2014-11-30 10:46:17" /><input type="hidden" id="userinfo2" value="" /></p>
+<form  id="form" action="<s:url action='diaryAction?method:saveDiary'/>" method="post">
+<input type="hidden" name="id" id="id" value="<s:property value='diary.id'/>">
 <div>
-<select id="selType" name="isOriginal">
+<select id="isOriginal" name="isOriginal" style="height:28px;">
 <option value="true">原创</option>
 <option value="false">转载</option>
 </select>
-<input type="text" id="txtTitle" name="title" style="width:560px; height:20px; float:left;" maxlength="100" />
-<span style="display:inline-block; padding:4px 0 0 10px;">*只有原创和翻译文章才能推荐到首页</span>
+<input type="text" id="title" name="title" placeholder="文章标题" value="<s:property value='diary.title'/>" style="width:880px; height:20px; float:right;" maxlength="100" />
 </div>
-
-<p class="subtit">文章内容<span style="color:#ff9900;font-weight:normal;display:none;">（很抱歉，由于博客图片审核功能尚未完成，普通用户暂时关闭引用站外图片功能，请您谅解，我们会尽快开放。）</span><span id="autosave_note"></span></p>
+<input type="text" id="author"  name="author" placeholder="文章作者" value="<s:property value='diary.author'/>" style="width:880px; height:20px; float:right;margin-left:55px;" maxlength="100"/>
+<input  type="text" id="original_link" name="original_link" placeholder="原文地址"  value="<s:property value='diary.original_link'/>" style="width:880px; height:20px; float:right;margin-left:55px;" maxlength="100"/>
 <div class="section">
-<textarea id="editor" name="editor" rows="30" style="width:99.4%;">输入爱人的名字</textarea>
+<textarea id="editor" name="editor" placeholder="文章内容" rows="30" style="width:99.4%;"><s:property value='diary.content'/></textarea>
 </div>
 <script type="text/javascript">
-CKEDITOR.replace( 'editor' );
+var editortext = CKEDITOR.replace( 'editor' );
 </script>
 
+<p>选择分类 [<a href="/category" target="_blank">编辑分类</a>]</p>
+<select id="categoryId" name="categoryId">
+<s:iterator value="categories" var="category">
+<option value="<s:property value="#category.id"/>"><s:property value="#category.name"/></option>
+</s:iterator>
+</select>
+
+<p>设置权限</p>
+<select id="authority" name="authority">
+<option value="10">所有人可见</option>
+<option value="0">自己可见</option>
+<option value="5">登录可见</option>
+<option value="1">珠海ip可见</option>
+<option value="2">珠海ip不可见</option>
+</select>
 
     <p class="subtit">文章标签</p>
 <div style="position:relative;">
-<div id="d_tag2"></div>
-<input name="label" type="text" id="txtTag2" style="width:60%; height:20px;" maxlength="100" />（最多添加5个标签，多个标签之间用“,”分隔）
+<input name="label" type="text" id="txtTag2" placeholder="最多添加5个标签，多个标签之间用“,”分隔" value="<s:property value='diary.label'/>" style="width:60%; height:20px;" maxlength="100" />
 <div id="tag2box" style="display:none;">
 </div>
 </div>
 
-<p class="subtit">选择分类 [<a href="/category" target="_blank">编辑分类</a>]</p>
-<select id="selType" name="category"><option value="3000">请选择</option><option value="3001">java</option><option value="3002">linux</option></select>
-<div>
-<input type="text" id="txtTag" style="width:60%; height:20px;" maxlength="100" />（多个分类之间用“,”分隔）
-<div><div id="tagbox"></div></div>
-</div>
+						<script type="text/javascript">
+						var duplicateCheck=function(){
+							$.ajax({
+								url:'diaryAction.action?method:hasExisted',
+								type:'post',
+								contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+								data:'title='+$('#title').val(),
+								success:function(data){
+									if(data.hasExisted & document.getElementById('id').value==''){
+										alert('不要重复发布文章');
+									}else if(editortext.document.getBody().getText().replace(/\s/g,'')==''){
+										alert('文章内容为空');}
+										   else{
+										document.getElementById('form').submit();
+									}
+								}
+							});
+						} ;
+						</script>
 
-<div class="btn_area_1">   
-<input id="btnPublish" type="submit" class="input_btn_1" value="发表文章" title="保存并跳转" />
-<input id="btnDraft" type="submit" class="input_btn_1" value="立即保存" title="保存文章并留在当前页" />
-<input id="btnCancel" type="submit" class="input_btn_1" value="舍弃" />
-<span id="sp_note" class="savenote" style="display:none;"></span>
+<div style="text-align:center;margin-top:15px;">   
+<input id="btnPublish" type="button" onclick="duplicateCheck()" class="input_btn_1" value="发表文章" title="保存并跳转" />
+<input id="btnCancel" type="button" onclick="window.location.href='http://127.0.0.1:8080/iBlog/diaryAction.action?method:editDiary'; " value="舍弃" />
 </div>
 </form>
-    </div>
 
- 
 
+
+
+
+</div>
+<%@ include file="snippets/footer.jsp" %>
+
+<script type="text/javascript">
+var selector = document.getElementById('isOriginal');
+for(i=0;i<selector.length;i++)
+	{
+	if(selector[i].value=="<s:property value='diary.original_flag'/>")
+		selector[i].selected=true;
+	}
+selector = document.getElementById('categoryId');
+for(i=0;i<selector.length;i++)
+	{
+	if(selector[i].value=="<s:property value='diary.category'/>")
+		selector[i].selected=true;
+	}
+selector = document.getElementById('authority');
+for(i=0;i<selector.length;i++)
+	{
+	if(selector[i].value=="<s:property value='diary.authority'/>")
+		selector[i].selected=true;
+	}
+</script>
 </body>
 </html>
