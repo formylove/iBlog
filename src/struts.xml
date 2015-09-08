@@ -14,23 +14,11 @@
 	<package name="default" extends="struts-default">
 
 
-		<global-results>
-
-			<result name="exception">/pages/jsp/runtimeExceptionPage.jsp</result>
-			<result name="login">/pages/jsp/login.jsp</result>
-			<result name="main">/pages/jsp/main.jsp</result>
-
-		</global-results>
-		
-		<global-exception-mappings>
-			<exception-mapping result="exception"
-				exception="java.lang.RuntimeException" />
-		</global-exception-mappings>
 		
 
 		
 		<action name="commentAction" class="main.src.action.CommentAction">
-			<result name="success">/pages/jsp/saved.jsp</result>
+			<result name="success">/pages/jsp/essay/saved.jsp</result>
 		</action>
 		
 
@@ -41,14 +29,26 @@
 	
 
 		<package name="default2" extends="json-default">  
+		<global-results>
+
+			<result name="exception">/pages/jsp/common/runtimeExceptionPage.jsp</result>
+			<result name="login">/pages/jsp/login.jsp</result>
+			<result name="main">/pages/jsp/main.jsp</result>
+
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping result="exception" exception="java.lang.Exception" />
+		</global-exception-mappings>
 		<action name="forwardAction" class="main.src.action.ForwardAction">
 			<result name="success" type="json"></result>
 		</action>
-		<action name="diaryAction" class="main.src.action.DiaryAction">
-			<result name="diarypage">/pages/jsp/diary.jsp</result>
-			<result name="editdiary">/pages/jsp/editDiary.jsp</result>
-			<result name="success">/pages/jsp/saved.jsp</result>
-			<result name="deleted">/pages/jsp/deletedConfirmation.jsp</result>
+		<action name="essayAction" class="main.src.action.EssayAction" >
+			<result name="essaypage">/pages/jsp/essay/essay.jsp</result>
+			<result name="editessay">/pages/jsp/essay/editEssay.jsp</result>
+			<result name="success">/pages/jsp/essay/saved.jsp</result>
+			<result name="deleted">/pages/jsp/essay/deletedConfirmation.jsp</result>
+			<result name="essays">/pages/jsp/essay/essays.jsp</result>
 			<result name="reduplicative" type="json"></result>
 			<result name="recovered" type="json"></result>
 			<result name="like" type="json"></result>

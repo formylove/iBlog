@@ -1,31 +1,31 @@
-package main.src.entity;
+package main.src.entity.essay;
 
 import main.src.common.TimeManager;
 
-public class Diary {
+public class Essay {
 	
-int id;
-String title;
-String subtitle;
-String author;
-String author_link;
-String author_desc;
-String profile;
-String label;
-int category;
-String content;
-int read_cnt;
-int favor_cnt;
-boolean original_flag;
-String original_link;
-int music;
-String portrait;
-String create_date;
-String create_time;
-int authority;
-boolean del_flag;
+public int id;
+public String title;
+public String subtitle;
+public String author;
+public String author_link;
+public String author_desc;
+public String profile;
+public String label;
+public int category;
+public String content;
+public int read_cnt;
+public int favor_cnt;
+public boolean original_flag;
+public String original_link;
+public int music;
+public String portrait;
+public String create_date;
+public String create_time;
+public int authority;
+public boolean del_flag;
 
-public Diary(){
+public Essay(){
 	setCreate_date(TimeManager.getDate());
 	setCreate_time(TimeManager.getTime());
 }

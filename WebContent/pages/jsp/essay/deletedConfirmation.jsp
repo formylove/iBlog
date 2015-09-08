@@ -7,14 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>删除成功</title>
 <%request.setAttribute("importParams", "jquery|index.js|common.css|luoo.js|end"); %>
-<%@ include file="snippets/static_js_css.jsp" %>
+<%@ include file="../snippets/static_js_css.jsp" %>
 </head>
 <body>
-<%@ include file="./snippets/navigator.jsp" %>
+<%@ include file="../snippets/navigator.jsp" %>
 <script type="text/javascript">
-var recoverDiary = function(){
+var recoverEssay = function(){
 	 $.ajax({
-		 url:"diaryAction.action?method:recoverDiary&<s:property value='diary.id'/>",
+		 url:"essayAction.action?method:recoverEssay&<s:property value='essay.id'/>",
 		 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
 		 type:'post',
 		 success:function(data){
@@ -25,9 +25,9 @@ var recoverDiary = function(){
 
 </script>
 <div style="text-align:center;">
-"<s:property value="diary.title"/>" 已被成功删除,点击恢复<a onclick="recoverDiary();"></a>
+"<s:property value="essay.title"/>" 已被成功删除,点击恢复<a onclick="recoverEssay();"></a>
 </div>
 
-<%@ include file="snippets/footer.jsp" %>
+<%@ include file="../snippets/footer.jsp" %>
 </body>
 </html>

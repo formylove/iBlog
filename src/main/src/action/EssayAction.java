@@ -14,11 +14,11 @@ import main.src.common.MsgConstants;
 import main.src.common.SqlUtils;
 import main.src.common.TimeManager;
 import main.src.entity.Category;
-import main.src.entity.Diary;
+import main.src.entity.essay.Essay;
 import main.src.service.CategoryService;
-import main.src.service.DiaryService;
-public class DiaryAction {
-Diary diary;
+import main.src.service.EssayService;
+public class EssayAction {
+Essay essay;
 String editor;
 String title;
 String author;
@@ -28,13 +28,19 @@ int authority;
 int music;
 String original_link;
 boolean isOriginal;
-//edit diary
+//edit essay
 int id;
 List<Category> categories;
-boolean diaryCheckflag = false;
-int test =0;
+boolean essayCheckflag = false;
 boolean hasExisted;
-public String saveDiary() throws NumberFormatException, UnsupportedEncodingException{
+//essay list
+List<Essay> essays;
+public String listEssay(){
+	essays = EssayService.getAllDiaries(true);
+	
+	return MsgConstants.Essays;
+}
+public String saveEssay() throws NumberFormatException, UnsupportedEncodingException{
 	Map<String,Object> data=new HashMap<String,Object>();
 		data.put("title", title);
 		data.put("author", author);
@@ -52,82 +58,91 @@ public String saveDiary() throws NumberFormatException, UnsupportedEncodingExcep
 		if(id==0){//创建日志
 			data.put("create_date", TimeManager.getDate());
 			data.put("create_time", TimeManager.getTime());
-			SqlUtils.executeInsert(data, "diary");
-			int diaryId = DiaryService.getLatestDiaryId();
-			diary=DiaryService.getDiary(diaryId);
+			SqlUtils.executeInsert(data, "essay");
+			int essayId = EssayService.getLatestEssayId();
+			essay=EssayService.getEssay(essayId);
 		}else{//修改文章
-			SqlUtils.executeUpdate(data, "diary", "id ="+id);
-			diary=DiaryService.getDiary(id);
+			SqlUtils.executeUpdate(data, "essay", "id ="+id);
+			essay=EssayService.getEssay(id);
 		}
-		return MsgConstants.DIARYPAGE;
+		return MsgConstants.ESSAYPAGE;
 }
 
-public String loadDiary(){
+public String loadEssay(){
 		HttpServletRequest request=ServletActionContext.getRequest();
-		int diaryId=Integer.parseInt(request.getParameter("id"));
-	    diary=DiaryService.getDiary(diaryId);
+		int essayId=Integer.parseInt(request.getParameter("id"));
+	    essay=EssayService.getEssay(essayId);
+	    if(essay.author_desc.length()>30){
+	    	essay.author_desc = essay.author_desc.substring(0, 29) + "...";
+	    }
 	
-	return MsgConstants.DIARYPAGE;
+	return MsgConstants.ESSAYPAGE;
 }
 
-public String editDiary(){
+public String editEssay(){
 	
 	HttpServletRequest request=ServletActionContext.getRequest();
-	int diaryId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	diary=DiaryService.getDiary(diaryId);
+	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
+	essay=EssayService.getEssay(essayId);
 	categories = CategoryService.getAllCategories(true);
 	
-	return "editdiary";
+	return "editessay";
 }
 
-public String deleteDiary(){
+public String deleteEssay(){
 	HttpServletRequest request=ServletActionContext.getRequest();
-	int diaryId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	DiaryService.deleteDiary(diaryId);
-	diary = DiaryService.getDiary(diaryId);
+	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
+	EssayService.deleteEssay(essayId);
+	essay = EssayService.getEssay(essayId);
 	return MsgConstants.DELETED;
 }
 
-public String recoverDiary(){
+public String recoverEssay(){
 	HttpServletRequest request=ServletActionContext.getRequest();
-	int diaryId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	DiaryService.recoverDiary(diaryId);
+	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
+	EssayService.recoverEssay(essayId);
 	return MsgConstants.RECOVERED;
 }
 
 public String hasExisted(){
-	hasExisted = DiaryService.hasExisted(title);
+	hasExisted = EssayService.hasExisted(title);
 	return MsgConstants.REDUPLICATIVE;
 }
 public String like(){
 	HttpServletRequest request=ServletActionContext.getRequest();
-	int diaryId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	DiaryService.likeDiary(diaryId);
+	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
+	EssayService.likeEssay(essayId);
 	return MsgConstants.LIKE;
 }
 
 public String undoLike(){
 	HttpServletRequest request=ServletActionContext.getRequest();
-	int diaryId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	DiaryService.undoLikeDiary(diaryId);
+	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
+	EssayService.undoLikeEssay(essayId);
 	return MsgConstants.LIKE;
 }
 
 
-public boolean isDiaryCheckflag() {
-	return diaryCheckflag;
+public List<Essay> getEssays() {
+	return essays;
+}
+public void setEssays(List<Essay> essays) {
+	this.essays = essays;
+}
+public int getMusic() {
+	return music;
 }
 
-public void setDiaryCheckflag(boolean diaryCheckflag) {
-	this.diaryCheckflag = diaryCheckflag;
+public void setMusic(int music) {
+	this.music = music;
 }
 
-public int getTest() {
-	return test;
+public boolean isEssayCheckflag() {
+	return essayCheckflag;
 }
 
-public void setTest(int test) {
-	this.test = test;
+public void setEssayCheckflag(boolean essayCheckflag) {
+	this.essayCheckflag = essayCheckflag;
 }
 
 public void setHasExisted(boolean hasExisted) {
@@ -169,12 +184,12 @@ public void setCategories(List<Category> categories) {
 	this.categories = categories;
 }
 
-public Diary getDiary() {
-	return diary;
+public Essay getEssay() {
+	return essay;
 }
 
-public void setDiary(Diary diary) {
-	this.diary = diary;
+public void setEssay(Essay essay) {
+	this.essay = essay;
 }
 
 public String getEditor() {

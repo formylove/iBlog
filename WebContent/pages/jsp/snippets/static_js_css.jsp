@@ -41,11 +41,14 @@ if(importParams.indexOf("ckeditor.js")>=0){ %>
 if(importParams.indexOf("common.css")>=0){ %>
 <link href="css/common.css" type="text/css" rel="stylesheet">
 <%}
-if(importParams.indexOf("vol.css")>=0){ %>
-<link href="css/vol.css" type="text/css" rel="stylesheet">
+if(importParams.indexOf("essays.css")>=0){ %>
+<link href="css/essays.css" type="text/css" rel="stylesheet">
 <%}
-if(importParams.indexOf("diary.css")>=0){ %>
-<link href="css/diary.css" type="text/css" rel="stylesheet">
+if(importParams.indexOf("essay.css")>=0){ %>
+<link href="css/essay.css" type="text/css" rel="stylesheet">
+<%}
+if(importParams.indexOf("ZeroClipboard.js")>=0){ %>
+<script src="js/zeroclipboard/ZeroClipboard.js"></script>
 <%}
 if(importParams.indexOf("luoo.js")>=0){ %>
 <script src="js/luoo.js"></script>

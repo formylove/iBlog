@@ -3,9 +3,10 @@ package main.src.common;
 public class MsgConstants {
 public static final String SUCCESS="success"; 
 public static final String REDUPLICATIVE="reduplicative"; 
-public static final String DIARYPAGE="diarypage"; 
+public static final String ESSAYPAGE="essaypage"; 
 public static final String DELETED="deleted"; 
 public static final String RECOVERED="recovered"; 
+public static final String Essays="essays"; 
 public static final String LIKE="like"; 
 public static final String NO="N"; 
 public static final String YES="Y"; 

@@ -8,26 +8,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>文章编辑</title>
 <%request.setAttribute("importParams", "jquery|index.js|common.css|luoo.js|ckeditor.js|end"); %>
-<%@ include file="snippets/static_js_css.jsp" %>
+<%@ include file="../snippets/static_js_css.jsp" %>
 </head>
 <body>
-<%@ include file="./snippets/navigator.jsp" %>
+<%@ include file="../snippets/navigator.jsp" %>
 
 <div class="container index-ct" style="min-height: 221px;">	
 
-<form  id="form" action="<s:url action='diaryAction?method:saveDiary'/>" method="post">
-<input type="hidden" name="id" id="id" value="<s:property value='diary.id'/>">
+<form  id="form" action="<s:url action='essayAction?method:saveEssay'/>" method="post">
+<input type="hidden" name="id" id="id" value="<s:property value='essay.id'/>">
 <div>
 <select id="isOriginal" name="isOriginal" style="height:28px;">
 <option value="true">原创</option>
 <option value="false">转载</option>
 </select>
-<input type="text" id="title" name="title" placeholder="文章标题" value="<s:property value='diary.title'/>" style="width:880px; height:20px; float:right;" maxlength="100" />
+<input type="text" id="title" name="title" placeholder="文章标题" value="<s:property value='essay.title'/>" style="width:880px; height:20px; float:right;" maxlength="100" />
 </div>
-<input type="text" id="author"  name="author" placeholder="文章作者" value="<s:property value='diary.author'/>" style="width:880px; height:20px; float:right;margin-left:55px;" maxlength="100"/>
-<input  type="text" id="original_link" name="original_link" placeholder="原文地址"  value="<s:property value='diary.original_link'/>" style="width:880px; height:20px; float:right;margin-left:55px;" maxlength="100"/>
+<input type="text" id="author"  name="author" placeholder="文章作者" value="<s:property value='essay.author'/>" style="width:880px; height:20px; float:right;margin-left:55px;" maxlength="100"/>
+<input  type="text" id="original_link" name="original_link" placeholder="原文地址"  value="<s:property value='essay.original_link'/>" style="width:880px; height:20px; float:right;margin-left:55px;" maxlength="100"/>
 <div class="section">
-<textarea id="editor" name="editor" placeholder="文章内容" rows="30" style="width:99.4%;"><s:property value='diary.content'/></textarea>
+<textarea id="editor" name="editor" placeholder="文章内容" rows="30" style="width:99.4%;"><s:property value='essay.content'/></textarea>
 </div>
 <script type="text/javascript">
 var editortext = CKEDITOR.replace( 'editor' );
@@ -51,7 +51,7 @@ var editortext = CKEDITOR.replace( 'editor' );
 
     <p class="subtit">文章标签</p>
 <div style="position:relative;">
-<input name="label" type="text" id="txtTag2" placeholder="最多添加5个标签，多个标签之间用“,”分隔" value="<s:property value='diary.label'/>" style="width:60%; height:20px;" maxlength="100" />
+<input name="label" type="text" id="txtTag2" placeholder="最多添加5个标签，多个标签之间用“,”分隔" value="<s:property value='essay.label'/>" style="width:60%; height:20px;" maxlength="100" />
 <div id="tag2box" style="display:none;">
 </div>
 </div>
@@ -59,7 +59,7 @@ var editortext = CKEDITOR.replace( 'editor' );
 						<script type="text/javascript">
 						var duplicateCheck=function(){
 							$.ajax({
-								url:'diaryAction.action?method:hasExisted',
+								url:'essayAction.action?method:hasExisted',
 								type:'post',
 								contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
 								data:'title='+$('#title').val(),
@@ -78,7 +78,7 @@ var editortext = CKEDITOR.replace( 'editor' );
 
 <div style="text-align:center;margin-top:15px;">   
 <input id="btnPublish" type="button" onclick="duplicateCheck()" class="input_btn_1" value="发表文章" title="保存并跳转" />
-<input id="btnCancel" type="button" onclick="window.location.href='http://127.0.0.1:8080/iBlog/diaryAction.action?method:editDiary'; " value="舍弃" />
+<input id="btnCancel" type="button" onclick="window.location.href='http://127.0.0.1:8080/iBlog/essayAction.action?method:editEssay'; " value="舍弃" />
 </div>
 </form>
 
@@ -87,25 +87,25 @@ var editortext = CKEDITOR.replace( 'editor' );
 
 
 </div>
-<%@ include file="snippets/footer.jsp" %>
+<%@ include file="../snippets/footer.jsp" %>
 
 <script type="text/javascript">
 var selector = document.getElementById('isOriginal');
 for(i=0;i<selector.length;i++)
 	{
-	if(selector[i].value=="<s:property value='diary.original_flag'/>")
+	if(selector[i].value=="<s:property value='essay.original_flag'/>")
 		selector[i].selected=true;
 	}
 selector = document.getElementById('categoryId');
 for(i=0;i<selector.length;i++)
 	{
-	if(selector[i].value=="<s:property value='diary.category'/>")
+	if(selector[i].value=="<s:property value='essay.category'/>")
 		selector[i].selected=true;
 	}
 selector = document.getElementById('authority');
 for(i=0;i<selector.length;i++)
 	{
-	if(selector[i].value=="<s:property value='diary.authority'/>")
+	if(selector[i].value=="<s:property value='essay.authority'/>")
 		selector[i].selected=true;
 	}
 </script>

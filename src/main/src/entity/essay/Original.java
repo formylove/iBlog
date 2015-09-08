@@ -1,4 +1,4 @@
-package main.src.entity.diary;
+package main.src.entity.essay;
 
 public class Original {
 

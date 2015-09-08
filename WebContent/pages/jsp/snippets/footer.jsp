@@ -4,7 +4,7 @@
 	<div class="foot-ct clearfix">
 		<div class="about-wrapper">
 			<h4 class="foot-item-head">关于</h4>
-			<p><a class="ln-about" href="http://www.luoo.net/about/">关于树</a></p>
+			<p><a class="ln-about" href="about/">关于树</a></p>
 				<p><a class="ln-about" href="javascript:;" id="feedback">反馈建议</a></p>
 		</div>
 
@@ -19,7 +19,7 @@
 						·907251709
 					</span>
 				</a>
-				<a href="pages/jsp/QRcode.jsp" target="_blank" class="icon-sns-wechat" id="luooWechatAccount"></a>
+				<a href="QRcode/" target="_blank" class="icon-sns-wechat" id="luooWechatAccount"></a>
 				<a href="http://weibo.com/myazurelove" target="_blank" class="icon-sns-weibo"></a>
 				<a href="http://www.zhihu.com/people/Tyrioni" target="_blank" class="icon-sns-zhihu"></a>
 			</div>

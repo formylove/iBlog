@@ -1,6 +1,8 @@
 package main.src.filter;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -25,23 +27,29 @@ public class UrlFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,	FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request=(HttpServletRequest)req;
-		String url=request.getRequestURI();
+		String url=request.getRequestURI().toLowerCase();
 	Log.print(url);
-		if(url.indexOf("diary/")>=0)
-		{
-//			Log.print("in");
-		String diaryId=	url.substring(url.length()-4);
-		HttpServletResponse response=(HttpServletResponse) res;
-		response.sendRedirect("../action/diaryAction.action?method:loadDiary&id="+diaryId);
-		}else if(url.indexOf("hidddd", 0)>=0){
-			Log.print("in");
-			req.getRequestDispatcher("/pages/jsp/hi.html").forward(req, res);
-		}else{
-			filterChain.doFilter(req, res);
-			
-			
-		}
-//		Log.print("out");
+	HttpServletResponse response=(HttpServletResponse) res;
+	if(Pattern.compile("/edit/?$").matcher(url).find()){
+		req.getRequestDispatcher("/pages/jsp/essay/editEssay.js").forward(req, res);
+	}else if(Pattern.compile("/qrcode/?$").matcher(url).find()){
+		req.getRequestDispatcher("/pages/jsp/single/QRcode.jsp").forward(req, res);
+	}else if(Pattern.compile("/about/?$").matcher(url).find()){
+		req.getRequestDispatcher("/pages/jsp/single/about.jsp").forward(req, res);
+	}else if(Pattern.compile("/essays/?$").matcher(url).find()){//$要加上
+		response.sendRedirect("essayAction.action?method:listEssay");//等于完全重新发出一次请求，还需要重新过滤
+	} else if(Pattern.compile("/essay/2\\d{3}/?$").matcher(url).find()){//$要加上
+		Matcher m = Pattern.compile("2\\d{3}/?$").matcher(url);
+		m.find();
+		String id = m.group().replace("/", "");
+		response.sendRedirect("essayAction.action?method:loadEssay&id=" + id);//等于完全重新发出一次请求，还需要重新过滤
+	} else if(Pattern.compile("/edit/2\\d{3}/?$").matcher(url).find()){
+		Matcher m = Pattern.compile("2\\d{3}/?$").matcher(url);
+		m.find();
+		String id = m.group().replace("/", "");
+		response.sendRedirect("essayAction.action?method:editEssay&id=" + id);
+	} else{
+filterChain.doFilter(req, res);}
 	}
 
 	@Override

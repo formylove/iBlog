@@ -23,7 +23,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
-import main.src.entity.Diary;
+import main.src.entity.essay.Essay;
 
 public class SqlUtils {
 	static String url = null;
@@ -153,7 +153,7 @@ public class SqlUtils {
 		String columns = "";
 		String values = "";
 		Class class_ = entity.getClass();
-		for(Field field:class_.getDeclaredFields()){
+		for(Field field:class_.getFields()){
 			if(field.getType() == String.class){
 				try {
 					if(null == BeanUtils.getProperty(entity, field.getName()) || "".equalsIgnoreCase(BeanUtils.getProperty(entity, field.getName())))
@@ -185,6 +185,7 @@ public class SqlUtils {
 		columns = columns.substring(0, columns.length() - 1);
 		values = values.substring(0, values.length() - 1);
 		String sql = "insert into " + tableName + " (" + columns + ")" 	+ " values(" + values + ")";
+		Log.print(tableName, sql);
 		return executeUpdate(sql, null);
 	}
 	// bean×ª»»Æ÷
@@ -257,7 +258,7 @@ public class SqlUtils {
 				tableName = class_.getSuperclass().getSimpleName();
 			}
 			String sql = "update " + tableName + " set ";
-			for(Field field:class_.getDeclaredFields()){
+			for(Field field:class_.getFields()){
 				if(field.getType() == String.class){
 					try {
 						if(null == BeanUtils.getProperty(entity, field.getName()) || "".equalsIgnoreCase(BeanUtils.getProperty(entity, field.getName())))

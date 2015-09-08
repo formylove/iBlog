@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><s:property value="diary.title"/></title>
-<%request.setAttribute("importParams", "jquery|index.js|diary.css|common.css|luoo.js|end"); %>
-<%@ include file="snippets/static_js_css.jsp" %>
+<title><s:property value="essay.title"/></title>
+<%request.setAttribute("importParams", "jquery|index.js|essay.css|common.css|luoo.js|end"); %>
+<%@ include file="../snippets/static_js_css.jsp" %>
 </head>
 <body>
-<%@ include file="./snippets/navigator.jsp" %>
+<%@ include file="../snippets/navigator.jsp" %>
 <div class="container ct-sm" style="min-height: 221px;">	
 		<nav class="article-nav">
 			<a href="essays/" class="nav-back">
@@ -20,11 +20,11 @@
 			</a>
 		</nav>
 		<div class="essay-detail-wrapper">	
-			<h1 class="essay-title"><s:property value="diary.title"/></h1>
+			<h1 class="essay-title"><s:property value="essay.title"/></h1>
 			<script type="text/javascript">
-			var deleteDiary = function(){
+			var deleteEssay = function(){
 				 $.ajax({
-					 url:"diaryAction.action?method:deleteDiary&id=<s:property value='diary.id'/>",
+					 url:"essayAction.action?method:deleteEssay&id=<s:property value='essay.id'/>",
 					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
 					 type:'post',
 					 success:function(data){
@@ -35,9 +35,9 @@
 				 });
 			};
 			
-			var recoverDiary = function(){
+			var recoverEssay = function(){
 				 $.ajax({
-					 url:"diaryAction.action?method:recoverDiary&id=<s:property value='diary.id'/>",
+					 url:"essayAction.action?method:recoverEssay&id=<s:property value='essay.id'/>",
 					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
 					 type:'post',
 					 success:function(data){
@@ -50,7 +50,7 @@
 			
 			var like = function(){
 				 $.ajax({
-					 url:"diaryAction.action?method:like&id=<s:property value='diary.id'/>",
+					 url:"essayAction.action?method:like&id=<s:property value='essay.id'/>",
 					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
 					 type:'post',
 					 success:function(data){
@@ -63,7 +63,7 @@
 			
 			var undoLike = function(){
 				 $.ajax({
-					 url:"diaryAction.action?method:undoLike&id=<s:property value='diary.id'/>",
+					 url:"essayAction.action?method:undoLike&id=<s:property value='essay.id'/>",
 					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
 					 type:'post',
 					 success:function(data){
@@ -77,12 +77,13 @@
 			</script>
 			<p class="essay-meta">
 			
-				<span class="cursor-pointer" onclick="window.location.href='diaryAction.action?method:editDiary&id=<s:property value='diary.id'/>'">修改</span>・
-				<s:if test="diary.del_flag==false"><span id="delete" onclick="deleteDiary();" class="cursor-pointer">删除</span><span id="recover" class="hidden" onclick="recoverDiary();">恢复</span></s:if>
-				<s:else><span id="delete" class="hidden" onclick="deleteDiary();">删除</span><span id="recover" onclick="recoverDiary();" class="cursor-pointer">恢复</span></s:else>
-				・<s:if test="diary.original_flag">[原创]</s:if><s:else>[转发自]</s:else>&nbsp;
-				作者・<span><s:property value="diary.author"/></span>・<span><s:if test="!diary.original_flag"><a href="<s:property value="diary.original_link"/>"><font color="red">[原文链接]</font></a></s:if><s:else>[原创]</s:else></span>・<s:property value="diary.create_date"/></p>
-		
+				<span class="cursor-pointer" onclick="window.location.href='essayAction.action?method:editEssay&id=<s:property value='essay.id'/>'">修改</span>・
+				<s:if test="essay.del_flag==false"><span id="delete" onclick="deleteEssay();" class="cursor-pointer">删除</span><span id="recover" class="hidden" onclick="recoverEssay();">恢复</span></s:if>
+				<s:else><span id="delete" class="hidden" onclick="deleteEssay();">删除</span><span id="recover" onclick="recoverEssay();" class="cursor-pointer">恢复</span></s:else>
+				・<s:if test="essay.original_flag">[原创]</s:if><s:else>[转发自]</s:else>&nbsp;
+				作者・<span><a href="<s:property value="essay.author_link"/>"><s:property value="essay.author"/></a></span>・<span><s:if test="!essay.original_flag"><a href="<s:property value="essay.original_link"/>" target="_blank" ><font color="red">[原文链接]</font></a></s:if><s:else>[原创]</s:else></span>・<s:property value="essay.create_date"/></p>
+		<!-- 音乐 -->
+		<s:if test="essay.music != 0">
 		<div class="essay-music">
 							<div class="vol-tracklist" id="luooPlayerPlaylist">
 								<ul>
@@ -123,8 +124,15 @@
 							</div>	
 						</div>
 					</div>
+					</s:if>
+					<s:else>
+<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=#987cb9 SIZE=1>	
+	<br>
+					</s:else>
+
+				<!-- 文章内容 -->
 					<div class="essay-content">
-					<s:property value="diary.content" escape="false"/>
+					<s:property value="essay.content" escape="false"/>
 				<br>
 				<br>
 				<br>
@@ -134,7 +142,7 @@
 				<a href="javascript:;" >
 					<span id="like" class="icon-essay-fav"  onclick="like();" style="margin-right:5px;" ></span>
 					<span id="liked" class="icon-essay-faved hidden"  onclick="undoLike();" style="margin-right:5px;" ></span>
-					<span id="favorcnt"><s:property value="diary.favor_cnt"/></span>
+					<span id="favorcnt"><s:property value="essay.favor_cnt"/></span>
 				</a>
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="javascript:;" class="btn-share btn-action-share" data-app="essay" data-id="520'" data-text="这篇文章值得一读【惘闻：艺术与声音的即兴合作——奇迹寻踪】（分享自@落网）" data-img="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/essays/201508/55d5b1119b303.jpg" title="分享">
@@ -143,6 +151,7 @@
 			</div>			 
 			<!-- 作者信息 -->		 
 					 
+						<s:if test="essay.author != null || essay.author != '' ">
 					 <div class="essay-author-wrapper clearfix">
 				<div class="essay-author">
 					<p class="title">
@@ -150,15 +159,15 @@
 					</p>
 					
 						<div class="clearfix">
-							<a href="http://www.luoo.net/author/essays/656733" class="avatar-wrapper">
-								<img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/avatars/u656733_1430279362.png?imageView2/1/w/128/h/128" alt="eyelight" class="avatar rounded">
+							<a href="<s:property value='essay.author_link'/>" class="avatar-wrapper">
+								<img src="<s:property value='essay.portrait'/>" alt="<s:property value='essay.author'/>" class="avatar rounded"/>
 							</a>
 							<div class="essay-author-info">
 								<div class="cell">
-									<a href="http://www.luoo.net/author/essays/656733" class="essay-author-name">
-										<s:property value="diary.author"/>
+									<a href="<s:property value='essay.author_link'/>" class="essay-author-name">
+										<s:property value="essay.author"/>
 									</a>
-									<p class="essay-author-sign">想來生活無非是痛苦和美麗</p>
+									<p class="essay-author-sign"><s:property value='essay.author_desc'/></p>
 								</div>
 							</div>
 						</div>
@@ -168,10 +177,11 @@
 						版权声明
 					</p>
 					<div class="copyright-ct">
-						「夜网」专栏内文章，如果侵权，联系站主，立即删除
+						「夜网」专栏内文章，如果侵权，立即删除
 					</div>
 				</div>
 			</div>
+			</s:if>
 	</div>	
 		
 		<div class="comment-wrapper">
@@ -467,6 +477,6 @@
 		</div>
 		</div>
 		
-<%@ include file="snippets/footer.jsp" %>
+<%@ include file="../snippets/footer.jsp" %>
 </body>
 </html>

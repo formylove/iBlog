@@ -18,15 +18,22 @@
     </jsp-property-group>
  </jsp-config>
 	<display-name>iBlog</display-name>
-	<filter>
-		<filter-name>Struts2</filter-name>
-		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>Struts2</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+<!-- <filter>  -->
+<!--   <filter-name>UrlRewriteFilter</filter-name>  -->
+<!--    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>  -->
+<!--   <init-param>  -->
+<!--     <param-name>logLevel</param-name>  -->
+<!--      <param-value>9</param-value>  -->
+<!--   </init-param>  -->
 
+<!--  </filter>  -->
+
+<!--  <filter-mapping>  -->
+<!--    <filter-name>UrlRewriteFilter</filter-name>  -->
+<!--    <url-pattern>/*</url-pattern> -->
+<!--    		<dispatcher>REQUEST</dispatcher>   -->
+<!--         <dispatcher>FORWARD</dispatcher>   -->
+<!--   </filter-mapping> -->
 <filter>
 <filter-name>url filter</filter-name>
 <filter-class>main.src.filter.UrlFilter</filter-class>
@@ -34,8 +41,22 @@
 <filter-mapping>
 <filter-name>url filter</filter-name>
 		<url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
 </filter-mapping>
+	<filter>
+		<filter-name>Struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
 
+
+  
 <filter>
 <filter-name>Interceptor</filter-name>
 <filter-class>main.src.filter.Interceptor</filter-class>
@@ -47,7 +68,7 @@
 
 	<error-page>
 		<error-code>404</error-code>
-		<location>/pages/jsp/404.jsp</location>
+		<location>/pages/jsp/common/404.jsp</location>
 	</error-page>
 	
 	<welcome-file-list>

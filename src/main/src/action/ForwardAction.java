@@ -7,11 +7,12 @@ import org.apache.struts2.ServletActionContext;
 
 import main.src.common.Log;
 import main.src.common.MsgConstants;
-import main.src.service.DiaryService;
+import main.src.service.EssayService;
 
 public class ForwardAction {
 String url;
 boolean hasForwarded;
+int diaryId;
 	
 	public String forward(){
 		
@@ -20,7 +21,12 @@ boolean hasForwarded;
 		url = request.getParameter("url");
 		Log.print(url);
 		response.setHeader("Access-Control-Allow-Origin", "*");//解决跨域请求的问题，这个header就是让服务器支持CORS的
-		hasForwarded = DiaryService.forward(url);
+		diaryId = EssayService.forward(url);
+		if(diaryId == 0){
+			hasForwarded = false;
+		}else{
+			hasForwarded = true;
+		}
 		return MsgConstants.SUCCESS;
 	}
 	
@@ -31,10 +37,18 @@ boolean hasForwarded;
 		url = request.getParameter("url");
 		Log.print(url);
 		response.setHeader("Access-Control-Allow-Origin", "*");//解决跨域请求的问题，这个header就是让服务器支持CORS的
-		hasForwarded = DiaryService.hasForwarded(url);
+		hasForwarded = EssayService.hasForwarded(url);
 		return MsgConstants.SUCCESS;
 	}
 
+
+	public int getDiaryId() {
+		return diaryId;
+	}
+
+	public void setDiaryId(int diaryId) {
+		this.diaryId = diaryId;
+	}
 
 	public boolean isHasForwarded() {
 		return hasForwarded;

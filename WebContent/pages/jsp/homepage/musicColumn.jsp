@@ -19,35 +19,35 @@
 				</div>
 			</div>
 		
-			<div class="section-ct clearfix">
+<div class="section-ct clearfix">
 				<div class="vol-item-lg">
-					<a href="http://www.luoo.net/music/746" class="cover-wrapper cover-wrapper-lg">
-						<img src="http://img3.luoo.net/pics/vol/55d0e8979538c.jpg_640x452.jpg" alt="愿我们所有的坚持终不被辜负" class="cover-lg rounded">
+					<a href="http://www.luoo.net/music/750" class="cover-wrapper cover-wrapper-lg">
+						<img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/vol/55eb2fc98733a.jpg?imageView2/1/w/640/h/452" alt="路过的风" class="cover-lg rounded">
 						<span class="icon-play-lg" style="opacity: 0;"></span>
 						<div class="play-btn-mask" style="opacity: 0;"></div>
 					</a>
 
-					<a href="http://www.luoo.net/music/746" class="title">vol.746 愿我们所有的坚持终不被辜负</a>
+					<a href="http://www.luoo.net/music/750" class="title">vol.750 路过的风</a>
 				</div>
 				
 					<div class="vol-item">
-						<a href="http://www.luoo.net/music/745" class="cover-wrapper">
-							<img src="http://img3.luoo.net/pics/vol/55ca3160bfd7c.jpg_640x452.jpg" alt="海之南" class="cover rounded">
+						<a href="http://www.luoo.net/music/749" class="cover-wrapper">
+							<img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/vol/55e95dba15b79.jpg?imageView2/1/w/640/h/452" alt="绕指柔" class="cover rounded">
 							<span class="icon-play" style="opacity: 0;"></span>
 							<div class="play-btn-mask" style="opacity: 0;"></div>
 						</a>
 
-						<a class="title" href="http://www.luoo.net/music/745">vol.745 海之南</a>
+						<a class="title" href="http://www.luoo.net/music/749">vol.749 绕指柔</a>
 					</div>
 					
 					<div class="vol-item">
-						<a href="http://www.luoo.net/music/744" class="cover-wrapper">
-							<img src="http://img3.luoo.net/pics/vol/55c4f48627567.jpg_640x452.jpg" alt="琴声飞舞" class="cover rounded">
+						<a href="http://www.luoo.net/music/748" class="cover-wrapper">
+							<img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/vol/55e32b5eed01c.jpg?imageView2/1/w/640/h/452" alt="雨打风吹去" class="cover rounded">
 							<span class="icon-play" style="opacity: 0;"></span>
 							<div class="play-btn-mask" style="opacity: 0;"></div>
 						</a>
 
-						<a class="title" href="http://www.luoo.net/music/744">vol.744 琴声飞舞</a>
+						<a class="title" href="http://www.luoo.net/music/748">vol.748 雨打风吹去</a>
 					</div>
 								</div>
 		</div>

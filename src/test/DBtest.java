@@ -5,7 +5,7 @@ import java.util.Map;
 
 import main.src.common.SqlUtils;
 import main.src.common.TimeManager;
-import main.src.entity.Diary;
+import main.src.entity.essay.Essay;
 
 public class DBtest {
 

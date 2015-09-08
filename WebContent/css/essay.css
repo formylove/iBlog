@@ -8,7 +8,15 @@
     background-position: top left;
     background-repeat: no-repeat
 }
-
+¡£essay-content img,.zg-content-img-source-link,.origin_image,.content_image,.video_image,.play_video {
+    margin: 6px 0;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    width: auto\9;
+    -ms-interpolation-mode: bicubic
+    }
+    
 .icon-android {
     display: inline-block;
     width: 20px;

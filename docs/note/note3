@@ -1,2 +1,4 @@
 html的资源路径是相对于base而不是jsp所在目录
 jsp则是相对于当前jsp目录
+3<img alt="ansyx1002" src="/img/QRcode/wechat_2.png">和<img alt="ansyx1002" src="img/QRcode/wechat_2.png">区别
+/表示绝对路径，没有/表示相对路径

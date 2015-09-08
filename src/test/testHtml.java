@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import main.src.common.Spider;
+import main.src.entity.essay.Zhihu;
 
 public class testHtml {
 
@@ -17,7 +18,7 @@ public class testHtml {
 		String web4 = "http://www.zhihu.com/";
 		String web5 = "http://www.zhihu.com/question/34721074/answer/61297948";
 //		System.out.println(Spider.SendGet(web5));
-		String html = Spider.SendGet(web5);
+		String html = Spider.SendGet(web1);
 		Map<String,String> regExp = new HashMap<String,String>();
 		regExp.put("title", "<a\\s*href=\"/question/\\d{8}\"\\s*>[^<]+</a>");
 		regExp.put("content", "(?<=<noscript>).*(?=</noscript>)");
@@ -28,17 +29,9 @@ public class testHtml {
 		regExp.put("portrait", "(?<=src=\")[^\"]*(?=\")");
 		regExp.put("author_desc", "(?<=title=\")[^\"]*(?=\")");
 		regExp.put("author", "(?<=>)[^<>]*(?=</a>£¬)");
-		
-		String reg = "(?<=>)[^<]*(?=</a>£¬)";
-		String reg2 = "(?<=<h3 class=\"zm-item-answer-author-wrap\">).*(?=</h3>)";
-		getSingleNode(reg,getSingleNode(reg2,html));
-		String contentRegex1 = "<noscript>.*?</noscript>";
-//	System.out.println(getMultiNode("<a[^>]*class=\"zm-item-tag\"[^>]*>[^<]*</a>",html));;
-	}
-	static public String generateInnerHtmlReg(String tag,String attribute){
-		String regExp = "(?<=<" + tag +".*?"  + attribute +".*?>)" + ".*(?=</" + tag +">)";
-		System.out.println(regExp);
-		return regExp;
+		regExp.put("profile1", "<img.+?src\\s*=\\s*\"[^\"]+\"[^>]*>");
+		regExp.put("profile2", "(?<=src=\")[^\"]*(?=\")");
+		getSingleNode("(?<=href=z>)[^f]*(?=f)"," href=zsdfffffffff");
 	}
 	static public String getSingleNode(String regExp,String html){
 		Pattern pattern = Pattern.compile(regExp);
