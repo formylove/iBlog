@@ -6,13 +6,16 @@
 <%
 if(importParams!=null){
 if(importParams.indexOf("jquery")>=0){ %>
-<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.js"></script>
 <%}
 if(importParams.indexOf("Jcrop.js")>=0){ %>
 <script type="text/javascript" src="Jcrop/js/jquery.Jcrop.js"></script>
 <%}
 if(importParams.indexOf("flexSlider.js")>=0){ %>
-<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="js/flexSlider/jquery.flexslider-min.js"></script>
+<%}
+if(importParams.indexOf("sticky.js")>=0){ %>
+<script type="text/javascript" src="js/stickyKit/stickyKit.js"></script>
 <%}
 if(importParams.indexOf("Jcrop.css")>=0){ %>
 <link href="Jcrop/css/jquery.Jcrop.css" type="text/css" rel="stylesheet">
@@ -24,7 +27,7 @@ if(importParams.indexOf("crop.js")>=0){ %>
 <script src="js/crop.js"></script>
 <%}
 if(importParams.indexOf("index.js")>=0){ %>
-<script src="js/index.js"></script>
+<script src="js/Akita/index.js"></script>
 <%}
 if(importParams.indexOf("upload.js")>=0){ %>
 <script src="js/ajaxupload.js"></script>
@@ -51,5 +54,5 @@ if(importParams.indexOf("ZeroClipboard.js")>=0){ %>
 <script src="js/zeroclipboard/ZeroClipboard.js"></script>
 <%}
 if(importParams.indexOf("luoo.js")>=0){ %>
-<script src="js/luoo.js"></script>
+<script src="js/Akita/Akita.js"></script>
 <%}}%>

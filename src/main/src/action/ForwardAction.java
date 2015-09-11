@@ -12,17 +12,18 @@ import main.src.service.EssayService;
 public class ForwardAction {
 String url;
 boolean hasForwarded;
-int diaryId;
+int essayId;
 	
 	public String forward(){
+		
 		
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		url = request.getParameter("url");
 		Log.print(url);
 		response.setHeader("Access-Control-Allow-Origin", "*");//解决跨域请求的问题，这个header就是让服务器支持CORS的
-		diaryId = EssayService.forward(url);
-		if(diaryId == 0){
+		essayId = EssayService.forward(url);
+		if(essayId == 0){
 			hasForwarded = false;
 		}else{
 			hasForwarded = true;
@@ -42,12 +43,12 @@ int diaryId;
 	}
 
 
-	public int getDiaryId() {
-		return diaryId;
+	public int getEssayId() {
+		return essayId;
 	}
 
-	public void setDiaryId(int diaryId) {
-		this.diaryId = diaryId;
+	public void setEssayId(int essayId) {
+		this.essayId = essayId;
 	}
 
 	public boolean isHasForwarded() {

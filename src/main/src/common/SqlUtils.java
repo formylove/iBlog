@@ -109,6 +109,26 @@ public class SqlUtils {
 
 		return result;
 	}
+	
+	// ×Ö¶Î²éÑ¯Æ÷
+	@SuppressWarnings("unchecked")
+	public static int executeQueryForCount(String sql, Object[] params) {
+		int result = -1;
+		try {
+			if (null == cnn) {
+				cnn = getConnection();
+			}
+			QueryRunner qr = new QueryRunner();
+			if (params == null || params.length == 0)
+				result = (int)(long)qr.query(cnn, sql, new ScalarHandler());
+			else
+				result = (int)qr.query(cnn, sql, new ScalarHandler(), params);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	// update
 	public static int executeUpdate(String sql, Object[] params) {
@@ -185,7 +205,7 @@ public class SqlUtils {
 		columns = columns.substring(0, columns.length() - 1);
 		values = values.substring(0, values.length() - 1);
 		String sql = "insert into " + tableName + " (" + columns + ")" 	+ " values(" + values + ")";
-		Log.print(tableName, sql);
+		Log.print(sql, sql);
 		return executeUpdate(sql, null);
 	}
 	// bean×ª»»Æ÷

@@ -1,3 +1,14 @@
+.icon-sns-zhihu {
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    line-height: 1;
+    vertical-align: middle;
+    background-image: url(../img/icon-common.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-position: 0 -240px
+}
 .round-poster{
 	border-radius:8px;
 }
@@ -104,17 +115,6 @@
     background-position: 0 -210px
 }
 
-.icon-sns-zhihu {
-    display: inline-block;
-    width: 30px;
-    height: 20px;
-    line-height: 1;
-    vertical-align: middle;
-    background-image: url(../img/icon-common.png);
-    background-position: top left;
-    background-repeat: no-repeat;
-    background-position: 0 -240px
-}
 
 .icon-sns-wechat {
     display: inline-block;

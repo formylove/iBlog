@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import main.src.common.Spider;
+import main.src.common.TxtFileUtils;
+import main.src.entity.essay.Douban;
 import main.src.entity.essay.Zhihu;
 
 public class RegExp {
@@ -20,8 +22,14 @@ public class RegExp {
 //	Zhihu z = new Zhihu(web1);
 //	System.out.println(z.getContent());
 //	System.out.println(z.getProfile());
-		System.out.println("нрнрнрньньньньньньньньньньньньньньньньньньньньньнь".substring(0, 4));
-}
+		 String url5 = "http://book.douban.com/review/7595674/?icn=index-reviewer";
+		 String url6 = "http://www.douban.com/note/413145196/";
+//		 CSDN c = new CSDN(url4);	
+		 Douban z = new Douban(url5);
+		 TxtFileUtils.writeTo(z.content.replaceAll("<div[^>]*?id=\"link-report\"[^>]*?>", ""), "vv");
+//		getSingleNode("<div[^>]*?id=\"link-report\"[^>]*?>", "<div id=\"link-report\" class=\"review-text\">  ");
+//		System.out.println("vvvvv"+z.content.replaceAll("<div[^>]*?id=\"link-report\"[^>]*?>", ""));
+	}
 static public String getSingleNode(String regExp,String html){
 	Pattern pattern = Pattern.compile(regExp);
 	Matcher matcher = pattern.matcher(html);

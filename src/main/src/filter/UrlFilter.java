@@ -37,7 +37,22 @@ public class UrlFilter implements Filter{
 	}else if(Pattern.compile("/about/?$").matcher(url).find()){
 		req.getRequestDispatcher("/pages/jsp/single/about.jsp").forward(req, res);
 	}else if(Pattern.compile("/essays/?$").matcher(url).find()){//$要加上
-		response.sendRedirect("essayAction.action?method:listEssay");//等于完全重新发出一次请求，还需要重新过滤
+		response.sendRedirect("essayAction.action?method:listEssay&page=1&category=5000&category=5006");//等于完全重新发出一次请求，还需要重新过滤
+	}else if(Pattern.compile("/essays/\\d{1,100}/?$").matcher(url).find()){//$要加上
+		Matcher m = Pattern.compile("\\d{1,100}/?$").matcher(url);
+		m.find();
+		int page = Integer.parseInt(m.group().replace("/", ""));
+		response.sendRedirect("essayAction.action?method:listEssay&page=" + page +"&category=5000&category=5006");//等于完全重新发出一次请求，还需要重新过滤
+	}else if(Pattern.compile("/essays/\\d{1,100}/c(/5\\d{3})+/?$").matcher(url).find()){//$要加上
+		Matcher m = Pattern.compile("\\d{1,100}/c").matcher(url);
+		m.find();
+		int page = Integer.parseInt(m.group().replace("/c", ""));		
+		m = Pattern.compile("5\\d{3}").matcher(url);
+		String categories = "";
+		while(m.find()){
+			categories = categories + "&category=" + m.group();
+		}
+		response.sendRedirect("essayAction.action?method:listEssay&page=" + page + categories);//等于完全重新发出一次请求，还需要重新过滤
 	} else if(Pattern.compile("/essay/2\\d{3}/?$").matcher(url).find()){//$要加上
 		Matcher m = Pattern.compile("2\\d{3}/?$").matcher(url);
 		m.find();

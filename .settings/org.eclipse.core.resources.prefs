@@ -4,6 +4,7 @@ encoding//WebContent/pages/jsp/essay/essay.jsp=UTF-8
 encoding//WebContent/pages/jsp/single/QRcode.jsp=UTF-8
 encoding//WebContent/pages/jsp/snippets/cropFile.jsp=UTF-8
 encoding//WebContent/pages/jsp/snippets/navigator.jsp=UTF-8
+encoding//WebContent/pages/jsp/snippets/pagination.jsp=UTF-8
 encoding//WebContent/pages/jsp/snippets/test.jsp=UTF-8
 encoding//src/test/AutoDetectCharset.java=UTF-8
 encoding/<project>=gbk

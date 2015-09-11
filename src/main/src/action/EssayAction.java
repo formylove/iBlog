@@ -35,9 +35,17 @@ boolean essayCheckflag = false;
 boolean hasExisted;
 //essay list
 List<Essay> essays;
+List<Essay> recommendations;
+int page;
+int pages;
+String category;
 public String listEssay(){
-	essays = EssayService.getAllDiaries(true);
-	
+	HttpServletRequest request=ServletActionContext.getRequest();
+	String[] categories =  request.getParameterValues("category");
+	System.out.println("cat  "+category);
+	essays = EssayService.getOnePage(page, categories, null, false);
+	recommendations = EssayService.getRecommendation(categories);
+	pages = EssayService.getPageCnt(false,categories);
 	return MsgConstants.Essays;
 }
 public String saveEssay() throws NumberFormatException, UnsupportedEncodingException{
@@ -68,13 +76,18 @@ public String saveEssay() throws NumberFormatException, UnsupportedEncodingExcep
 		return MsgConstants.ESSAYPAGE;
 }
 
+public String readEssay(){
+	    EssayService.readEssay(id);
+	    return null;
+}
 public String loadEssay(){
-		HttpServletRequest request=ServletActionContext.getRequest();
-		int essayId=Integer.parseInt(request.getParameter("id"));
-	    essay=EssayService.getEssay(essayId);
-	    if(essay.author_desc.length()>30){
-	    	essay.author_desc = essay.author_desc.substring(0, 29) + "...";
-	    }
+	HttpServletRequest request=ServletActionContext.getRequest();
+	int essayId=Integer.parseInt(request.getParameter("id"));
+	essay=EssayService.getEssay(essayId);
+	EssayService.readEssay(essayId);
+	if(essay.author_desc.length()>30){
+		essay.author_desc = essay.author_desc.substring(0, 29) + "...";
+	}
 	
 	return MsgConstants.ESSAYPAGE;
 }
@@ -123,6 +136,30 @@ public String undoLike(){
 }
 
 
+public List<Essay> getRecommendations() {
+	return recommendations;
+}
+public void setRecommendations(List<Essay> recommendations) {
+	this.recommendations = recommendations;
+}
+public String getCategory() {
+	return category;
+}
+public void setCategory(String category) {
+	this.category = category;
+}
+public int getPage() {
+	return page;
+}
+public void setPage(int page) {
+	this.page = page;
+}
+public int getPages() {
+	return pages;
+}
+public void setPages(int pages) {
+	this.pages = pages;
+}
 public List<Essay> getEssays() {
 	return essays;
 }

@@ -22,6 +22,8 @@ public class Zhidao extends Essay {
 	private Parser parser;
 	private NodeList nodes;
 	static private final String contentReg = "(?<=class=\"best-text mb-10\">).*?(?=</pre>)";
+	static private final String recommendReg = "(?<=class=\"recommend-text mb-10\">).*?(?=</pre>)";
+	static private final String answerReg = "(?<=class=\"answer-text line\">).*?(?=</div>)";
 	static private final String author_linkReg = "(?<=href=\")[^\"]*(?=\")";
 	static private final String portraitReg = "(?<= data-img=\")[^\"]*(?=\")";
 	static private final String subtitleReg = "(?<=accuse=\"qContent\">).*?(?=</pre>)";
@@ -91,6 +93,7 @@ public class Zhidao extends Essay {
 		@SuppressWarnings("unused")
 		NodeFilter filter = (NodeFilter) new AndFilter(tagFilter, classFilter);
 		String fatherNode = "";
+		String temp = null;
 		try {
 			parser.reset();//调用一次后需要reset归位
 			fatherNode = parser.extractAllNodesThatMatch(filter).toNodeArray()[0].toHtml();
@@ -101,6 +104,32 @@ public class Zhidao extends Essay {
 		Matcher match = Pattern.compile(contentReg).matcher(fatherNode);
 		if(match.find()){
 			content = match.group();
+		}else{
+			match = Pattern.compile(recommendReg).matcher(fatherNode);
+		if(match.find()){
+			content = match.group();
+		}else{
+			match = Pattern.compile(answerReg,Pattern.CASE_INSENSITIVE | Pattern.DOTALL).matcher(fatherNode);
+			if(match.find()){
+				temp = match.group();
+			}
+			tagFilter = new TagNameFilter("div");
+			classFilter = new HasAttributeFilter("class","quality-content-detail content");
+			filter = (NodeFilter) new AndFilter(tagFilter, classFilter);
+			try {
+				parser.reset();
+				NodeList ns = parser.extractAllNodesThatMatch(filter);
+				if(ns !=null && ns.size() !=0){
+					content = ns.toNodeArray()[0].toPlainTextString();
+				}else{
+					content = temp;
+				}
+			} catch (ParserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}	
 		}
 		System.out.println("content :"+content);
 		return content;

@@ -1,3 +1,10 @@
+function readEssay(diaryId){
+	xmlHttp = new XMLHttpRequest();
+	theUrl = 'http://127.0.0.1:8080/iBlog/essayAction.action?method:readEssay&id=' + diaryId;
+	xmlHttp.open( "post", theUrl, false );
+	xmlHttp.send(null);
+}
+///↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑  新增   ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 function common_ajax_callback(a) {
     if (a.msg) {
         var b = '<p style="margin-bottom: 10px;">' + a.msg + "</p>";
@@ -92,7 +99,7 @@ function update_playlist_btn_status() {
         }
     })
 }
-function show_track_detail(a) {
+function show_track_detail(a, b) {
     0 == $("#trackDetailWrapper" + a).find(".lyric-content").html() && $.luoo.get(url("single/lyric/" + a), {}, function(a, b) {
         a.lyric ? $("#trackDetailWrapper" + b).find(".lyric-content").html(a.lyric.content) : $("#trackDetailWrapper" + a.sid).find(".lyric-content").html('<div class="single-report"><a href="javascript:;" class="icon-single-report btn-single-report" data-sname="' + a.sname + '" data-sid="' + a.sid + '">报错</a></div><p style="margin: 60px auto; text-align: center;"><a href="javascript:;" class="btn btn-positive btn-add-lyric" data-sid="' + b + '">添加歌词</a></p>')
     }, a), $("#trackDetailWrapper" + a).show()
@@ -136,13 +143,13 @@ function init_player(module_options) {
                 }, websocket.onmessage = function(a) {
                     var a = JSON.parse(a.data);
                     a.sessid == $.luoo.res.sessid && luooPlayer.playerid != a.playerid && luooPlayer.pause()
-                }, websocket.onerror = function() {
+                }, websocket.onerror = function(a) {
                 }, websocket.onclose = function() {
                 }
             } catch (e) {
                 console.error("websocket error")
             }
-    }), $("#luooPlayerPlaylist").bind($.jPlayer.event.pause, function() {
+    }), $("#luooPlayerPlaylist").bind($.jPlayer.event.pause, function(a) {
         $("#track" + luooPlayer.playlist[luooPlayer.current].id).data("status", "pause"), update_playlist_btn_status()
     }), $("#luooPlayerPlaylist").bind($.jPlayer.event.error, function(a) {
         console.log(a)
@@ -426,10 +433,10 @@ function send_mail_cback(a, b) {
 }(this, function(a, b) {
     a.fn.jPlayer = function(c) {
         var d = "jPlayer", e = "string" == typeof c, f = Array.prototype.slice.call(arguments, 1), g = this;
-        return c = !e && f.length ? a.extend.apply(null, [!0, c].concat(f)) : c, e && "_" === c.charAt(0) ? g : (this.each(e ? function() {
+        return c = !e && f.length ? a.extend.apply(null, [!0, c].concat(f)) : c, e && "_" === c.charAt(0) ? g : (e ? this.each(function() {
             var e = a(this).data(d), h = e && a.isFunction(e[c]) ? e[c].apply(e, f) : e;
             return h !== e && h !== b ? (g = h, !1) : void 0
-        } : function() {
+        }) : this.each(function() {
             var b = a(this).data(d);
             b ? b.option(c || {}) : a(this).data(d, new a.jPlayer(c, this))
         }), g)
@@ -527,7 +534,7 @@ function send_mail_cback(a, b) {
                         a.volume(a.options.volume - .1)
                     }}},verticalVolume: !1,verticalPlaybackRate: !1,globalVolume: !1,idPrefix: "jp",noConflict: "jQuery",emulateHtml: !1,consoleAlerts: !0,errorAlerts: !1,warningAlerts: !1},optionsAudio: {size: {width: "0px",height: "0px",cssClass: ""},sizeFull: {width: "0px",height: "0px",cssClass: ""}},optionsVideo: {size: {width: "480px",height: "270px",cssClass: "jp-video-270p"},sizeFull: {width: "100%",height: "100%",cssClass: "jp-video-full"}},instances: {},status: {src: "",media: {},paused: !0,format: {},formatType: "",waitForPlay: !0,waitForLoad: !0,srcSet: !1,video: !1,seekPercent: 0,currentPercentRelative: 0,currentPercentAbsolute: 0,currentTime: 0,duration: 0,remaining: 0,videoWidth: 0,videoHeight: 0,readyState: 0,networkState: 0,playbackRate: 1,ended: 0},internal: {ready: !1},solution: {html: !0,flash: !0},format: {mp3: {codec: 'audio/mpeg; codecs="mp3"',flashCanPlay: !0,media: "audio"},m4a: {codec: 'audio/mp4; codecs="mp4a.40.2"',flashCanPlay: !0,media: "audio"},m3u8a: {codec: 'application/vnd.apple.mpegurl; codecs="mp4a.40.2"',flashCanPlay: !1,media: "audio"},m3ua: {codec: "audio/mpegurl",flashCanPlay: !1,media: "audio"},oga: {codec: 'audio/ogg; codecs="vorbis, opus"',flashCanPlay: !1,media: "audio"},flac: {codec: "audio/x-flac",flashCanPlay: !1,media: "audio"},wav: {codec: 'audio/wav; codecs="1"',flashCanPlay: !1,media: "audio"},webma: {codec: 'audio/webm; codecs="vorbis"',flashCanPlay: !1,media: "audio"},fla: {codec: "audio/x-flv",flashCanPlay: !0,media: "audio"},rtmpa: {codec: 'audio/rtmp; codecs="rtmp"',flashCanPlay: !0,media: "audio"},m4v: {codec: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"',flashCanPlay: !0,media: "video"},m3u8v: {codec: 'application/vnd.apple.mpegurl; codecs="avc1.42E01E, mp4a.40.2"',flashCanPlay: !1,media: "video"},m3uv: {codec: "audio/mpegurl",flashCanPlay: !1,media: "video"},ogv: {codec: 'video/ogg; codecs="theora, vorbis"',flashCanPlay: !1,media: "video"},webmv: {codec: 'video/webm; codecs="vorbis, vp8"',flashCanPlay: !1,media: "video"},flv: {codec: "video/x-flv",flashCanPlay: !0,media: "video"},rtmpv: {codec: 'video/rtmp; codecs="rtmp"',flashCanPlay: !0,media: "video"}},_init: function() {
             var c = this;
-            if (this.element.empty(), this.status = a.extend({}, this.status), this.internal = a.extend({}, this.internal), this.options.timeFormat = a.extend({}, a.jPlayer.timeFormat, this.options.timeFormat), this.internal.cmdsIgnored = a.jPlayer.platform.ipad || a.jPlayer.platform.iphone || a.jPlayer.platform.ipod, this.internal.domNode = this.element.get(0), this.options.keyEnabled && !a.jPlayer.focus && (a.jPlayer.focus = this), this.androidFix = {setMedia: !1,play: !1,pause: !1,time: 0 / 0}, a.jPlayer.platform.android && (this.options.preload = "auto" !== this.options.preload ? "metadata" : "auto"), this.formats = [], this.solutions = [], 
+            if (this.element.empty(), this.status = a.extend({}, this.status), this.internal = a.extend({}, this.internal), this.options.timeFormat = a.extend({}, a.jPlayer.timeFormat, this.options.timeFormat), this.internal.cmdsIgnored = a.jPlayer.platform.ipad || a.jPlayer.platform.iphone || a.jPlayer.platform.ipod, this.internal.domNode = this.element.get(0), this.options.keyEnabled && !a.jPlayer.focus && (a.jPlayer.focus = this), this.androidFix = {setMedia: !1,play: !1,pause: !1,time: NaN}, a.jPlayer.platform.android && (this.options.preload = "auto" !== this.options.preload ? "metadata" : "auto"), this.formats = [], this.solutions = [], 
             this.require = {}, this.htmlElement = {}, this.html = {}, this.html.audio = {}, this.html.video = {}, this.flash = {}, this.css = {}, this.css.cs = {}, this.css.jq = {}, this.ancestorJq = [], this.options.volume = this._limitValue(this.options.volume, 0, 1), a.each(this.options.supplied.toLowerCase().split(","), function(b, d) {
                 var e = d.replace(/^\s+|\s+$/g, "");
                 if (c.format[e]) {
@@ -548,7 +555,7 @@ function send_mail_cback(a, b) {
                 c.options[a] !== b && (c.element.bind(d + ".jPlayer", c.options[a]), c.options[a] = b)
             }), this.require.audio = !1, this.require.video = !1, a.each(this.formats, function(a, b) {
                 c.require[c.format[b].media] = !0
-            }), this.options = this.require.video ? a.extend(!0, {}, this.optionsVideo, this.options) : a.extend(!0, {}, this.optionsAudio, this.options), this._setSize(), this.status.nativeVideoControls = this._uaBlocklist(this.options.nativeVideoControls), this.status.noFullWindow = this._uaBlocklist(this.options.noFullWindow), this.status.noVolume = this._uaBlocklist(this.options.noVolume), a.jPlayer.nativeFeatures.fullscreen.api.fullscreenEnabled && this._fullscreenAddEventListeners(), this._restrictNativeVideoControls(), this.htmlElement.poster = document.createElement("img"), this.htmlElement.poster.id = this.internal.poster.id, this.htmlElement.poster.onload = function() {
+            }), this.require.video ? this.options = a.extend(!0, {}, this.optionsVideo, this.options) : this.options = a.extend(!0, {}, this.optionsAudio, this.options), this._setSize(), this.status.nativeVideoControls = this._uaBlocklist(this.options.nativeVideoControls), this.status.noFullWindow = this._uaBlocklist(this.options.noFullWindow), this.status.noVolume = this._uaBlocklist(this.options.noVolume), a.jPlayer.nativeFeatures.fullscreen.api.fullscreenEnabled && this._fullscreenAddEventListeners(), this._restrictNativeVideoControls(), this.htmlElement.poster = document.createElement("img"), this.htmlElement.poster.id = this.internal.poster.id, this.htmlElement.poster.onload = function() {
                 (!c.status.video || c.status.waitForPlay) && c.internal.poster.jq.show()
             }, this.element.append(this.htmlElement.poster), this.internal.poster.jq = a("#" + this.internal.poster.id), this.internal.poster.jq.css({width: this.status.width,height: this.status.height}), this.internal.poster.jq.hide(), this.internal.poster.jq.bind("click.jPlayer", function() {
                 c._trigger(a.jPlayer.event.click)
@@ -585,7 +592,7 @@ function send_mail_cback(a, b) {
                 }
                 this.element.append(d), this.internal.flash.jq = a(d)
             }
-            this.status.playbackRateEnabled = this.html.used && !this.flash.used ? this._testPlaybackRate("audio") : !1, this._updatePlaybackRate(), this.html.used && (this.html.audio.available && (this._addHtmlEventListeners(this.htmlElement.audio, this.html.audio), this.element.append(this.htmlElement.audio), this.internal.audio.jq = a("#" + this.internal.audio.id)), this.html.video.available && (this._addHtmlEventListeners(this.htmlElement.video, this.html.video), this.element.append(this.htmlElement.video), this.internal.video.jq = a("#" + this.internal.video.id), this.internal.video.jq.css(this.status.nativeVideoControls ? {width: this.status.width,height: this.status.height} : {width: "0px",height: "0px"}), this.internal.video.jq.bind("click.jPlayer", function() {
+            this.html.used && !this.flash.used ? this.status.playbackRateEnabled = this._testPlaybackRate("audio") : this.status.playbackRateEnabled = !1, this._updatePlaybackRate(), this.html.used && (this.html.audio.available && (this._addHtmlEventListeners(this.htmlElement.audio, this.html.audio), this.element.append(this.htmlElement.audio), this.internal.audio.jq = a("#" + this.internal.audio.id)), this.html.video.available && (this._addHtmlEventListeners(this.htmlElement.video, this.html.video), this.element.append(this.htmlElement.video), this.internal.video.jq = a("#" + this.internal.video.id), this.status.nativeVideoControls ? this.internal.video.jq.css({width: this.status.width,height: this.status.height}) : this.internal.video.jq.css({width: "0px",height: "0px"}), this.internal.video.jq.bind("click.jPlayer", function() {
                 c._trigger(a.jPlayer.event.click)
             }))), this.options.emulateHtml && this._emulateHtmlBridge(), this.html.used && !this.flash.used && setTimeout(function() {
                 c.internal.ready = !0, c.version.flash = "n/a", c._trigger(a.jPlayer.event.repeat), c._trigger(a.jPlayer.event.ready)
@@ -757,11 +764,11 @@ function send_mail_cback(a, b) {
         },focus: function() {
             this.options.keyEnabled && (a.jPlayer.focus = this)
         },play: function(a) {
-            a = "number" == typeof a ? a : 0 / 0, this.status.srcSet ? (this.focus(), this.html.active ? this._html_play(a) : this.flash.active && this._flash_play(a)) : this._urlNotSetError("play")
+            a = "number" == typeof a ? a : NaN, this.status.srcSet ? (this.focus(), this.html.active ? this._html_play(a) : this.flash.active && this._flash_play(a)) : this._urlNotSetError("play")
         },videoPlay: function() {
             this.play()
         },pause: function(a) {
-            a = "number" == typeof a ? a : 0 / 0, this.status.srcSet ? this.html.active ? this._html_pause(a) : this.flash.active && this._flash_pause(a) : this._urlNotSetError("pause")
+            a = "number" == typeof a ? a : NaN, this.status.srcSet ? this.html.active ? this._html_pause(a) : this.flash.active && this._flash_pause(a) : this._urlNotSetError("pause")
         },tellOthers: function(b, c) {
             var d = this, e = "function" == typeof c, f = Array.prototype.slice.call(arguments);
             "string" == typeof b && (e && f.splice(1, 1), a.each(this.instances, function() {
@@ -796,7 +803,7 @@ function send_mail_cback(a, b) {
         },volumeBar: function(b) {
             if (this.css.jq.volumeBar.length) {
                 var c = a(b.currentTarget), d = c.offset(), e = b.pageX - d.left, f = c.width(), g = c.height() - b.pageY + d.top, h = c.height();
-                this.volume(this.options.verticalVolume ? g / h : e / f)
+                this.options.verticalVolume ? this.volume(g / h) : this.volume(e / f)
             }
             this.options.muted && this._muted(!1)
         },_updateVolume: function(a) {
@@ -812,7 +819,7 @@ function send_mail_cback(a, b) {
             var d = this;
             if ("string" == typeof c)
                 if (a.jPlayer.prototype.options.cssSelector[b]) {
-                    if (this.css.jq[b] && this.css.jq[b].length && this.css.jq[b].unbind(".jPlayer"), this.options.cssSelector[b] = c, this.css.cs[b] = this.options.cssSelectorAncestor + " " + c, this.css.jq[b] = c ? a(this.css.cs[b]) : [], this.css.jq[b].length && this[b]) {
+                    if (this.css.jq[b] && this.css.jq[b].length && this.css.jq[b].unbind(".jPlayer"), this.options.cssSelector[b] = c, this.css.cs[b] = this.options.cssSelectorAncestor + " " + c, c ? this.css.jq[b] = a(this.css.cs[b]) : this.css.jq[b] = [], this.css.jq[b].length && this[b]) {
                         var e = function(c) {
                             c.preventDefault(), d[b](c), a(this).blur()
                         };
@@ -823,7 +830,7 @@ function send_mail_cback(a, b) {
                     this._warning({type: a.jPlayer.warning.CSS_SELECTOR_METHOD,context: b,message: a.jPlayer.warningMsg.CSS_SELECTOR_METHOD,hint: a.jPlayer.warningHint.CSS_SELECTOR_METHOD});
             else
                 this._warning({type: a.jPlayer.warning.CSS_SELECTOR_STRING,context: c,message: a.jPlayer.warningMsg.CSS_SELECTOR_STRING,hint: a.jPlayer.warningHint.CSS_SELECTOR_STRING})
-        },duration: function() {
+        },duration: function(a) {
             this.options.toggleDuration && this._setOption("remainingDuration", !this.options.remainingDuration)
         },seekBar: function(b) {
             if (this.css.jq.seekBar.length) {
@@ -1112,7 +1119,7 @@ function send_mail_cback(a, b) {
                 this._flashError(d)
             }
         },_flash_resetMedia: function() {
-            this.internal.flash.jq.css({width: "0px",height: "0px"}), this._flash_pause(0 / 0)
+            this.internal.flash.jq.css({width: "0px",height: "0px"}), this._flash_pause(NaN)
         },_flash_clearMedia: function() {
             try {
                 this._getMovie().fl_clearMedia()
@@ -1421,7 +1428,7 @@ function send_mail_cback(a, b) {
             var i = {classes: "qtip-luoo"};
             e.width && (i.width = e.width);
             var j = {solo: !0};
-            if (j.event = e.show ? e.show : "click", e.hide)
+            if (e.show ? j.event = e.show : j.event = "click", e.hide)
                 var k = e.hide;
             else
                 var k = "click";
@@ -1534,7 +1541,7 @@ function send_mail_cback(a, b) {
     var qqint;
     $("#QqAccount").hover(function() {
         $(this).find(".qq-group").show()
-    }, function() {
+    }, function(a) {
         qqint = setTimeout(function() {
             $("#QqAccount").find(".qq-group").hide()
         }, 100)
@@ -1542,9 +1549,7 @@ function send_mail_cback(a, b) {
         clearTimeout(qqint), $(this).show()
     });
     var map = window.location.hash.substr(1);
-    if ($(".util-luoo-tabs").luooTab(map), 1 != $.cookie("tipsclose") && $("#announcement").slideDown(200), $("#announcement .close").click(function() {
-        $("#announcement").slideUp(200), $.cookie("tipsclose", 1)
-    }), $(".foot-ct").is($("div"))) {
+    if ( $(".foot-ct").is($("div"))) {
         var b2t_left = $(".foot-ct").offset().left - 0 + 980;
         $(window).scroll(function() {
             var a = $(document).scrollTop();
@@ -1637,7 +1642,6 @@ function send_mail_cback(a, b) {
             return !1;
         $.luoo.close_msg();
         var c = '<div class="lyric-form-wrapper" id="singleReportWrapper"> <form action="' + url("single/report") + '" method="post" class="form-ajax" callback="single_report_cback"> <p class="input-group">歌曲：<span id="singleReportSname"></span></p> <p class="input-group">报错原因：</p> <p class="input-group"> <label><input type="radio" name="msg" value="歌词错误"> 歌词错误</label> </p> <p class="input-group"> <label><input type="radio" name="msg" value="歌曲信息错误"> 歌曲信息错误</label> </p> <p class="input-group"> <label><input type="radio" name="msg" value="歌曲无法试听"> 歌曲无法试听</label> </p> <p class="input-group"> <input type="radio" name="msg" id="singleReportMsgOther" value="1"> 其他： <input type="text" name="text" id="txtSingleReportMsg" style="width: 300px;" maxlength="200"> </p> <br> <p class="input-group"> <button class="btn btn-not-ready">提交</button> <button type="submit" class="btn btn-positive">提交</button> <button type="button" class="btn btn-negative" id="cancleAddLyric">取消</button> </p> <input type="hidden" name="sid" id="singleReportSid"><input type="hidden" name="sname" id="singleReportName"> </form> </div>';
-        
         $.luoo.msg("歌曲报错", c), $("#singleReportSid").val(a), $("#singleReportName").val(b), $("#singleReportSname").text(b)
     }), $("body").on("click", "#txtSingleReportMsg", function() {
         $("#singleReportMsgOther").prop("checked", !0)
@@ -1661,7 +1665,5 @@ function send_mail_cback(a, b) {
         $("#frmMail").submit()
     }), $("body").on("click", "#btnCancleMail", function() {
         $.luoo.close_msg()
-    }), $.luoo.qrcode = new QRCode("qrcodeContent", {text: "http://www.luoo.net/",width: 240,height: 240,colorDark: "#000000",colorLight: "#ffffff",correctLevel: QRCode.CorrectLevel.H}), $("body").on("click", ".btn-show-qr", function(a) {
-        a.preventDefault(), $.luoo.qrcode.clear(), $.luoo.qrcode.makeCode($(this).data("href")), $.luoo.msg("分享到朋友圈", $("#qrcodeWrapper").html(), void 0, "#000", void 0, 250), $.luoo.destroy_tip()
     })
 });
