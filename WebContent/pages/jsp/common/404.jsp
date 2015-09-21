@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>页面丢失_404</title>
-<%request.setAttribute("importParams", "jquery|index.js|common.css|luoo.js|end"); %>
+<%request.setAttribute("importParams", "jquery|index.js|common.css|Akita.js|end"); %>
 <%@ include file="../snippets/static_js_css.jsp" %>
 </head>
 <body style="background-color:#daecee">

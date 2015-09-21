@@ -1672,7 +1672,7 @@
 
     shade: null,
 
-    boxWidth: 800,
+    boxWidth: 0,
     boxHeight: 0,
     boundary: 2,
     fadeTime: 400,

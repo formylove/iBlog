@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<link type="image/x-icon" href="http://www.luoo.net/favicon.ico" rel="shortcut icon">	
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%request.setAttribute("importParams", "jquery|flexSlider.js|index.js|common.css|luoo.js|end"); %>
+<%request.setAttribute("importParams", "jquery|flexSlider.js|index.js|common.css|Akita.js|end"); %>
 <%@ include file="../snippets/static_js_css.jsp" %>
 <title>树</title>
 </head>

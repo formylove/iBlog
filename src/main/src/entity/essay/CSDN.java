@@ -27,6 +27,7 @@ public class CSDN extends Essay {
 		setCategory(5002);
 		setOriginal_flag(false);
 		setMusic(0);
+		setContent(" ");
 		setAuthority(10);
 		setDel_flag(false);
 		setOriginal_link(url);

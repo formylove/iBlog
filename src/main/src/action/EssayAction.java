@@ -12,6 +12,7 @@ import org.apache.struts2.ServletActionContext;
 
 import main.src.common.MsgConstants;
 import main.src.common.SqlUtils;
+import main.src.common.StringUtils;
 import main.src.common.TimeManager;
 import main.src.entity.Category;
 import main.src.entity.essay.Essay;
@@ -30,8 +31,8 @@ String original_link;
 boolean isOriginal;
 //edit essay
 int id;
+Map<String, String> authorities = (new MsgConstants()).AUTHORITY;
 List<Category> categories;
-boolean essayCheckflag = false;
 boolean hasExisted;
 //essay list
 List<Essay> essays;
@@ -66,8 +67,7 @@ public String saveEssay() throws NumberFormatException, UnsupportedEncodingExcep
 		if(id==0){//创建日志
 			data.put("create_date", TimeManager.getDate());
 			data.put("create_time", TimeManager.getTime());
-			SqlUtils.executeInsert(data, "essay");
-			int essayId = EssayService.getLatestEssayId();
+			int essayId = SqlUtils.executeInsert(data, "essay");
 			essay=EssayService.getEssay(essayId);
 		}else{//修改文章
 			SqlUtils.executeUpdate(data, "essay", "id ="+id);
@@ -85,9 +85,7 @@ public String loadEssay(){
 	int essayId=Integer.parseInt(request.getParameter("id"));
 	essay=EssayService.getEssay(essayId);
 	EssayService.readEssay(essayId);
-	if(essay.author_desc.length()>30){
-		essay.author_desc = essay.author_desc.substring(0, 29) + "...";
-	}
+	StringUtils.truncate(essay.author_desc, 30);
 	
 	return MsgConstants.ESSAYPAGE;
 }
@@ -136,6 +134,12 @@ public String undoLike(){
 }
 
 
+public Map<String, String> getAuthorities() {
+	return authorities;
+}
+public void setAuthorities(Map<String, String> authorities) {
+	this.authorities = authorities;
+}
 public List<Essay> getRecommendations() {
 	return recommendations;
 }
@@ -174,13 +178,6 @@ public void setMusic(int music) {
 	this.music = music;
 }
 
-public boolean isEssayCheckflag() {
-	return essayCheckflag;
-}
-
-public void setEssayCheckflag(boolean essayCheckflag) {
-	this.essayCheckflag = essayCheckflag;
-}
 
 public void setHasExisted(boolean hasExisted) {
 	this.hasExisted = hasExisted;

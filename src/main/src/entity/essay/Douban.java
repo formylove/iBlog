@@ -1,11 +1,5 @@
 package main.src.entity.essay;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Matcher;
@@ -19,23 +13,31 @@ import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-import main.src.common.TxtFileUtils;
+import main.src.entity.note.Opus;
 
 public class Douban extends Essay {
 	//页面解析参数
 	private Parser parser;
 	private NodeList nodes;
-	static private final String contentReg = "(?<=class=\"article_content\">).*?(?=</div>)";
+	private Opus opus;
 	static private final String portraitReg = "(?<=src=\")[^\"]*(?=\")";
 	static private final String author_linkReg = "(?<=href=\")[^\"]*(?=\")";
 	static private final String authorReg = "(?<=alt=\").*?(?=\")";
 	static private final String author_movie_bookReg = "(?<=<span property=\"v:reviewer\">).*?(?=</span>)";
 	static private final String author_descReg = "(?<=</a>).*?(?=<br/>)";
+	static private final String book_authorReg = "(?<=作者:</span>).*?(?=<br/>)";
+	static private final String movie_directorReg = "(?<=导演:</span>).*?(?=</li>)";
+	static private final String movie_castReg = "(?<=主演:</span>).*?(?=</li>)";
+	static private final String original_nameReg = "(?<=原作名:</span>).*?(?=<br/>)";
+	static private final String translatorReg = "(?<=译者:</span>).*?(?=<br/>)";
+	static private final String publishReg = "(?<=出版年:</span>).*?(?=<br/>)";
+	static private final String releaseReg = "(?<=<li>).*?(?=年</li>)";
 	public Douban(String url){
 		//初始化
 		super();//必须放在第一句
 		setOriginal_flag(false);
 		setMusic(0);
+		setLabel("");
 		setAuthority(10);
 		setDel_flag(false);
 		setOriginal_link(url);
@@ -47,20 +49,19 @@ public class Douban extends Essay {
 			e.printStackTrace();
 		}
 		if(url.indexOf("douban.com/note")>=0){
-			setCategory(5008);
 			parseAuthorDetailFromNote();                     
-			
+			setCategory(5008);
 		}else if(url.indexOf("movie.douban.com/review")>=0){
 			parseAuthorDetailFromMovie();                     
+			parseWorksDetailFromMovie();
 			setCategory(5010);
 		}else if(url.indexOf("book.douban.com/review")>=0){
-			parseAuthorDetailFromBook();                     
+			parseAuthorDetailFromBook();    
+			parseWorksDetailFromBook();    
 			setCategory(5009);
 		}
 		parseTitle();
 		parseContent();                     
-		parseLabel();
-		
 	};
 	private String parseTitle(){
 		NodeFilter tagFilter = new TagNameFilter("title");
@@ -75,28 +76,6 @@ public class Douban extends Essay {
 		}
 		return title;
 	}
-	private String parseLabel(){
-		NodeFilter tagFilter = new TagNameFilter("div");
-		NodeFilter attrFilter = new HasAttributeFilter("class","tag2box");
-		NodeFilter filter = (NodeFilter) new AndFilter(tagFilter, attrFilter);
-		try {
-			parser.reset();
-			label = "";
-			nodes = parser.extractAllNodesThatMatch(filter);
-			String l = "";
-			if(nodes.size()>0){
-			for(int i=0;i<nodes.elementAt(0).getChildren().size();i++){
-					label = nodes.elementAt(0).getChildren().elementAt(i).toPlainTextString().trim()  + ";" + label ;
-			}
-			}
-			label = label.trim().replaceAll("(\t\n|\n\t|\n|\t)", " ");
-			System.out.println("label :"+label);
-		} catch (ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return label;
-	}
 	
 	private String parseContent(){
 			NodeFilter tagFilter = new TagNameFilter("div");
@@ -105,9 +84,6 @@ public class Douban extends Essay {
 			try {
 				parser.reset();//调用一次后需要reset归位
 				content = parser.extractAllNodesThatMatch(filter).toNodeArray()[0].toHtml().replaceAll("((\t\n)|(\n\t)|\n|\t)", "");
-				content = content.replace("<div[^>]*?id=\"link-report\"[^>]*?>", "").substring(0, content.lastIndexOf("</div>"));
-				TxtFileUtils.writeTo(content, "fs");
-				System.out.println("content :"+content);
 			} catch (ParserException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -234,6 +210,94 @@ private String parseAuthorDetailFromBook(){
 	return author;
 }
 
+private String parseWorksDetailFromBook(){
+	NodeFilter tagFilter = new TagNameFilter("div");
+	NodeFilter attrFilter = new HasAttributeFilter("class","indent subject-info");
+	NodeFilter filter = (NodeFilter) new AndFilter(tagFilter, attrFilter);
+	try {
+		parser.reset();
+		nodes = parser.extractAllNodesThatMatch(filter);
+		String works_detail = nodes.toNodeArray()[0].toHtml();
+		Matcher matcher = Pattern.compile(portraitReg).matcher(works_detail);
+		if(matcher.find()){
+			opus.cover = matcher.group();
+		}
+		matcher = Pattern.compile(authorReg).matcher(works_detail);
+		if(matcher.find()){
+			opus.name = matcher.group();
+		}
+		matcher = Pattern.compile(book_authorReg).matcher(works_detail);
+		if(matcher.find()){
+			opus.author_directior = matcher.group();
+		}
+		matcher = Pattern.compile(original_nameReg).matcher(works_detail);
+		if(matcher.find()){
+			opus.original_name = matcher.group();
+		}
+		matcher = Pattern.compile(translatorReg).matcher(works_detail);
+		if(matcher.find()){
+			label = "译者：" + matcher.group() + ";" + label;
+		}
+		matcher = Pattern.compile(publishReg).matcher(works_detail);
+		if(matcher.find()){
+			opus.publish_date = matcher.group();
+		}
+		
+		System.out.println("cover :"+opus.cover);
+		System.out.println("works_name :"+opus.name);
+		System.out.println("author_directior :"+opus.author_directior);
+		System.out.println("publish_date :"+opus.publish_date);
+	} catch (ParserException e) {		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return author;
+}
+private String parseWorksDetailFromMovie(){
+	NodeFilter tagFilter = new TagNameFilter("div");
+	NodeFilter attrFilter = new HasAttributeFilter("id","movie-summary");
+	NodeFilter filter = (NodeFilter) new AndFilter(tagFilter, attrFilter);
+	try {
+		parser.reset();
+		nodes = parser.extractAllNodesThatMatch(filter);
+		String works_detail = nodes.toNodeArray()[0].toHtml();
+		Matcher matcher = Pattern.compile(portraitReg).matcher(works_detail);
+		if(matcher.find()){
+			opus.cover = matcher.group();
+		}
+		matcher = Pattern.compile(authorReg).matcher(works_detail);
+		if(matcher.find()){
+			opus.name = matcher.group();
+		}
+		matcher = Pattern.compile(movie_directorReg,Pattern.DOTALL).matcher(works_detail);
+		if(matcher.find()){
+			opus.author_directior = matcher.group().trim();
+		}
+		matcher = Pattern.compile(movie_castReg,Pattern.DOTALL).matcher(works_detail);
+		if(matcher.find()){
+			opus.protagonists = matcher.group().trim();
+		}
+		matcher = Pattern.compile(releaseReg).matcher(works_detail);
+		if(matcher.find()){
+			opus.publish_date = matcher.group() + "年";
+		}
+		
+		System.out.println("cover :"+opus.cover);
+		System.out.println("works_name :"+opus.name);
+		System.out.println("author_directior :"+opus.author_directior);
+		System.out.println("protagonists :"+opus.protagonists);
+		System.out.println("publish_date :"+opus.publish_date);
+	} catch (ParserException e) {		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return author;
+}
+
+	public Opus getOpus() {
+	return opus;
+	}
+	public void setOpus(Opus opus) {
+	this.opus = opus;
+	}
 	public String toString(){
 		return "id: " + id + "\n" + "title: " + title + "\n" + "subtitle: " + subtitle + "\n" + "profile: " + profile + "\n" + "author: " + author + "\n" + "portrait: " + portrait
 				+ "\n" + "author_link: " + author_link + "\n" + "author_desc: " + author_desc + "\n" + "label: " + label + "\n" + "category: " + category + "\n" + "id: " + id + "\n" + "read_cnt: " + read_cnt

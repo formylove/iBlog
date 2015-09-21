@@ -16,6 +16,9 @@
 .cursor-pointer:hover{
 	cursor:pointer;
 }
+.hidden{
+	display:none;
+}
 essay
 .aside {
     float: right;

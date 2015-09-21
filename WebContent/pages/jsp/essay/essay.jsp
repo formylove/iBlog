@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="essay.title"/></title>
-<%request.setAttribute("importParams", "jquery|index.js|essay.css|luoo.js|end"); %>
+<%request.setAttribute("importParams", "jquery|index.js|essay.css|Akita.js|end"); %>
 <%@ include file="../snippets/static_js_css.jsp" %>
 </head>
 <body>

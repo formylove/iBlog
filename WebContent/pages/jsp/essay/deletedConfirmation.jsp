@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>删除成功</title>
-<%request.setAttribute("importParams", "jquery|index.js|common.css|luoo.js|end"); %>
+<%request.setAttribute("importParams", "jquery|index.js|common.css|Akita.js|end"); %>
 <%@ include file="../snippets/static_js_css.jsp" %>
 </head>
 <body>

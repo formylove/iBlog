@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>My gf is as nice as my mum</title>
 <%
-	request.setAttribute("importParams", "jquery|index.js|common.css|ZeroClipboard.js|luoo.js|end");
+	request.setAttribute("importParams", "jquery|common.css|ZeroClipboard.js|Akita.js|end");
 %>
 <%@ include file="../snippets/static_js_css.jsp"%>
 	<script type="text/javascript">
@@ -28,7 +28,7 @@
 <body onload="init()">
 	<%@ include file="../snippets/navigator.jsp"%>
 	<div style="text-align: center;">
-		<h1>报错信息：<s:property value="exception.message" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="clip_button" value="将异常信息加入剪切板"></h1>
+		<h1>报错信息：<s:property value="exception.message" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn" id="clip_button" value="将异常信息加入剪切板"></h1>
 		<br>
 		<br>
 		<textarea rows="30" cols="120" spellcheck="false" id="stacktrace">

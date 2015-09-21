@@ -48,3 +48,4 @@ INSERT INTO table_name (列1, 列2,...) VALUES (值1, 值2,....)
     Object key = it.next();
     System.out.println( key+"="+ map1.get(key));
    }
+   14her.css('width') 获得300px，由单位，用her.width()

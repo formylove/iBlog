@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%=request.getAttribute("page") %>
     <%
-    int index = (request.getAttribute("page") == null || (int)request.getAttribute("page") == 0)?1:(int)request.getAttribute("page");
+    int index = (request.getAttribute("page") == null || (Integer)request.getAttribute("page") == 0)?1:(Integer)request.getAttribute("page");
     System.out.print(index);
-    int pages = (int)request.getAttribute("pages"); 
+    int pages = (Integer)request.getAttribute("pages"); 
      String category = "c/" + ((String)request.getAttribute("category")).replace(",", "/")+"/";
     %><div class="paginator" style="<%=request.getAttribute("category")%>"><a class="previous <%if(index == 1){%>disabled<%}%>" rel="nofollow" href="<%if(index != 1){%>essays/<%=index - 1 %>/<%}%>">上一页</a><%
     if(pages <= 12){

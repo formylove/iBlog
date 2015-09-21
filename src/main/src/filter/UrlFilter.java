@@ -30,8 +30,20 @@ public class UrlFilter implements Filter{
 		String url=request.getRequestURI().toLowerCase();
 	Log.print(url);
 	HttpServletResponse response=(HttpServletResponse) res;
-	if(Pattern.compile("/edit/?$").matcher(url).find()){
-		req.getRequestDispatcher("/pages/jsp/essay/editEssay.js").forward(req, res);
+	if(Pattern.compile("essay/edit/?$").matcher(url).find()){
+		response.sendRedirect("essayAction.action?method:editEssay");//等于完全重新发出一次请求，还需要重新过滤
+	}else if(Pattern.compile("essay/edit/2\\d{3}?$").matcher(url).find()){
+		Matcher m = Pattern.compile("2\\d{3}/?$").matcher(url);
+		m.find();
+		String id = m.group().replace("/", "");
+		response.sendRedirect("essayAction.action?method:editEssay&id=" + id);//等于完全重新发出一次请求，还需要重新过滤
+	}else if(Pattern.compile("note/edit/?$").matcher(url).find()){
+		response.sendRedirect("noteAction.action?method:editNote");//等于完全重新发出一次请求，还需要重新过滤
+	}else if(Pattern.compile("note/edit/2\\d{3}?$").matcher(url).find()){
+		Matcher m = Pattern.compile("2\\d{3}/?$").matcher(url);
+		m.find();
+		String id = m.group().replace("/", "");
+		response.sendRedirect("noteAction.action?method:editNote&id=" + id);//等于完全重新发出一次请求，还需要重新过滤
 	}else if(Pattern.compile("/qrcode/?$").matcher(url).find()){
 		req.getRequestDispatcher("/pages/jsp/single/QRcode.jsp").forward(req, res);
 	}else if(Pattern.compile("/about/?$").matcher(url).find()){

@@ -23,6 +23,7 @@ public class CNBlogs extends Essay {
 		setCategory(5008);
 		setOriginal_flag(false);
 		setMusic(0);
+		setContent(" ");
 		setAuthority(10);
 		setDel_flag(false);
 		setOriginal_link(url);

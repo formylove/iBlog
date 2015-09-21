@@ -17,3 +17,12 @@ html资源需要使用相对目录,如../../js/bootstrap.css
 js库的使用也要求按顺序放入,jquery最前,其他在后.引用与使用要有先后顺序
 页面元素显示有问题,可能是html版本问题,将<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">改成<!DOCTYPE HTML >就好了
 js正则表达式：//形式，/需要转义，“”形式‘“需要转义
+<input type="file" onchange="ajaxUpload('file',$('#loading'));" id="file" name="file" accept=".jpg,.jpeg,.png,.gif" style="display:none;"> id name 都得设为file后台才能获得值
+private String fileFileName ; // 我也不知道怎么获得的额
+input file 用之前要清空$('#'+she).prop('outerHTML', $('#'+she).prop('outerHTML'));
+为什么每次执行结果不一样？1先前结果影响2网络传输事件影响3并发  $('img[name=target]').eq(1).load(function()）
+Map<String, String> nation = (new MsgConstants()).ISO31661ALPHA3;静态函数块必须新建实例或调用函数或静态函数中调用才会生效
+struts 用get获取action的值，用set设置action的值
+#request.dynastys == dynasty ongl 表达式
+修改服务器编码方式，双击服务器，点击open configuration，选择common标签修改
+s:select disabled="true"

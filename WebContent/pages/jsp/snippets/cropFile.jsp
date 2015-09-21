@@ -6,18 +6,18 @@
 	<title>上传头像自定义裁切 示例页面</title>
 	<meta charset="utf-8" />
 	
-	<script type="text/javascript" language="javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
 	
 	
 	<link type="text/css" rel="stylesheet" href="file-uploader/fileuploader.css"/>
-	<script type="text/javascript" language="javascript" src="file-uploader/fileuploader.min.js"></script>
+	<script type="text/javascript" src="file-uploader/fileuploader.min.js"></script>
 	
 	
 	<link type="text/css" rel="stylesheet" href="jcrop/jquery.Jcrop.min.css" />
-	<script type="text/javascript" language="javascript" src="jcrop/jquery.Jcrop.min.js"></script>
+	<script type="text/javascript" src="jcrop/jquery.Jcrop.min.js"></script>
 	
 	
-	<script type="text/javascript" language="javascript">
+	<script type="text/javascript">
    		var g_oJCrop = null;
 		
 		$(function(){

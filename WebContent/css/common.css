@@ -1,10 +1,111 @@
+
+.essay-edit-img{
+	width:220px;
+	height:156px;
+}
+.crop-overlay{
+	display:none;
+	width:500px;
+	height:500px;
+	pisition:fixed;
+	z-index: 5;
+	background-color: rgba(0,0,0,0.5);
+}
+.overlay{
+	position:absolute;
+	width:100%;
+	height:100%;
+	z-index: 5;
+	top: 0;
+    left: 0;
+	background-color: rgba(0,0,0,0.2);
+}
+.pop {
+    height: 500px;
+    position: fixed;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 111; /* 1px higher than the overlay layer */
+}
+/* width$ */
+.width-40{
+	width:40%;
+}
+.width-50{
+	width:50%;
+}
+.width-70{
+	width:70%;
+}
+.width_80{
+	width:80%;
+}
+.width-100{
+	width:100%;
+}
+.input-width{
+	width:300px;
+}
+/* margin$ */
+.margin-l-30{
+	margin-left:30px;
+}
+.margin-r-8{
+	margin-right:8px;
+}
+.margin-r-16{
+	margin-right:16px;
+}
+.margin-r-24{
+	margin-right:24px;
+}
+.margin-r-55{
+	margin-right:55px;
+}
+.margin-t-20{
+	margin-top:20px;
+}
+.margin-t-23{
+	margin-top:23px;
+}
+.margin-t-40{
+	margin-top:40px;
+}
+.margin-t-50{
+	margin-top:50px;
+}
+.margin-b-4{
+	margin-bottom:4px;
+}
+.margin-b-6{
+	margin-bottom:6px;
+}
+.margin-b-8{
+	margin-bottom:8px;
+}
+.margin-b-16{
+	margin-bottom:16px;
+}
+.margin-b-20{
+	margin-bottom:16px;
+}
+/* margin$ */
+.nfloat{
+	float:none;
+}
+.height-input{
+	height:27px;
+}
+input{
+	height:27px;
+}
 .icon-sns-zhihu {
     display: inline-block;
     width: 30px;
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -240px
@@ -12,7 +113,85 @@
 .round-poster{
 	border-radius:8px;
 }
+.round-cover{
+	border-radius:8px;
+    border: 1px solid rgba(0,0,0,0.3);;
+}
+.round-container{
+	padding:25px;
+	border-radius:8px;
+    border: 1px solid rgba(0,0,0,0.3);;
+}
+.clearfix {
+    *zoom:1}
 
+.clearfix:before,.clearfix:after {
+    clear: both;
+    display: table;
+    content: "\200B";
+    line-height: 0
+}
+.jcrop-holder #preview-pane {
+  display: block;
+  position: absolute;
+  z-index: 2000;
+  top: 10px;
+  right: -280px;
+  padding: 6px;
+  border: 1px rgba(0,0,0,.4) solid;
+  background-color: white;
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+.preview-container-note {
+  width: 155px;
+  height: 170px;
+  border-radius:10px;
+  border:1px rgba(0, 0, 0, 0.3) solid;
+  overflow: hidden;
+  position:relative;
+  z-index:6;
+}
+.border-frame{
+	  border-radius:12px;
+  border: 1px #bbb solid;
+  -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+}
+.dark-font{
+	color:#9D9D9D;
+}
+.border-frame-light{
+	  border-radius:12px;
+  border: 1px #bbb solid;
+  -webkit-box-shadow: 1px 1px 10px rgba(155, 0, 0, 0.33);
+  -moz-box-shadow: 1px 1px 10px rgba(155, 0, 0, 0.33);
+  box-shadow: 1px 1px 10px rgba(155, 0, 0, 0.33);
+}
+.cover-note {
+  width: 155px;
+  height: 170px;
+  overflow: hidden;
+}
+.preview-container-essay {
+  width: 220px;
+  height: 158px;
+  overflow: hidden;
+}
+.cover-essay {
+  width: 220px;
+  height: 158px;
+  overflow: hidden;
+}
+/**********************************************************************************/
 .cursor-pointer:hover{
 	cursor:pointer;
 }
@@ -23,7 +202,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat
 }
@@ -34,7 +213,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -30px
@@ -46,7 +225,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -60px
@@ -58,7 +237,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -90px
@@ -70,7 +249,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 22px;
@@ -83,7 +262,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 10px;
@@ -96,7 +275,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 22px;
@@ -109,7 +288,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -210px
@@ -122,7 +301,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -270px
@@ -134,7 +313,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     height: 16px;
@@ -147,7 +326,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     height: 18px;
@@ -160,7 +339,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     height: 16px;
@@ -173,7 +352,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     height: 16px;
@@ -186,7 +365,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: -110px -270px
@@ -198,7 +377,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 24px;
@@ -212,7 +391,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 24px;
@@ -226,7 +405,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 24px;
@@ -240,7 +419,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: uicon-common.pngcommon.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 24px;
@@ -254,7 +433,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 24px;
@@ -268,7 +447,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 24px;
@@ -281,7 +460,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 20px;
@@ -294,7 +473,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 20px;
@@ -307,7 +486,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 20px;
@@ -321,7 +500,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 18px;
@@ -335,7 +514,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     height: 16px;
@@ -348,7 +527,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     height: 12px;
@@ -362,7 +541,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 136px
@@ -374,7 +553,7 @@
     height: 20px;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-common.png);
+    background-image: url(../img/icon/icon-common.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -300px;
@@ -472,15 +651,7 @@ input::-moz-selection,textarea::-moz-selection,.btn-positive::-moz-selection {
     color: #FFF
 }
 
-.clearfix {
-    *zoom:1}
 
-.clearfix:before,.clearfix:after {
-    clear: both;
-    display: table;
-    content: "";
-    line-height: 0
-}
 
 .fleft {
     float: left
@@ -1194,7 +1365,7 @@ input::-moz-selection,textarea::-moz-selection,.btn-positive::-moz-selection {
     display: none;
     height: 50px;
     width: 50px;
-    background: url(../img/icon-common.png) no-repeat 0 -360px;
+    background: url(../img/icon/icon-common.png) no-repeat 0 -360px;
     cursor: pointer
 }
 
@@ -2520,3 +2691,6 @@ html[xmlns] .slides {
     margin-bottom: 15px
 }
 
+.hidden{
+	display:none;
+}

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%request.setAttribute("importParams", "jquery|index.js|common.css|luoo.js|end|Jcrop.js|main.css|upload.js|ajaxfile.js|||||"); %>
+<%request.setAttribute("importParams", "jquery|index.js|common.css|Akita.js|end|Jcrop.js|main.css|upload.js|ajaxfile.js|||||"); %>
 <%@ include file="snippets/static_js_css.jsp" %>
 <title>梦游仙境</title>
 

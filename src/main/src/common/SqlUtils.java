@@ -35,8 +35,7 @@ public class SqlUtils {
 		Driver = MessageUtils.getMessageFromDbInfo("Driver");
 		url = MessageUtils.getMessageFromDbInfo("url");
 		DbUtils.loadDriver(Driver);
-		System.out
-				.println("*****************************dbutil*********************************");
+		System.out.println("*****************************dbutil*********************************");
 	}
 
 	public static Connection getConnection() throws SQLException {
@@ -166,12 +165,14 @@ public class SqlUtils {
 		columns = columns.substring(0, columns.length() - 1);
 		values = values.substring(0, values.length() - 1);
 		String sql = "insert into " + tableName + "(" + columns + ")" 	+ "values(" + values + ")";
-		return executeUpdate(sql, null);
+		executeUpdate(sql, null);
+		return getLatatestId();
 	}
 	
 	public static int executeInsert(Object entity) {
 		String columns = "";
 		String values = "";
+		@SuppressWarnings("rawtypes")
 		Class class_ = entity.getClass();
 		for(Field field:class_.getFields()){
 			if(field.getType() == String.class){
@@ -205,8 +206,9 @@ public class SqlUtils {
 		columns = columns.substring(0, columns.length() - 1);
 		values = values.substring(0, values.length() - 1);
 		String sql = "insert into " + tableName + " (" + columns + ")" 	+ " values(" + values + ")";
-		Log.print(sql, sql);
-		return executeUpdate(sql, null);
+		Log.print("insert sql: ", sql);
+		executeUpdate(sql, null);
+		return getLatatestId();
 	}
 	// bean×ª»»Æ÷
 	@SuppressWarnings("unchecked")
@@ -311,6 +313,27 @@ public class SqlUtils {
 	public static int executeDelete(String tableName,String condition) {
 		String sql="delete from "+tableName+" where "+condition;
 		return executeUpdate(sql, null);
+	}
+	
+	public static int getLatatestId()  {
+		
+		String sql="SELECT LAST_INSERT_ID()";
+		Statement st;
+		ResultSet rs;
+		try {
+			st = cnn.createStatement();
+			if(st.execute(sql)){
+				rs = st.getResultSet();
+				rs.next();
+				System.out.println("latestId:  "+rs.getInt(1));
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return 0;
 	}
 	
 	

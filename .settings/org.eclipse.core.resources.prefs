@@ -1,8 +1,11 @@
 eclipse.preferences.version=1
 encoding//WebContent/css/common.css=UTF-8
 encoding//WebContent/pages/jsp/essay/essay.jsp=UTF-8
+encoding//WebContent/pages/jsp/note/editNote.jsp=UTF-8
 encoding//WebContent/pages/jsp/single/QRcode.jsp=UTF-8
 encoding//WebContent/pages/jsp/snippets/cropFile.jsp=UTF-8
+encoding//WebContent/pages/jsp/snippets/cropIMG.jsp=UTF-8
+encoding//WebContent/pages/jsp/snippets/cropIMG2.jsp=UTF-8
 encoding//WebContent/pages/jsp/snippets/navigator.jsp=UTF-8
 encoding//WebContent/pages/jsp/snippets/pagination.jsp=UTF-8
 encoding//WebContent/pages/jsp/snippets/test.jsp=UTF-8

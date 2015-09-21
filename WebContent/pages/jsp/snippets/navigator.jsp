@@ -1,17 +1,17 @@
 	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<div class="header">
 		<div class="header-ct">
-			<a href="img/t.jpg" class="logo">
+			<a href="" class="logo">
 				<span class="icon-logo"></span>树
 			</a>
 			<div class="nav" >
 				<ul class="clearfix">
 					<li><a href="essays/">文字</a></li>
-					<li><a href="http://www.luoo.net/musician/">心情</a></li>
-					<li><a href="http://www.luoo.net/app/">梦呓 </a></li>				
-					<li><a href="http://www.luoo.net/app/">札记 </a></li>				
-					<li><a href="http://www.luoo.net/app/">留言</a></li>				
-					<li><a href="http://www.luoo.net/app/">图鉴</a></li>				
+					<li><a href="tsukkomi/">心情</a></li>
+					<li><a href="somniloquy/">梦呓 </a></li>				
+					<li><a href="notes/">札记 </a></li>				
+					<li><a href="illustration/">长廊</a></li>				
+					<li><a href="essays/">留言</a></li>				
 				</ul>
 
 			</div>

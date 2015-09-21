@@ -1,9 +1,150 @@
+function addLabel(me){
+	if($("span[name='labelIterm']").size()<5){
+		var she = $('#labelIterm').clone();
+		she.children().first().val("");
+		me.before(she);
+	}
+		checkTokenDis($("span[name='labelIterm']").size());
+}
+function redLabel(me){
+	if($("span[name='labelIterm']").size()>1){
+		$("span[name='labelIterm']").last().remove();
+	}
+	checkTokenDis($("span[name='labelIterm']").size());
+}
+function checkTokenDis(size){
+	if(size==5){
+		$("#add").addClass("hidden");
+	}else if(size==1){
+		$("#reduce").addClass("hidden");
+	}else{
+		$("#add").removeClass("hidden");
+		$("#reduce").removeClass("hidden");
+	}
+}
+function getScreenWidth(){
+	if(window.innerWidth){
+		return window.innerWidth;
+	}else {
+		return document.body.clientWidth;
+	}
+}
+	function getScreenHeight(){
+	if(window.innerHeight){
+		return window.innerHeight;
+	}else {
+		return document.body.clientHeight;
+	}
+	}
+	
+	function getLCenterPopPosition(w){
+		return  getScreenWidth()/2-w/2;
+		
+}
+	function getTCenterPopPosition(h){
+		return getScreenHeight()/2-h/2;
+	}
+	function setCenterPopPosition(her,it){
+		var l = getLCenterPopPosition(it.width());
+		var t = getTCenterPopPosition(it.height());
+		her.css({'top':t,'left':l});
+	}
+function initSelector(id,value){
+	var selector = document.getElementById(id);
+	for(i=0;i<selector.length;i++)
+	{
+		if(selector[i].value == value)
+			selector[i].selected=true;
+	}
+	
+}
+function showCouple(i,she,condition){
+	me = document.getElementById(i);
+	var obj = me.options[me.selectedIndex];
+	if(obj.value==condition){
+		show(she);
+	}else{
+		hide(she);
+	}
+}
+function hideCouple(i,she,condition){
+	me = document.getElementById(i);
+	var obj = me.options[me.selectedIndex];
+	if(obj.value==condition){
+		hide(she);
+	}else{
+		show(she);
+	}
+}
+function enable(she){
+	$("#"+she).removeAttr('disabled');
+	show(she);
+}
+function disanable(she){
+	$("#"+she).attr('disabled','disabled');
+	hide(she);
+}
+function toggleDisable(she){
+	if($("#"+she).attr('disabled')){
+		enable(she);
+	}else{
+		disanable(she);
+	}
+}
+function enableCouple(i,she,condition){
+	me = document.getElementById(i);
+	var obj = me.options[me.selectedIndex];
+	if(obj.value==condition){
+		show(she);
+		$("#"+she+" input[type=text]").removeAttr('disabled');
+		$("#"+she+" input[type=number]").removeAttr('disabled');
+		$("#"+she+" select").removeAttr('disabled');
+	}else{
+		$("#"+she+" input[type=text]").attr('disabled','disabled');
+		$("#"+she+" input[type=number]").attr('disabled','disabled');
+		$("#"+she+" select").attr('disabled','disabled');
+		hide(she);
+	}
+}
+function paste(id){
+	var input = document.getElementById(id);
+	input.focus();
+	input.select();
+	input.value='';
+	document.execCommand('Paste');
+}
+function show(id){
+	$('#'+id).removeClass("hidden");
+}
+function hide(id){
+	$('#'+id).addClass("hidden");
+}
+function showJQ(arg){
+	$(arg).removeClass("hidden");
+}
+function hideJQ(arg){
+	$(arg).addClass("hidden");
+}
+function toggleShow(id){
+	$('#'+id).toggleClass("hidden");
+}
 function readEssay(diaryId){
 	xmlHttp = new XMLHttpRequest();
 	theUrl = 'http://127.0.0.1:8080/iBlog/essayAction.action?method:readEssay&id=' + diaryId;
 	xmlHttp.open( "post", theUrl, false );
 	xmlHttp.send(null);
 }
+///↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑  validate   ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+$("form").validate(
+{rule:{
+	works_name:{requered:true, minlength: 6},
+	author_directior:{requered:true},
+	title:{requered:true},
+	author:{requered:true},
+},
+errorPlacement:function(error,element){element.after(error);}
+}		
+);
 ///↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑  新增   ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 function common_ajax_callback(a) {
     if (a.msg) {
@@ -40,31 +181,7 @@ function refresh_captcha() {
 function url(a) {
     return $.luoo.root + "/" + a
 }
-function head_login_cback(a, b) {
-    b.data("disabled", 0), a.status ? (b.find(".btn-login-submit").hide(), b.find(".btn-login-msg").text(a.msg).show(), setTimeout(function() {
-        check_login(a.uid)
-    }, 1e3)) : (b.find(".btn-login-submit").hide(), b.find(".btn-login-msg").text(a.msg).show())
-}
-function login_cback(a, b) {
-    b.data("disabled", 0), a.status ? (b.find(".btn-login-submit").hide(), b.find(".btn-login-msg").text(a.msg).show(), setTimeout(function() {
-        check_login(a.uid), $.luoo.destroy_tip()
-    }, 1e3)) : (b.find(".btn-login-submit").hide(), b.find(".btn-login-msg").text(a.msg).show())
-}
-function check_login(a) {
-    $.luoo.get(url("login/user"), "", function(b) {
-        b.status ? ($("#loggedOutWrapper").hide(), $("#loggedInWrapper").html(b.msg).show(), $("#commentAvatarHolder").attr("href", $.luoo.root + "/user/" + b.data.uid), $("#commentAvatarHolder img").attr("src", b.data.user_avatar), $("#commentForm").data("login", 1), $("#lnActiveTip").tip("", !1)) : "undefined" != typeof a ? ($("#loggedOutWrapper").hide(), $("#loggedInWrapper").html(b.msg).show(), $("#commentForm").data("login", 0)) : ($("#loggedOutWrapper").show(), $("#loggedInWrapper").html("").hide(), $("#commentAvatarHolder").attr("href", "javascript:;"), $("#commentAvatarHolder img").attr("src", $.luoo.url_static + "/img/avatar.gif"), $("#commentForm").data("login", 0))
-    })
-}
-function head_register_cback(a, b) {
-    b.data("disabled", 0), a.status ? (b.find(".btn-register-submit").hide(), b.find(".btn-register-msg").text(a.msg).show(), setTimeout(function() {
-        check_login(a.uid)
-    }, 1e3)) : (b.find(".btn-register-submit").hide(), b.find(".btn-register-msg").text(a.errors.msg).show())
-}
-function register_cback(a, b) {
-    b.data("disabled", 0), a.status ? (b.find(".btn-register-submit").hide(), b.find(".btn-register-msg").text(a.msg).show(), setTimeout(function() {
-        check_login(a.uid), $.luoo.destroy_tip()
-    }, 1e3)) : (b.find(".btn-register-submit").hide(), b.find(".btn-register-msg").text(a.errors.msg).show())
-}
+
 function active_email_cback(a) {
     $(".active-info-wrapper").html(a.msg)
 }
@@ -1491,7 +1608,7 @@ function send_mail_cback(a, b) {
         return h
     }
 }()), $(document).ready(function() {
-    check_login(), $("body").on("submit", ".form-ajax", function(evt) {
+    $("body").on("submit", ".form-ajax", function(evt) {
         evt.preventDefault();
         var $form = $(this), func = $form.attr("prepare");
         if (func)

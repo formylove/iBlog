@@ -51,7 +51,17 @@ jQuery.extend({
 		jQuery(form).appendTo('body');		
 		return form;
     },
+    handleError: function( s, xhr, status, e ) 		{
+    	// If a local callback was specified, fire it
+    			if ( s.error ) {
+    				s.error.call( s.context || s, xhr, status, e );
+    			}
 
+    			// Fire the global callback
+    			if ( s.global ) {
+    				(s.context ? jQuery(s.context) : jQuery.event).trigger( "ajaxError", [xhr, s, e] );
+    			}
+    },
     ajaxFileUpload: function(s) {
         // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout		
         s = jQuery.extend({}, jQuery.ajaxSettings, s);
@@ -185,16 +195,26 @@ jQuery.extend({
     uploadHttpData: function( r, type ) {
         var data = !type;
         data = type == "xml" || data ? r.responseXML : r.responseText;
+        data = data.replace("<pre>","");
+        data = data.replace("</pre>","");
         // If the type is "script", eval it in global context
         if ( type == "script" )
             jQuery.globalEval( data );
         // Get the JavaScript object, if JSON is used.
-        if ( type == "json" )
+        if ( type == "json" ){
+        	data = r.responseText;  
+            var start = data.indexOf(">");  
+            if(start != -1) {  
+              var end = data.indexOf("<", start + 1);  
+              if(end != -1) {  
+                data = data.substring(start + 1, end);  
+               }  
+            } 
             eval( "data = " + data );
+        }
         // evaluate scripts within html
         if ( type == "html" )
             jQuery("<div>").html(data).evalScripts();
-
         return data;
     }
 })

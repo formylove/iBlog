@@ -7,10 +7,12 @@ import java.util.Map;
 import main.src.common.SqlUtils;
 import main.src.entity.essay.CNBlogs;
 import main.src.entity.essay.CSDN;
+import main.src.entity.essay.Douban;
 import main.src.entity.essay.Essay;
 import main.src.entity.essay.ITEye;
 import main.src.entity.essay.Zhidao;
 import main.src.entity.essay.Zhihu;
+import main.src.entity.note.Opus;
 
 public class EssayService {
 	static final String TABLE_ESSAY="essay"; 
@@ -79,19 +81,23 @@ public class EssayService {
 	static public int loadForwardEssay(String url){
 		url = url.toLowerCase();
 		if(url.indexOf("zhihu")>=0){
-			SqlUtils.executeInsert(new Zhihu(url));
+			return SqlUtils.executeInsert(new Zhihu(url));
 		}else if(url.indexOf("zhidao.baidu")>=0){
-			SqlUtils.executeInsert(new Zhidao(url));
+			return SqlUtils.executeInsert(new Zhidao(url));
 		}else if(url.indexOf("blog.csdn.net")>=0){
-			SqlUtils.executeInsert(new CSDN(url));
+			return SqlUtils.executeInsert(new CSDN(url));
 		}else if(url.indexOf("iteye.com")>=0){
-			SqlUtils.executeInsert(new ITEye(url));
+			return SqlUtils.executeInsert(new ITEye(url));
 		}else if(url.indexOf("cnblogs.com")>=0){
-			SqlUtils.executeInsert(new CNBlogs(url));
+			return SqlUtils.executeInsert(new CNBlogs(url));
 		}else if(url.indexOf("douban.com")>=0){
-			SqlUtils.executeInsert(new CNBlogs(url));
+			Douban douban = new Douban(url);
+			int id = SqlUtils.executeInsert(douban);
+			Opus opus = douban.getOpus();
+			opus.setId(id);
+			return SqlUtils.executeInsert(opus);
 		}
-         return EssayService.getLatestEssayId();
+         return 0;
 	}
 	
 	static public int deleteEssay(int id){
@@ -113,6 +119,9 @@ public class EssayService {
 		String sql="UPDATE essay set favor_cnt = favor_cnt+1 WHERE id="+id;
 		return SqlUtils.executeUpdate(sql, null);
 	}
+	/**
+	 *¼ÇÂ¼ÔÄ¶Á´ÎÊý.<br/>
+	 **/
 	static public int readEssay(int id){
 		String sql="UPDATE essay set read_cnt = read_cnt+1 WHERE id="+id;
 		return SqlUtils.executeUpdate(sql, null);

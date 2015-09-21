@@ -31,6 +31,6 @@ public class testZhidao {
 	 String url5 = "http://book.douban.com/review/7595674/?icn=index-reviewer";
 	 String url6 = "http://www.douban.com/note/413145196/";
 //	 CSDN c = new CSDN(url4);	
-	 Douban z = new Douban(url5);
+	 Douban z = new Douban(url4);
  }
 }

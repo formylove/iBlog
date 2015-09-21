@@ -8,17 +8,18 @@ if(importParams!=null){
 if(importParams.indexOf("jquery")>=0){ %>
 <script type="text/javascript" src="js/jquery/jquery.js"></script>
 <%}
-if(importParams.indexOf("Jcrop.js")>=0){ %>
-<script type="text/javascript" src="Jcrop/js/jquery.Jcrop.js"></script>
+if(importParams.indexOf("validate")>=0){ %>
+<script type="text/javascript" src="js/validate/jquery.validate.min.js"></script>
+<%}
+if(importParams.indexOf("validate")>=0){ %>
+<script type="text/javascript" src="js/Jcrop/jquery.Jcrop.js"></script>
+<link href="js/Jcrop/jquery.Jcrop.css" type="text/css" rel="stylesheet">
 <%}
 if(importParams.indexOf("flexSlider.js")>=0){ %>
 <script type="text/javascript" src="js/flexSlider/jquery.flexslider-min.js"></script>
 <%}
 if(importParams.indexOf("sticky.js")>=0){ %>
 <script type="text/javascript" src="js/stickyKit/stickyKit.js"></script>
-<%}
-if(importParams.indexOf("Jcrop.css")>=0){ %>
-<link href="Jcrop/css/jquery.Jcrop.css" type="text/css" rel="stylesheet">
 <%}
 if(importParams.indexOf("main.css")>=0){ %>
 <link href="Jcrop/css/main.css" type="text/css" rel="stylesheet">
@@ -30,7 +31,7 @@ if(importParams.indexOf("index.js")>=0){ %>
 <script src="js/Akita/index.js"></script>
 <%}
 if(importParams.indexOf("upload.js")>=0){ %>
-<script src="js/ajaxupload.js"></script>
+<script src="js/fileUpload/ajaxfileupload.js"></script>
 <%}
 if(importParams.indexOf("upload2.js")>=0){ %>
 <script src="js/fileuploader.js"></script>
@@ -47,12 +48,15 @@ if(importParams.indexOf("common.css")>=0){ %>
 if(importParams.indexOf("essays.css")>=0){ %>
 <link href="css/essays.css" type="text/css" rel="stylesheet">
 <%}
+if(importParams.indexOf("note.css")>=0){ %>
+<link href="css/note.css" type="text/css" rel="stylesheet">
+<%}
 if(importParams.indexOf("essay.css")>=0){ %>
 <link href="css/essay.css" type="text/css" rel="stylesheet">
 <%}
 if(importParams.indexOf("ZeroClipboard.js")>=0){ %>
 <script src="js/zeroclipboard/ZeroClipboard.js"></script>
 <%}
-if(importParams.indexOf("luoo.js")>=0){ %>
+if(importParams.indexOf("Akita.js")>=0){ %>
 <script src="js/Akita/Akita.js"></script>
 <%}}%>
