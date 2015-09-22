@@ -26,3 +26,6 @@ struts 用get获取action的值，用set设置action的值
 #request.dynastys == dynasty ongl 表达式
 修改服务器编码方式，双击服务器，点击open configuration，选择common标签修改
 s:select disabled="true"
+<s:set name="list" value="{'eeeee','ddddd','ccccc','bbbbb','aaaaa'}"></s:set>
+<s:property value="#request.list"/>
+输出结果[eeeee, ddddd, ccccc, bbbbb, aaaaa]

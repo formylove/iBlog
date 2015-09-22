@@ -19,17 +19,19 @@ width:100px;
 input[type=number]{
 height:23px;
 }
+input[type=month]{
+height:23px;
+}
 </style>
 </head>
 <body style="position:relative;">
 	<%@ include file="../snippets/navigator.jsp"%>
  <div class="overlay hidden"></div>
 	<div class="container index-ct round-container" style="min-height: 221px;">
-
-		<form id="form" action="<s:url action='noteAction.action?method:saveNote'/>" method="post">
-			<input type="file" onchange="ajaxUpload('file');" id="file" name="file" accept=".jpg,.jpeg,.png,.gif" style="display:none;">
+	<form id="form" action="<s:url action='noteAction.action?method:saveNote'/>" method="post">
 			<input type="hidden" name="id" id="id"  value="<%=((request.getAttribute("note")==null)?0:((Essay)request.getAttribute("note")).getId()) %>">
-			<input type="hidden" name="opus.cover" id="cover" value="">
+			<input type="hidden" name="cover" id="cover" value="">
+			<input type="file" onchange="ajaxUpload('file');" id="file" name="file" accept=".jpg,.jpeg,.png,.gif" style="display:none;">
 			<div id="works_info" class="clearfix" style="width: 100%">
 				<div class="margin-b-16">
 					<label>札记类型</label> 
@@ -48,6 +50,7 @@ height:23px;
 				<div id="book_info" >
 					<div class="margin-b-8">
 						<label>图书信息</label>&nbsp;&nbsp;<s:select list="rate" listKey="key" listValue="value"  id="rating" name='opus.rating' ></s:select>
+						<input type="hidden" name="opus.type" value="book">
 					</div>
 					<div class="margin-b-6">
 						<input type="text" placeholder="书名" id='works_name' name='opus.name'> 
@@ -57,32 +60,32 @@ height:23px;
 					<div class="margin-b-6">
 						<input type="text" placeholder="作者" id="author_directior" name='opus.author_directior'> 
 						<s:select list="nation" listKey="key" listValue="value" 
-						onchange="showCouple('nationality','dynasty','CN');hideCouple('nationality','original_name','CN');" id="nationality" name='opus.nationality' ></s:select>
+						onchange="showCouple('nationality','dynasty','中国');hideCouple('nationality','original_name','中国');" id="nationality" name='opus.nationality' ></s:select>
 						<s:select id="dynasty" name='opus.dynasty' list="dynastys" listKey="key" listValue="value" cssClass="hidden" >
 						</s:select>
 					</div>
 					<div class="margin-b-6">
 						<input type="text" placeholder="主角" id="protagonists" name='opus.protagonists' style="width:41%;">
-						 <input type="text"	placeholder="出版日期" id="publish_date" name='opus.publish_date'>
 					</div>
 				</div>
 				<!-- 电影 -->
 				<div id="movie_info" class="hidden">
 					<div class="margin-b-8">
 						<label>电影信息</label>&nbsp;&nbsp;<label>评分：</label><input type="number" max="10" min="0" step="0.2" id="score" name='opus.rating' />
+						<input type="hidden" name="opus.type" value="movie">
 					</div>
 					<div class="margin-b-6">
 						<input  type="text" placeholder="电影名" id="works_name" name='opus.name'> 
 					    <input type="text" placeholder="译名"  id='original_name2' name='opus.original_name'>
 						<s:select list="genres.{?#this.type=='movie'}" listKey="id" listValue="name"   id="genre" name='opus.genre' ></s:select>
-						<s:select list="nation" listKey="key" listValue="value"   id="nationality2" name='opus.nationality' onchange="hideCouple('nationality2','original_name2','CN');"></s:select>
+						<s:select list="nation" listKey="key" listValue="value"   id="nationality2" name='opus.nationality' onchange="hideCouple('nationality2','original_name2','中国');"></s:select>
 					</div>
 					<div class="margin-b-6">
 						<input  type="text" id="author_directior" name='opus.author_directior' placeholder="导演"> 
 						<input  type="text" id="protagonists" name='opus.protagonists' placeholder="主角" style="width:57%;">
 					</div>
 					<div class="margin-b-6">
-						<input  type="text" placeholder="上映日期" id="publish_date" name='opus.publish_date'>
+						<label>上映日期：</label>&nbsp;&nbsp;<input  type="month" placeholder="上映日期" id="publish_date" name='opus.publish_date'>
 					</div>
 			<div>
 				</div>
@@ -92,9 +95,9 @@ height:23px;
 					<input type="button" class="btn" value="本地上传"  onclick="$(file).click();">
 					<span>|</span>
 					<input type="button" class="btn" value="粘贴图片网址" id="tog" onclick="if($('#imgUrl').attr('disabled')){$('#tog').val('收起');}else{$('#tog').val('粘贴图片网址');};toggleDisable('imgUrl');toggleDisable('confBtn');toggleDisable('pas');">
-					<input type="url" id="imgUrl" class="hidden"  placeholder="粘贴图片网址"  style="width:40%;">
-					<input type="button" id="confBtn" class="btn hidden"  value="确认" onclick="startCrop();">
-					<input type="button" id="pas" class="btn hidden" onclick="paste('imgUrl');"   value="清空并粘贴">
+					<input type="url" id="imgUrl" class="hidden" disabled="disabled"  placeholder="粘贴图片网址"  style="width:40%;">
+					<input type="button" id="confBtn" class="btn hidden" disabled="disabled"  value="确认" onclick="startCrop();">
+					<input type="button" id="pas" class="btn hidden" disabled="disabled" onclick="paste('imgUrl');"   value="清空并粘贴">
 			        </div>
 			</div>
 			</div>
@@ -177,9 +180,9 @@ height:23px;
 	initSelector('authority', "<s:property value='note.authority'/>");
 	enableCouple('category','book_info','5012');
 	enableCouple('category','movie_info','5013');
-	showCouple('nationality','dynasty','CN');
-	hideCouple('nationality','original_name','CN');
-	hideCouple('nationality2','original_name2','CN');
+	showCouple('nationality','dynasty','中国');
+	hideCouple('nationality','original_name','中国');
+	hideCouple('nationality2','original_name2','中国');
 	showCouple('isOriginal','original_link','false');
 	showCouple('isOriginal','author','false');
 	</script>

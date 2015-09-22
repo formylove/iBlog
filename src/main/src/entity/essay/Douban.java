@@ -19,7 +19,7 @@ public class Douban extends Essay {
 	//页面解析参数
 	private Parser parser;
 	private NodeList nodes;
-	private Opus opus;
+	private Opus opus = new Opus();
 	static private final String portraitReg = "(?<=src=\")[^\"]*(?=\")";
 	static private final String author_linkReg = "(?<=href=\")[^\"]*(?=\")";
 	static private final String authorReg = "(?<=alt=\").*?(?=\")";

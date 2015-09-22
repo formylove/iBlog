@@ -98,10 +98,12 @@ function enableCouple(i,she,condition){
 		show(she);
 		$("#"+she+" input[type=text]").removeAttr('disabled');
 		$("#"+she+" input[type=number]").removeAttr('disabled');
+		$("#"+she+" input[type=hidden]").removeAttr('disabled');
 		$("#"+she+" select").removeAttr('disabled');
 	}else{
 		$("#"+she+" input[type=text]").attr('disabled','disabled');
 		$("#"+she+" input[type=number]").attr('disabled','disabled');
+		$("#"+she+" input[type=hidden]").attr('disabled','disabled');
 		$("#"+she+" select").attr('disabled','disabled');
 		hide(she);
 	}
@@ -135,16 +137,16 @@ function readEssay(diaryId){
 	xmlHttp.send(null);
 }
 ///↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑  validate   ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-$("form").validate(
-{rule:{
-	works_name:{requered:true, minlength: 6},
-	author_directior:{requered:true},
-	title:{requered:true},
-	author:{requered:true},
-},
-errorPlacement:function(error,element){element.after(error);}
-}		
-);
+//$("form").validate(
+//{rule:{
+//	works_name:{requered:true, minlength: 6},
+//	author_directior:{requered:true},
+//	title:{requered:true},
+//	author:{requered:true},
+//},
+//errorPlacement:function(error,element){element.after(error);}
+//}		
+//);
 ///↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑  新增   ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 function common_ajax_callback(a) {
     if (a.msg) {

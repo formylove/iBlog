@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
+import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
 import main.src.entity.Genre;
 import main.src.entity.essay.Essay;
@@ -25,13 +26,13 @@ private float w;
 private float h;
 private float x;
 private float y;
-	//////////
 @SuppressWarnings("static-access")
 Map<String, String> nation = (new MsgConstants()).ISO31661ALPHA3;
 Map<String, String> dynastys = MsgConstants.DYNASTY;
 Map<String, String> authority = MsgConstants.AUTHORITY;
 Map<String, String> rate = MsgConstants.RATE;
 String title;
+String cover;
 boolean hasExisted;
 
 //essay list
@@ -47,6 +48,7 @@ public String listNote(){
 	return MsgConstants.Essays;
 }
 public String saveNote() throws NumberFormatException, UnsupportedEncodingException{
+		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
 		id = NoteService.saveNote(note, opus);
 			System.out.println("opus   "+opus.genre);
 		return MsgConstants.NOTEPAGE;
@@ -101,6 +103,12 @@ public String undoLike(){
 }
 
 
+public String getCover() {
+	return cover;
+}
+public void setCover(String cover) {
+	this.cover = cover;
+}
 public String getTitle() {
 	return title;
 }

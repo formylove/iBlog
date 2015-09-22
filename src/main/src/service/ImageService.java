@@ -30,10 +30,6 @@ public class ImageService {
 
 
 	//·µ»Ø´æÂ·¾¶
-	 public String saveImage(File image) throws IOException{
-	 String path = 	MessageUtils.getMessageFromUrl("image.path");
-		return FileUtils.saveFile(image, path);
-	}
 
 	
 	static public String cut(File image,String picType,float width,float height,float x,float y) throws IOException{

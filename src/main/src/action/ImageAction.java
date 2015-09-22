@@ -11,7 +11,9 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import main.src.common.ImageUtils;
 import main.src.common.Log;
+import main.src.common.MessageUtils;
 import main.src.common.MsgConstants;
 import main.src.service.ImageService;
 
@@ -46,42 +48,13 @@ public class ImageAction {
 		Log.print(y1);
 		Log.print(x2);
 		Log.print(y2);
-		String name = ImageService.cut(upload, ImageService.getSimpleType(filetype), w, h, x1, y1);
-		ImageService.savePhoto(name, null, null, 6300);
 		return "test";
 	}
 
 	public String upLoadImg() throws IOException {
-
 		HttpServletResponse response = ServletActionContext.getResponse();
-
 		response.setCharacterEncoding("utf-8");
-         System.out.println(fileFileName);          
-		PrintWriter out = response.getWriter();
-
-		String localName = UUID.randomUUID().toString();
-		imgName = localName + fileFileName.substring(fileFileName.lastIndexOf("."), fileFileName.length());
-		InputStream img = new FileInputStream(this.getFile());
-		String savePath = ServletActionContext.getServletContext().getRealPath("/temp/");
-		File folder = new File(savePath);
-		if(!folder.exists()){
-			folder.mkdir();//写文件操作不会自动生成目录
-		}
-		File local = new File(savePath, imgName);
-		OutputStream saveObj = new FileOutputStream(local);
-		Log.print(savePath);
-		int length = 0;
-		byte[] buffer = new byte[1024];
-		while ((length = img.read(buffer)) > 0) {
-
-			saveObj.write(buffer, 0, length);
-
-		}
-		img.close();
-		saveObj.flush();
-		saveObj.close();
-		Log.print("good");
-		file=null;
+		imgName = ImageUtils.saveTemp(file, fileFileName);
 		return MsgConstants.SUCCESS;
 	}
 

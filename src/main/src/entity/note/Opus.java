@@ -1,6 +1,11 @@
 package main.src.entity.note;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import main.src.common.StringUtils;
 import main.src.common.TimeManager;
+import main.src.service.NoteService;
 
 public class Opus{
 	public int id;
@@ -13,13 +18,15 @@ public class Opus{
 	public String dynasty;
 	public String author_directior;
 	public String protagonists;
-	public String genre;
+	public int genre;
+	public String type;
 	public String publish_date;
 	public String view_time;
 	public String create_date;
 	public String create_time;
 	public boolean del_flag;
 	public boolean single_flag;
+	private Map<String,String> meta;
 	public Opus(){
 		setCreate_date(TimeManager.getDate());
 		setCreate_time(TimeManager.getTime());
@@ -31,14 +38,78 @@ public class Opus{
 				+"\n" + "protagonists:"+protagonists + "\npublish_date:"+publish_date + "\nrec_flag:"+rec_flag + "\nrating:"+rating+ "\nsingle_flag:"+single_flag;
 	}
 	
-	public String getGenre() {
+	public Map<String,String> getMeta() {
+		meta = new LinkedHashMap<String,String>();
+		if(isBook()){
+			meta.put("书名", name);
+			
+			if("中国".equals(nationality)){
+				if(!"nope".equals(dynasty)){
+					meta.put("作家", author_directior+"("+dynasty+")");
+				}
+				meta.put("作家", author_directior);
+			}else if(!"nope".equals(nationality)){
+				meta.put("作家", author_directior+"("+nationality+")");
+				if(!StringUtils.isEmpty(original_name)){
+					meta.put("译名", original_name);
+				}
+				
+			}else{
+				meta.put("作家", author_directior);
+			}
+			if(!StringUtils.isEmpty(protagonists)){
+				meta.put("主角", protagonists);
+			}
+			if(genre !=0){
+				meta.put("类型", NoteService.getGenreName(genre));
+			}
+		}else{
+				if(!"中国".equals(nationality) && !"nope".equals(nationality)){
+						meta.put("电影名", name+"("+nationality+")");
+						if(!StringUtils.isEmpty(original_name)){
+							meta.put("译名", original_name);
+						}
+						
+				}else {
+					meta.put("电影名", name);
+				}
+				if(!StringUtils.isEmpty(author_directior)){
+					meta.put("导演", author_directior);
+				}
+				if(!StringUtils.isEmpty(protagonists)){
+					meta.put("主演", protagonists);
+				}
+				if(genre !=0){
+					meta.put("类型", NoteService.getGenreName(genre));
+				}
+				if(!StringUtils.isEmpty(publish_date)){
+					meta.put("上映时间", publish_date+"月");
+				}
+		}
+		return meta;
+	}
+	
+	public boolean isBook(){
+		if("book".equals(type)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public int getGenre() {
 		return genre;
 	}
-	public void setGenre(String genre) {
+	public void setGenre(int genre) {
 		this.genre = genre;
 	}
 	public void setGenre(String[] genre) {
-		this.genre = genre[0];
+		this.genre = Integer.parseInt(genre[0]);
 	}
 	public boolean isSingle_flag() {
 		return single_flag;

@@ -22,14 +22,13 @@ public class FileUtils {
 			saveObj.write(buffer, 0, length);
 		}
 		img.close();
+		saveObj.flush();
 		saveObj.close();
 		
 		return localName;
 	}
 	
-	static public String saveFile(File file,String path) throws IOException{
-		String localName=UUID.randomUUID().toString();
-		return saveFile(file, localName, path);
-	}
-	
+	static public String getFileSuffix(String org_name) throws IOException{
+		 return org_name.substring(org_name.lastIndexOf("."), org_name.length());
+	 }
 }

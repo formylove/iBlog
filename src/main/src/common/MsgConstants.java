@@ -23,22 +23,19 @@ public static Map<String, String> AUTHORITY = new LinkedHashMap<String, String>(
 public static Map<String, String> SCORE = new LinkedHashMap<String, String>(); 
 public static Map<String, String> RATE = new LinkedHashMap<String, String>(); 
 static {
-	ISO31661ALPHA3.put("nope", "国籍");
-	ISO31661ALPHA3.put("CN", "中国");
-	ISO31661ALPHA3.put("CN", "中国");
-	ISO31661ALPHA3.put("US", "美国");
-	ISO31661ALPHA3.put("JP", "日本");
-	ISO31661ALPHA3.put("JP1", "韩国");
-	ISO31661ALPHA3.put("JP2", "泰国");
-	ISO31661ALPHA3.put("JP3", "法国");
-	ISO31661ALPHA3.put("JP4", "英国");
-	ISO31661ALPHA3.put("JP5", "德国");
-	ISO31661ALPHA3.put("JP6", "俄罗斯");
-	ISO31661ALPHA3.put("JP7", "西班牙");
-	ISO31661ALPHA3.put("JP8", "意大利");
-	ISO31661ALPHA3.put("JP9", "奥地利");
-	ISO31661ALPHA3.put("JP00", "冰岛");
-	ISO31661ALPHA3.put("JP88", "日本");
+	ISO31661ALPHA3.put("中国", "中国");
+	ISO31661ALPHA3.put("美国", "美国");
+	ISO31661ALPHA3.put("日本", "日本");
+	ISO31661ALPHA3.put("韩国", "韩国");
+	ISO31661ALPHA3.put("泰国", "泰国");
+	ISO31661ALPHA3.put("法国", "法国");
+	ISO31661ALPHA3.put("英国", "英国");
+	ISO31661ALPHA3.put("德国", "德国");
+	ISO31661ALPHA3.put("俄罗斯", "俄罗斯");
+	ISO31661ALPHA3.put("西班牙", "西班牙");
+	ISO31661ALPHA3.put("意大利", "意大利");
+	ISO31661ALPHA3.put("奥地利", "奥地利");
+	ISO31661ALPHA3.put("冰岛", "冰岛");
 	
 	
 	DYNASTY.put("nope", "现代");
