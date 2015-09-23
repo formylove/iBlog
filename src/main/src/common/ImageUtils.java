@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
-
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -27,30 +26,31 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import main.src.common.gif.AnimatedGifEncoder;
+import main.src.common.gif.GifDecoder;
+
 public class ImageUtils {
 	static public String baseRealPath = ((HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST)).getRealPath("/");
 	static public String saveImageFromUrl(String imgUrl){
 		String localName = null;
-		System.out.println("imgfromUrl: ");
 	        try {  
 	            //实例化url  
 	            URL url = new URL(imgUrl);  
+	            URLConnection connection = url.openConnection();
+	            connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
 	            //载入图片到输入流  
-	            java.io.BufferedInputStream bis = new BufferedInputStream(url.openStream());  
+	            java.io.BufferedInputStream bis = new BufferedInputStream(connection.getInputStream());  
 	            //实例化存储字节数组  
 	            byte[] bytes = new byte[100];  
 	            //设置写入路径以及图片名称  
 	             localName = UUID.randomUUID().toString();
 			     localName = localName + "." + getSimpleType(imgUrl);
-//			     String relPath = MessageUtils.getMessageFromUrl("img.path");
-//				 String savePath = ServletActionContext.getServletContext().getRealPath(relPath);
-			     String savePath = "d:/";
-				 System.out.println("imgfromUrl: "+savePath);
-				 File folder = new File(savePath);
+			     String realPath = baseRealPath + MessageUtils.getMessageFromUrl("img.temp");
+				 File folder = new File(realPath);
 			     if(!folder.exists()){
 						folder.mkdir();//写文件操作不会自动生成目录
 					}
-			     OutputStream bos = new FileOutputStream(new File(savePath+localName));
+			     OutputStream bos = new FileOutputStream(new File(realPath+localName));
 	             int len;  
 	             while ((len = bis.read(bytes)) > 0) {  
 	                bos.write(bytes, 0, len);  
@@ -64,34 +64,6 @@ public class ImageUtils {
 		return localName;
 	}
 	
-	
-	static public int[] getImgWidth(File img){
-		int[] a ={0,0};
-        BufferedImage bi = null;  
-        boolean imgwrong=false;  
-        try {  
-            //读取图片  
-            bi = javax.imageio.ImageIO.read(img);  
-            try{  
-                //判断文件图片是否能正常显示,有些图片编码不正确  
-                int i = bi.getType();  
-                imgwrong=true;  
-            }catch(Exception e){  
-                imgwrong=false;  
-            }  
-        } catch (IOException ex) {  
-            ex.printStackTrace();  
-        }  
-        if(imgwrong){  
-            a[0] = bi.getWidth(); //获得 宽度  
-            a[1] = bi.getHeight(); //获得 高度  
-        }else{  
-            a=null;  
-        }  
-        //删除文件  
-        img.delete();  
-		return a;
-	}
 	static public String saveImage(File image,String org_name,String realPath) throws IOException{
 		 String localName = UUID.randomUUID().toString();
 		 localName = localName + FileUtils.getFileSuffix(org_name);
@@ -107,16 +79,25 @@ public class ImageUtils {
 	}
 	
 		static public String cut(String cover,float width,float height,float x,float y) {
-			try { 
-			if(cover.indexOf("http")>=0 || cover.indexOf("https")>=0 || cover.indexOf("www.")>=0){
+			String simpleType = getSimpleType(cover);
+			try {
+			if("gif".equalsIgnoreCase(simpleType)){
+				if(cover.indexOf("http")>=0 || cover.indexOf("https")>=0 || cover.indexOf("www.")>=0){
+					cover = saveImageFromUrl(cover);
+				}	
+				String sourcePath = baseRealPath + MessageUtils.getMessageFromUrl("img.temp") + cover;
+				return cutGif(sourcePath, (int)x, (int)y,(int)width, (int)height);
+			}else{
+				if(cover.indexOf("http")>=0 || cover.indexOf("https")>=0 || cover.indexOf("www.")>=0){
 					URL url = new URL(cover);
 					URLConnection connection = url.openConnection();
 					connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-					return cut(new BufferedInputStream(connection.getInputStream()),getSimpleType(cover),width,height,x,y);
-		    }else{
+					return cut(new BufferedInputStream(connection.getInputStream()),simpleType,width,height,x,y);
+				}else{
 		    	    FileInputStream fis = new FileInputStream(new File(baseRealPath + MessageUtils.getMessageFromUrl("img.temp")+cover));
-		    	    return cut(new BufferedInputStream(fis),getSimpleType(cover),width,height,x,y);
-		    }
+		    	    return cut(new BufferedInputStream(fis),simpleType,width,height,x,y);
+				}	
+			}
 		    } catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -124,7 +105,7 @@ public class ImageUtils {
 		return null;
 		}
 	static public String cut(BufferedInputStream image,String picType,float width,float height,float x,float y) throws IOException{
-       
+	   String sourcePath = null;
 	   BufferedInputStream is = null;  
        ImageInputStream iis = null;  
        String name=UUID.randomUUID().toString();
@@ -169,16 +150,48 @@ public class ImageUtils {
            if(!folder.exists()){
         	   folder.mkdir();
            }
-           ImageIO.write(bi, picType, new File(baseRealPath + path + name+"."+picType)); 
+           sourcePath = baseRealPath + path + name+"."+picType;
+           ImageIO.write(bi, picType, new File(sourcePath)); 
        } finally {  
            if (is != null)  
                is.close();  
            if (iis != null)  
                iis.close();  
-       }  
+       } 
+
 		return name+"."+picType;
 	}
 	
+	public static String cutGif(String sourcePath,int x,int y,int width,int height){
+	     //为gif保存一份静态备份
+		String name=UUID.randomUUID().toString();
+		String path=MessageUtils.getMessageFromUrl("img.depot");
+		String simpleType = getSimpleType(sourcePath);
+		String targetPath = baseRealPath + path + name + "." + simpleType;
+		            GifDecoder decoder = new GifDecoder();  
+		            int status = decoder.read(sourcePath);  
+		            if (status != GifDecoder.STATUS_OK) {  
+		                try {
+							throw new IOException("read image " + sourcePath + " error!");
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}  
+		            }
+		 
+		            AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+		            encoder.start(targetPath);
+		            encoder.setRepeat(decoder.getLoopCount());  
+		            Log.print("帧数："+decoder.getFrameCount());
+		            for (int i = 0; i < decoder.getFrameCount(); i ++) {  
+		                encoder.setDelay(decoder.getDelay(i));  
+		                BufferedImage childImage = decoder.getFrame(i);
+		                BufferedImage subImage = childImage.getSubimage(x, y, width, height);
+		                encoder.addFrame(subImage);  
+		            }  
+		            encoder.finish();
+		return  name + "." + simpleType;
+	}
 	public static String getSimpleType(String originType){
 		String simpleType="jpg";
 		if(originType.indexOf("png")>=0){
@@ -208,5 +221,32 @@ public class ImageUtils {
 		data.put("create_date", TimeManager.getDate());
 		data.put("create_time", TimeManager.getTime());
 		return SqlUtils.executeInsert(data, "photo");
+	}
+	static public int[] getImgWidth(File img){
+		int[] a ={0,0};
+        BufferedImage bi = null;  
+        boolean imgwrong=false;  
+        try {  
+            //读取图片  
+            bi = javax.imageio.ImageIO.read(img);  
+            try{  
+                //判断文件图片是否能正常显示,有些图片编码不正确  
+                int i = bi.getType();  
+                imgwrong=true;  
+            }catch(Exception e){  
+                imgwrong=false;  
+            }  
+        } catch (IOException ex) {  
+            ex.printStackTrace();  
+        }  
+        if(imgwrong){  
+            a[0] = bi.getWidth(); //获得 宽度  
+            a[1] = bi.getHeight(); //获得 高度  
+        }else{  
+            a=null;  
+        }  
+        //删除文件  
+        img.delete();  
+		return a;
 	}
 }

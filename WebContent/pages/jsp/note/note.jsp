@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title> - 札记</title>
+<title>${note.title} - 札记</title>
 <%request.setAttribute("importParams", "jquery|note.css|end"); %>
 <%@ include file="../snippets/static_js_css.jsp" %>
 </head>
@@ -21,7 +21,13 @@
 		<div class="event-head clearfix">
 			<img src="img/depot/${opus.cover}" alt="${note.title}" class="poster rounded">
 			<div class="event-meta">
-				<h1 class="title">${note.title}</h1>
+				<h1 style="font-size: 24px;">${note.title}</h1>
+				<p class="margin-b-25" style="margin-top: 0;  padding: 0;">
+				<span class="cursor-pointer" onclick="window.location.href='noteAction.action?method:editNote&id=<s:property value='note.id'/>'">修改</span>・
+				<s:if test="note.del_flag==false"><span id="delete" onclick="deleteNote();" class="cursor-pointer">删除</span><span id="recover" class="hidden" onclick="recoverNote();">恢复</span></s:if>
+				<s:else><span id="delete" class="hidden" onclick="deleteNote();">删除</span><span id="recover" onclick="recoverNote();" class="cursor-pointer">恢复</span></s:else>
+				・<s:if test="note.original_flag">[原创]</s:if><s:else>[转发自]</s:else>&nbsp;
+				作者・<span><a href="<s:property value="note.author_link"/>"><s:property value="note.author"/></a></span>・<span><s:if test="!note.original_flag"><a href="<s:property value="note.original_link"/>" target="_blank" ><font color="red">[原文链接]</font></a></s:if><s:else>[原创]</s:else></span>・<s:property value="note.create_date"/></p>
 				<s:iterator value="opus.getMeta()" id="entry">
 				<p class="meta"><s:property value="key"/>:
 				<s:property value="value"/></p>

@@ -76,7 +76,6 @@
 			
 			</script>
 			<p class="essay-meta">
-			
 				<span class="cursor-pointer" onclick="window.location.href='essayAction.action?method:editEssay&id=<s:property value='essay.id'/>'">修改</span>・
 				<s:if test="essay.del_flag==false"><span id="delete" onclick="deleteEssay();" class="cursor-pointer">删除</span><span id="recover" class="hidden" onclick="recoverEssay();">恢复</span></s:if>
 				<s:else><span id="delete" class="hidden" onclick="deleteEssay();">删除</span><span id="recover" onclick="recoverEssay();" class="cursor-pointer">恢复</span></s:else>

@@ -87,8 +87,9 @@
 	margin-bottom:16px;
 }
 .margin-b-20{
-	margin-bottom:16px;
+	margin-bottom:10px;
 }
+
 /* margin$ */
 .nfloat{
 	float:none;
@@ -2693,4 +2694,7 @@ html[xmlns] .slides {
 
 .hidden{
 	display:none;
+}
+.margin-b-25{
+	margin-bottom:25px;
 }
