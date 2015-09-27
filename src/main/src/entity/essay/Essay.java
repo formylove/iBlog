@@ -1,5 +1,6 @@
 package main.src.entity.essay;
 
+import main.src.common.StringUtils;
 import main.src.common.TimeManager;
 
 public class Essay {
@@ -7,16 +8,16 @@ public class Essay {
 public int id;
 public String title;
 public String subtitle;
-public String author;
+public String author = "徐大海";
 public String author_link;
 public String author_desc;
 public String profile;
 public String label;
 public int category;
 public String content;
-public int read_cnt;
-public int favor_cnt;
-public boolean original_flag;
+public Integer read_cnt=0;
+public Integer favor_cnt=0;
+public boolean original_flag = true;
 public String original_link;
 public int music;
 public String portrait;
@@ -24,12 +25,18 @@ public String create_date;
 public String create_time;
 public int authority;
 public boolean del_flag;
-
+private final String splitTag =",";
 public Essay(){
 	setCreate_date(TimeManager.getDate());
 	setCreate_time(TimeManager.getTime());
 }
-
+public String[] getLabels(){
+	if(!StringUtils.isEmpty(label)){
+		return label.split(splitTag);
+	}else{
+		return null;
+	}
+}
 public String getSubtitle() {
 	return subtitle;
 }
@@ -100,7 +107,11 @@ public String getLabel() {
 	return label;
 }
 public void setLabel(String label) {
-	this.label = label;
+	if(StringUtils.notEmpty(label)){
+		this.label = label.replaceAll(" ","").replaceAll(splitTag+"+$", "");
+	}else{
+		this.label = label;
+	}
 }
 public int getCategory() {
 	return category;
@@ -118,6 +129,9 @@ public boolean isOriginal_flag() {
 	return original_flag;
 }
 public void setOriginal_flag(boolean original_flag) {
+	if(!original_flag){
+		this.author = this.author.replace("徐大海", "");
+	}
 	this.original_flag = original_flag;
 }
 public String getOriginal_link() {

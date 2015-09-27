@@ -24,6 +24,7 @@ color:#FF0000;
 </div>
   </div>
 <script type="text/javascript">
+var classType = getClass('prevImg',/cover-\w+/);
 var jcrop_api,
 boundx,
 boundy,
@@ -32,6 +33,7 @@ $pimg = $('#preview-pane #preview-container img'),
 xsize = $pcnt.width(),
 ysize = $pcnt.height()
 originalImg = $('#prevImg').attr('src');
+originalImgUUID = $('#cover').attr('value');
 clears();
 var bounds;
 $('#target').Jcrop({
@@ -42,7 +44,6 @@ $('#target').Jcrop({
 	  boxWidth:600,
 	  aspectRatio: xsize / ysize
 	},function(){
-		console.info('hi');
 	  jcrop_api = this;
 	});
 function updatePreview(c)
@@ -91,7 +92,8 @@ function setImg(url){
 	jcrop_api.setImage(url);
 	$('img[name=target]').eq(1).load(function(){//等待图片加载完毕
 	$('#preview-container').addClass('border-frame-light');
-	$('#prevImg').removeClass('cover-note');
+	
+	$('#prevImg').removeClass(classType);
 		 bounds = jcrop_api.getBounds();
 		 boundx = bounds[0];
 		 boundy = bounds[1];
@@ -102,13 +104,13 @@ function setImg(url){
 			});
 	};
 	function recover(){
-		$('#prevImg').addClass('cover-note');
+		$('#prevImg').addClass(classType);
 		$('#preview-container').removeClass('border-frame-light');
 		hideJQ('#pop');
 		hideJQ('.overlay');
 	}
 	function clears(){
-		$('#cover').val("");
+		$('#cover').val(originalImgUUID);
 		$('#imgUrl').val("");
 		$('#cutArgs input[type=text]').val(0);
 		$("#prevImg").removeAttr("style");

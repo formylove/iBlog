@@ -20,7 +20,7 @@ $(function(){
 					<div class="widget-ct pic-widget">
 					<s:iterator value="recommendations" id="record" status="st">
 						<div class="item">
-							<a href=<s:if test="#record.category == 5003">"<s:property value='#record.original_link'/>" onclick="readEssay(<s:property value='#record.id'/>);" </s:if><s:else>"essay/<s:property value='#record.id'/>/"</s:else>
+							<a href=<s:if test='#record.category == 5003'>"<s:property value='#record.original_link'/>" onclick="readEssay(<s:property value='#record.id'/>);" </s:if><s:else>"essay/<s:property value='#record.id'/>/"</s:else>
 							target="_blank" title="<s:property value='#record.title'/>" class="cover-wrapper">
 								<img src="http://7xkszy.com2.z0.glb.qiniucdn.com//pics/essays/201507/55a8aba2aaf47.jpg" alt="<s:property value='#record.title'/>" class="essay-cover rounded">
 							</a>

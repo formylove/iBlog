@@ -28,8 +28,16 @@ public class UrlFilter implements Filter{
 	public void doFilter(ServletRequest req, ServletResponse res,	FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request=(HttpServletRequest)req;
 		String url=request.getRequestURI().toLowerCase();
-	Log.print(url);
+		request.getHeader("user-agent");
+	Log.print("agent:"+request.getHeader("user-agent"));
+	Log.print("url:"+url);
+	Log.print("RemoteAddr:"+request.getRemoteAddr());
+	Log.print("LocalAddr:"+request.getLocalAddr());
+	Log.print("LocalName:"+request.getLocalName());
+	Log.print("getRealPath:"+request.getRealPath(null));
 	HttpServletResponse response=(HttpServletResponse) res;
+	
+	
 	if(Pattern.compile("essay/edit/?$").matcher(url).find()){
 		response.sendRedirect("essayAction.action?method:editEssay");//等于完全重新发出一次请求，还需要重新过滤
 	}else if(Pattern.compile("essay/edit/2\\d{3}?$").matcher(url).find()){

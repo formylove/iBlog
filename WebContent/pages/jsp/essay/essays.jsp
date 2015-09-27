@@ -8,12 +8,12 @@ import="main.src.entity.essay.Essay,main.src.common.StringUtils,main.src.common.
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>那些文字</title>
 <%request.setAttribute("importParams", "jquery|sticky.js|essay.css|Akita.js|end"); %>
-<%@ include file="../snippets/static_js_css.jsp" %>
+<jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body style="position:relative;">
 <%@ include file="../snippets/navigator.jsp" %>
 					<!-- aside-left start-->
-<%@ include file="../snippets/aside_left.jsp" %>
+<jsp:include page="../snippets/aside_left.jsp" />
 			<!--/// aside-right end-->
 <div class="container" style="min-height: 221px;">	
 		
@@ -84,12 +84,12 @@ import="main.src.entity.essay.Essay,main.src.common.StringUtils,main.src.common.
 				</s:iterator>
 				</div>
 				<!--/// essay-list end-->
-			<%@ include file="../snippets/pagination.jsp" %>
+			<jsp:include page="../snippets/pagination.jsp" />
 			</div>
 			<!--/// article end-->
 
 			<!-- aside-right start-->
-<%@ include file="../snippets/aside_right.jsp" %>
+<jsp:include page="../snippets/aside_right.jsp" />
 			<!--/// aside-right end-->
 
 		</div>

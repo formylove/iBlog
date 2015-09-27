@@ -35,7 +35,10 @@ public class Test {
 //    	System.out.println("wocao?");
 //    	Map i =new HashMap<>();
 //    	i.put("", "fff");
-    	String imgUrl="http://ww4.sinaimg.cn/bmiddle/d54a1fa7jw1ew9wd40pxdj218g0p044p.jpg";
-    	ImageUtils.saveImageFromUrl(imgUrl);
+//    	String imgUrl="http://ww4.sinaimg.cn/bmiddle/d54a1fa7jw1ew9wd40pxdj218g0p044p.jpg";
+//    	ImageUtils.saveImageFromUrl(imgUrl);
+    	
+    	
+    	System.out.println("iiii,,f,,,".replaceAll(",+$", ""));
     }
 }

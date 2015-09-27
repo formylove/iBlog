@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>微信号</title>
-<%request.setAttribute("importParams", "jquery|index.js|common.css|Akita.js|end"); %>
-<%@ include file="../snippets/static_js_css.jsp" %>
+<%request.setAttribute("importParams", "jquery|common.css|Akita.js|end"); %>
+<jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>
 <%@ include file="../snippets/navigator.jsp" %>

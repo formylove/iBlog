@@ -9,7 +9,7 @@
 <%
 	request.setAttribute("importParams", "jquery|common.css|ZeroClipboard.js|Akita.js|end");
 %>
-<%@ include file="../snippets/static_js_css.jsp"%>
+<jsp:include page="../snippets/static_js_css.jsp"/>
 	<script type="text/javascript">
 	function init(){
   	clip = new ZeroClipboard.Client();

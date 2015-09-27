@@ -17,9 +17,6 @@
 		
 
 		
-		<action name="commentAction" class="main.src.action.CommentAction">
-			<result name="success">/pages/jsp/essay/saved.jsp</result>
-		</action>
 		
 
 
@@ -30,12 +27,11 @@
 
 		<package name="default2" extends="json-default">  
 		<global-results>
-
 			<result name="exception">/pages/jsp/common/runtimeExceptionPage.jsp</result>
 			<result name="login">/pages/jsp/login.jsp</result>
 			<result name="main">/pages/jsp/main.jsp</result>
-
 		</global-results>
+		
 		
 		<global-exception-mappings>
 			<exception-mapping result="exception" exception="java.lang.Exception" />
@@ -53,7 +49,9 @@
 			<result name="recovered" type="json"></result>
 			<result name="like" type="json"></result>
 		</action>
-		
+		<action name="commentAction" class="main.src.action.CommentAction">
+			<result name="success" type="json"></result>
+		</action>
 		<action name="noteAction" class="main.src.action.NoteAction" >
 			<result name="notepage">/pages/jsp/note/note.jsp</result>
 			<result name="editnote">/pages/jsp/note/editNote.jsp</result>
@@ -75,9 +73,6 @@
 			<result name="croped">/pages/jsp/gallery.jsp</result>
 		</action>
 		
-		<action name="commentAction" class="main.src.action.CommentAction">
-			<result name="conveycomments" type="json"></result>
-		</action>
 		
 	</package>
 

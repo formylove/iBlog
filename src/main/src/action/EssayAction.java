@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
+import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
 import main.src.common.SqlUtils;
 import main.src.common.StringUtils;
@@ -18,17 +19,15 @@ import main.src.entity.Category;
 import main.src.entity.essay.Essay;
 import main.src.service.CategoryService;
 import main.src.service.EssayService;
+import main.src.service.NoteService;
 public class EssayAction {
+private float w;
+private float h;
+private float x;
+private float y;
+String profile;
 Essay essay;
-String editor;
 String title;
-String author;
-String label;
-int categoryId;
-int authority;
-int music;
-String original_link;
-boolean isOriginal;
 //edit essay
 int id;
 Map<String, String> authorities = (new MsgConstants()).AUTHORITY;
@@ -50,29 +49,18 @@ public String listEssay(){
 	return MsgConstants.Essays;
 }
 public String saveEssay() throws NumberFormatException, UnsupportedEncodingException{
-	Map<String,Object> data=new HashMap<String,Object>();
-		data.put("title", title);
-		data.put("author", author);
-		data.put("music", music);
-		if(label!=null){
-			data.put("label", label);
-		}
-		data.put("category", categoryId);
-		data.put("content", editor);
-		data.put("original_flag", isOriginal);
-		if(original_link!=null){
-			data.put("original_link", original_link);
-		}
-		data.put("authority", authority);
-		if(id==0){//创建日志
-			data.put("create_date", TimeManager.getDate());
-			data.put("create_time", TimeManager.getTime());
-			int essayId = SqlUtils.executeInsert(data, "essay");
-			essay=EssayService.getEssay(essayId);
-		}else{//修改文章
-			SqlUtils.executeUpdate(data, "essay", "id ="+id);
-			essay=EssayService.getEssay(id);
-		}
+    if(id==0){
+    	if(!StringUtils.isEmpty(profile)){
+    		essay.setProfile(ImageUtils.cut(profile, w, h, x, y));
+    	}
+    	id = EssayService.saveEssay(essay);
+    }else{
+    	if(!essay.getProfile().equals(profile)){
+    		ImageUtils.deleteImg(essay.getProfile());
+    		essay.setProfile(ImageUtils.cut(profile, w, h, x, y));
+    	}
+    	EssayService.updateEssay(id, essay);
+    }
 		return MsgConstants.ESSAYPAGE;
 }
 
@@ -81,37 +69,28 @@ public String readEssay(){
 	    return null;
 }
 public String loadEssay(){
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int essayId=Integer.parseInt(request.getParameter("id"));
-	essay=EssayService.getEssay(essayId);
-	EssayService.readEssay(essayId);
-	StringUtils.truncate(essay.author_desc, 30);
-	
+	essay=EssayService.getEssay(id);
+	EssayService.readEssay(id);
 	return MsgConstants.ESSAYPAGE;
 }
 
 public String editEssay(){
-	
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	essay=EssayService.getEssay(essayId);
+	if(id!=0){
+		essay=EssayService.getEssay(id);
+	}
 	categories = CategoryService.getAllCategories(true);
 	
 	return "editessay";
 }
 
 public String deleteEssay(){
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	EssayService.deleteEssay(essayId);
-	essay = EssayService.getEssay(essayId);
+	EssayService.deleteEssay(id);
+	essay = EssayService.getEssay(id);
 	return MsgConstants.DELETED;
 }
 
 public String recoverEssay(){
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	EssayService.recoverEssay(essayId);
+	EssayService.recoverEssay(id);
 	return MsgConstants.RECOVERED;
 }
 
@@ -120,16 +99,12 @@ public String hasExisted(){
 	return MsgConstants.REDUPLICATIVE;
 }
 public String like(){
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	EssayService.likeEssay(essayId);
+	EssayService.likeEssay(id);
 	return MsgConstants.LIKE;
 }
 
 public String undoLike(){
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int essayId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	EssayService.undoLikeEssay(essayId);
+	EssayService.undoLikeEssay(id);
 	return MsgConstants.LIKE;
 }
 
@@ -170,13 +145,6 @@ public List<Essay> getEssays() {
 public void setEssays(List<Essay> essays) {
 	this.essays = essays;
 }
-public int getMusic() {
-	return music;
-}
-
-public void setMusic(int music) {
-	this.music = music;
-}
 
 
 public void setHasExisted(boolean hasExisted) {
@@ -187,21 +155,7 @@ public boolean isHasExisted() {
 	return hasExisted;
 }
 
-public String getAuthor() {
-	return author;
-}
 
-public void setAuthor(String author) {
-	this.author = author;
-}
-
-public int getAuthority() {
-	return authority;
-}
-
-public void setAuthority(int authority) {
-	this.authority = authority;
-}
 public int getId() {
 	return id;
 }
@@ -226,13 +180,6 @@ public void setEssay(Essay essay) {
 	this.essay = essay;
 }
 
-public String getEditor() {
-	return editor;
-}
-
-public void setEditor(String editor) {
-	this.editor = editor;
-}
 
 public String getTitle() {
 	return title;
@@ -241,38 +188,35 @@ public String getTitle() {
 public void setTitle(String title) {
 	this.title = title;
 }
-
-public String getLabel() {
-	return label;
+public float getW() {
+	return w;
 }
-
-public void setLabel(String label) {
-	this.label = label;
+public void setW(float w) {
+	this.w = w;
 }
-
-public int getCategoryId() {
-	return categoryId;
+public float getH() {
+	return h;
 }
-
-public void setCategoryId(int categoryId) {
-	this.categoryId = categoryId;
+public void setH(float h) {
+	this.h = h;
 }
-
-public String getOriginal_link() {
-	return original_link;
+public float getX() {
+	return x;
 }
-
-public void setOriginal_link(String original_link) {
-	this.original_link = original_link;
+public void setX(float x) {
+	this.x = x;
 }
-
-public boolean isOriginal() {
-	return isOriginal;
+public float getY() {
+	return y;
 }
-
-public void setOriginal(boolean isOriginal) {
-	this.isOriginal = isOriginal;
+public void setY(float y) {
+	this.y = y;
 }
-
+public String getProfile() {
+	return profile;
+}
+public void setProfile(String profile) {
+	this.profile = profile;
+}
 
 }

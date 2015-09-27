@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
+import main.src.common.StringUtils;
 import main.src.entity.Genre;
 import main.src.entity.essay.Essay;
 import main.src.entity.note.Opus;
@@ -34,7 +35,6 @@ Map<String, String> rate = MsgConstants.RATE;
 String title;
 String cover;
 boolean hasExisted;
-
 //essay list
 List<Essay> essays;
 List<Essay> recommendations;
@@ -48,9 +48,18 @@ public String listNote(){
 	return MsgConstants.Essays;
 }
 public String saveNote() throws NumberFormatException, UnsupportedEncodingException{
-		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
-		id = NoteService.saveNote(note, opus);
-			System.out.println("opus   "+opus.genre);
+	    if(id==0){
+	    	if(!StringUtils.isEmpty(cover)){
+	    		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    	}
+	    	id = NoteService.saveNote(note, opus);
+	    }else{
+	    	if(!opus.getCover().equals(cover)){
+	    		ImageUtils.deleteImg(opus.getCover());
+	    		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    	}
+	    	NoteService.updateNote(id, note, opus);
+	    }
 		return MsgConstants.NOTEPAGE;
 }
 
@@ -60,49 +69,44 @@ public String readNote(){
 }
 public String loadNote(){
 	note=(Essay) EssayService.getEssay(id);
-	EssayService.readEssay(id);
+	opus=NoteService.getOpus(id);
 	return MsgConstants.NOTEPAGE;
 }
 
 public String editNote(){
-	note=(Essay) EssayService.getEssay(id);
+	if(id!=0){
+		note=EssayService.getEssay(id);
+		opus = NoteService.getOpus(id);
+	}
 	genres = (List<Genre>) Genre.getAllGenre(false);
 	return "editnote";
 }
 
 public String deleteNote(){
-	EssayService.deleteEssay(id);
-	note = (Essay) EssayService.getEssay(id);
+	NoteService.deleteNote(id);
+	note=EssayService.getEssay(id);
+	opus = NoteService.getOpus(id);
 	return MsgConstants.DELETED;
 }
 
 public String recoverNote(){
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int noteId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	EssayService.recoverEssay(noteId);
+	NoteService.recoverNote(id);
 	return MsgConstants.RECOVERED;
 }
 
 public String hasExisted(){
 	hasExisted = EssayService.hasExisted(title);
-	System.out.println("####################лл###############");
 	return MsgConstants.REDUPLICATIVE;
 }
 public String like(){
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int noteId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	EssayService.likeEssay(noteId);
+	EssayService.likeEssay(id);
 	return MsgConstants.LIKE;
 }
 
 public String undoLike(){
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int noteId=(request.getParameter("id")==null)?0:Integer.parseInt(request.getParameter("id"));
-	EssayService.undoLikeEssay(noteId);
+	EssayService.undoLikeEssay(id);
 	return MsgConstants.LIKE;
 }
-
-
 public String getCover() {
 	return cover;
 }

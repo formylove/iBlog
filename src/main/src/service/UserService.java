@@ -16,4 +16,7 @@ public class UserService {
 		User user=((List<User>)SqlUtils.executeQuery(sql, null, User.class)).get(0);
 		return user;
 	}
+	static public User getcurLoginUser(){
+		return getUser(2);
+	}
 }

@@ -3,6 +3,77 @@
 	width:220px;
 	height:156px;
 }
+.essay-detail-wrapper .essay-author-wrapper {
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 35px;
+    padding: 20px 0
+}
+
+.essay-detail-wrapper .essay-author-wrapper .title {
+    font-size: 14px;
+    margin-bottom: 10px
+}
+
+.essay-detail-wrapper .essay-author {
+    float: left;
+    width: 260px;
+    padding-right: 50px;
+    border-right: 1px solid #e5e5e5;
+    margin-right: 49px
+}
+
+.essay-detail-wrapper .essay-authors {
+    float: left;
+    width: 285px;
+    padding-right: 25px;
+    border-right: 1px solid #e5e5e5;
+    margin-right: 49px
+}
+
+.essay-detail-wrapper .avatar-wrapper {
+    display: block;
+    float: left
+}
+
+.essay-detail-wrapper .avatar {
+    display: block;
+    height: 60px;
+    width: 60px;
+    border-radius: 30px
+}
+
+.essay-detail-wrapper .essay-author-info {
+    float: left;
+    width: 185px;
+    margin-left: 15px;
+    height: 60px;
+    display: table
+}
+
+.essay-detail-wrapper .cell {
+    display: table-cell;
+    vertical-align: middle
+}
+
+.essay-detail-wrapper .essay-author-name {
+    color: #dd5862
+}
+
+.essay-detail-wrapper .copyright {
+    float: left;
+    width: 260px
+}
+
+.essay-detail-wrapper .multi-authors .avatar-wrapper {
+    float: none;
+    display: inline-block;
+    margin-left: 16px;
+    line-height: 1;
+    color: #dd5862
+}
+
+
 .crop-overlay{
 	display:none;
 	width:500px;
@@ -28,6 +99,9 @@
     z-index: 111; /* 1px higher than the overlay layer */
 }
 /* width$ */
+.width-30{
+	width:30%;
+}
 .width-40{
 	width:40%;
 }
@@ -89,15 +163,14 @@
 .margin-b-20{
 	margin-bottom:10px;
 }
-
+.margin-b-25{
+	margin-bottom:25px;
+}
 /* margin$ */
 .nfloat{
 	float:none;
 }
 .height-input{
-	height:27px;
-}
-input{
 	height:27px;
 }
 .icon-sns-zhihu {
@@ -160,6 +233,16 @@ input{
   position:relative;
   z-index:6;
 }
+.preview-container-essay {
+  width: 220px;
+  height: 158px;
+  overflow: hidden;
+   border-radius:10px;
+  border:1px rgba(0, 0, 0, 0.3) solid;
+  overflow: hidden;
+  position:relative;
+  z-index:6;
+}
 .border-frame{
 	  border-radius:12px;
   border: 1px #bbb solid;
@@ -182,11 +265,13 @@ input{
   height: 170px;
   overflow: hidden;
 }
-.preview-container-essay {
+.cover-essay
+ {
   width: 220px;
-  height: 158px;
+  height: 156px;
   overflow: hidden;
 }
+
 .cover-essay {
   width: 220px;
   height: 158px;
@@ -2694,7 +2779,4 @@ html[xmlns] .slides {
 
 .hidden{
 	display:none;
-}
-.margin-b-25{
-	margin-bottom:25px;
 }

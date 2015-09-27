@@ -1,3 +1,89 @@
+function detectAreaVal(me,she,emptyClass,availClass){
+	var sub = $("#"+she);
+	if($("#"+me).val()==''){//textarea用val取值
+		sub.addClass(emptyClass);
+		sub.removeClass(availClass);
+		sub.attr("disabled","disabled");
+	}else{
+		sub.addClass(availClass);
+		sub.removeClass(emptyClass);
+		sub.removeAttr("disabled");
+	}
+}
+
+		function setCheckbox(me,val){
+				$('#'+me).val(val);
+			}
+			function getClass(me,reg){
+					return $('#'+me).attr("class").match(reg)[0];
+				}
+			function showCoupleForCheckbox(me,she,val){
+				if($('#'+me).prop("checked") == Boolean(val)){
+					$('#'+she).removeClass("hidden");
+				}else{
+					$('#'+she).addClass("hidden");
+				}
+			}
+function deleteObj(type,id){
+				var url;
+				if(type=="note"){
+					url ="noteAction.action?method:deleteNote&id="+id;
+				}else if(type=="essay"){
+					url ="essayAction.action?method:deleteEssay&id="+id ;
+				}
+				 $.ajax({
+					 url:url,
+					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
+					 type:'post',
+					 success:function(data){
+						 $("delete").addClass("hidden");
+						 $("recover").removeClass("hidden");
+						 alert('文章删除成功');
+					 }
+				 });
+			}
+			function recoverObj(type,id){
+				var url;
+				if(type=="note"){
+					url ="noteAction.action?method:deleteNote&id="+id;
+				}else if(type=="essay"){
+					url ="essayAction.action?method:deleteEssay&id="+id ;
+				}
+				 $.ajax({
+					 url:url,
+					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
+					 type:'post',
+					 success:function(data){
+						 $("recover").addClass("hidden");
+						 $("delete").removeClass("hidden");
+						 alert('文章恢复成功');
+					 }
+				 });
+			}
+			 function like(id){
+				 $.ajax({
+					 url:"noteAction.action?method:like&id="+id,
+					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
+					 type:'post',
+					 success:function(data){
+						 document.getElementById("like").className="icon-essay-fav hidden";
+						 document.getElementById("liked").className="icon-essay-faved";
+						 document.getElementById("favorcnt").innerText=parseInt(document.getElementById("favorcnt").innerText)+1;
+					 }
+				 });
+			}
+			 function undoLike(id){
+				 $.ajax({
+					 url:"noteAction.action?method:undoLike&id="+id,
+					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
+					 type:'post',
+					 success:function(data){
+						 document.getElementById("like").className="icon-essay-fav";
+						 document.getElementById("liked").className="icon-essay-faved hidden";
+						 document.getElementById("favorcnt").innerText=parseInt(document.getElementById("favorcnt").innerText)-1;
+					 }
+				 });
+			}
 function addLabel(me){
 	if($("span[name='labelIterm']").size()<5){
 		var she = $('#labelIterm').clone();
@@ -12,14 +98,42 @@ function redLabel(me){
 	}
 	checkTokenDis($("span[name='labelIterm']").size());
 }
+function addCast(me){
+	if($("span[name='CastIterm']").size()<5){
+		var she = $('#CastIterm').clone();
+		she.children().first().val("");
+		me.before(she);
+	}
+	checkToken($("span[name='CastIterm']").size());
+}
+function redCast(me){
+	if($("span[name='CastIterm']").size()>1){
+		$("span[name='CastIterm']").last().remove();
+	}
+	checkToken($("span[name='CastIterm']").size());
+}
 function checkTokenDis(size){
 	if(size==5){
 		$("#add").addClass("hidden");
+		$("#reduce").removeClass("hidden");
 	}else if(size==1){
+		$("#add").removeClass("hidden");
 		$("#reduce").addClass("hidden");
 	}else{
 		$("#add").removeClass("hidden");
 		$("#reduce").removeClass("hidden");
+	}
+}
+function checkToken(size){
+	if(size==5){
+		$("#add2").addClass("hidden");
+		$("#reduce2").removeClass("hidden");
+	}else if(size==1){
+		$("#add2").removeClass("hidden");
+		$("#reduce2").addClass("hidden");
+	}else{
+		$("#add2").removeClass("hidden");
+		$("#reduce2").removeClass("hidden");
 	}
 }
 function getScreenWidth(){

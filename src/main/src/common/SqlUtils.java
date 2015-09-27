@@ -294,7 +294,9 @@ public class SqlUtils {
 					}
 				}else{
 					try {
-						sql = sql + field.getName() + "=" + BeanUtils.getProperty(entity, field.getName()) + ",";
+						if(!"id".equalsIgnoreCase(field.getName())){
+							sql = sql + field.getName() + "=" + BeanUtils.getProperty(entity, field.getName()) + ",";
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -311,6 +313,15 @@ public class SqlUtils {
 	
 	
 	public static int executeDelete(String tableName,String condition) {
+		String sql="update "+tableName+" set del_flag=1 "+" where "+condition;
+		return executeUpdate(sql, null);
+	}
+	public static int executeRecovery(String tableName,String condition) {
+		String sql="update "+tableName+" set del_flag=0 "+" where "+condition;
+		return executeUpdate(sql, null);
+	}
+	
+	public static int executeDeleteEver(String tableName,String condition) {
 		String sql="delete from "+tableName+" where "+condition;
 		return executeUpdate(sql, null);
 	}

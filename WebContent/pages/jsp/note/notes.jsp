@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>札记</title>
 <%request.setAttribute("importParams", "jquery|note.css|sticky.js|Akita.js|end"); %>
-<%@ include file="../snippets/static_js_css.jsp" %>
+<jsp:include page="../snippets/static_js_css.jsp">
 </head>
 <body>
 <%@ include file="../snippets/navigator.jsp" %>

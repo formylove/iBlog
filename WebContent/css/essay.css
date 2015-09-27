@@ -1,5 +1,5 @@
-.hidden{
-	display:none;
+.cursor-pointer:hover{
+	cursor:pointer;
 }
 .aside-left {
     float: left;
@@ -3897,4 +3897,6 @@ table.aui_border,table.aui_dialog {
     line-height: 1;
     color: #dd5862
 }
-
+.hidden{
+	display:none;
+}

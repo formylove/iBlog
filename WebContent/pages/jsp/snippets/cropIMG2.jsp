@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%request.setAttribute("importParams", "jquery|common.css|Jcrop|end"); %>
-<%@ include file="../snippets/static_js_css.jsp" %>
+<jsp:include page="../snippets/static_js_css.jsp">
 <!DOCTYPE html>
 <html>
 <head>

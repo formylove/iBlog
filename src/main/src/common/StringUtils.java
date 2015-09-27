@@ -12,6 +12,9 @@ static public String removeTag(String raw){
 static public boolean isEmpty(String raw){
 	return (raw==null || "".equals(raw));
 }
+static public boolean notEmpty(String raw){
+	return (raw!=null && !"".equals(raw));
+}
 static public String truncate(String raw,int cnt){
 	if(!isEmpty(raw)){
 		if(raw.length()>cnt){

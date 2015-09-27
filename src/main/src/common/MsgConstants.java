@@ -56,7 +56,7 @@ static {
 	AUTHORITY.put("2", "珠海ip不可见");
 	
 	RATE.put("nope", "评价");
-	RATE.put("极好的", "极好的");
+	RATE.put("再读一遍！", "再读一遍！");
 	RATE.put("必读", "必读");
 	RATE.put("值得一读", "值得一读");
 	RATE.put("可以一读", "可以一读");

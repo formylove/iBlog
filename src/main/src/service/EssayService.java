@@ -19,10 +19,10 @@ public class EssayService {
 	static final int PERPAGE = 10; 
 	
 	static public Essay getEssay(int id){
-		List<Essay> diaries=getDiaries("id="+id);
-		if(diaries.size()==1)
+		List<Essay> essays=getEssays("id="+id);
+		if(essays.size()==1)
 		{
-			return diaries.get(0);
+			return essays.get(0);
 		}else{
 			return null;
 		}
@@ -31,18 +31,18 @@ public class EssayService {
 	static public int getLatestEssayId(){
 		String sql="SELECT * from essay order by id DESC LIMIT 0,1";
 		@SuppressWarnings("unchecked")
-		List<Essay> diaries=(List<Essay>)SqlUtils.executeQuery(sql, null, Essay.class);
-		if(diaries.size()==1)
+		List<Essay> essays=(List<Essay>)SqlUtils.executeQuery(sql, null, Essay.class);
+		if(essays.size()==1)
 		{
-			return (diaries.get(0)).getId();
+			return (essays.get(0)).getId();
 		}else{
 			return 0;
 		}
 	}
 	
 	static public boolean hasExisted(String title){
-		List<Essay> diaries= getDiaries("title ='"+ title +"'");
-		if(diaries.size()==1)
+		List<Essay> essays= getEssays("title ='"+ title +"'");
+		if(essays.size()==1)
 		{
 			return true;
 		}else{
@@ -51,28 +51,28 @@ public class EssayService {
 	}
 	
 	static public boolean hasForwarded(String url){
-		List<Essay> diaries= getDiaries("original_link ='"+ url +"' and del_flag = 0");
-		if(diaries.size()>=1)
+		List<Essay> essays= getEssays("original_link ='"+ url +"' and del_flag = 0");
+		if(essays.size()>=1)
 		{
 			return true;
 		}else{
 			return false;
 		}
 	}
-	static public List<Essay> getDiaries(String condition){
+	static public List<Essay> getEssays(String condition){
 		String sql="SELECT * from essay where " + condition;
 		@SuppressWarnings("unchecked")
-		List<Essay> diaries=(List<Essay>)SqlUtils.executeQuery(sql, null, Essay.class);
-			return diaries;
+		List<Essay> essays=(List<Essay>)SqlUtils.executeQuery(sql, null, Essay.class);
+			return essays;
 	}
 	
 	static public int forward(String url){
-		List<Essay> diaries = getDiaries("original_link= '"+url +"'");
-		if(diaries.size() == 0){
+		List<Essay> essays = getEssays("original_link= '"+url +"'");
+		if(essays.size() == 0){
 			return loadForwardEssay(url);
-		}else if(diaries.get(0).isDel_flag()){
+		}else if(essays.get(0).isDel_flag()){
 			recoverEssay(url);
-			return diaries.get(0).getId();
+			return essays.get(0).getId();
 		}else{
 			deleteEssay("original_link='"+url+"'");
 			return 0;
@@ -101,13 +101,11 @@ public class EssayService {
 	}
 	
 	static public int deleteEssay(int id){
-		String sql="update  essay set del_flag=1 where id="+id;
-		return SqlUtils.executeUpdate(sql, null);
+		return SqlUtils.executeDelete(TABLE_ESSAY, "id="+id);
 	}
 	
 	static public int recoverEssay(int id){
-		String sql="update  essay set del_flag=0 where id="+id;
-		return SqlUtils.executeUpdate(sql, null);
+		return SqlUtils.executeRecovery(TABLE_ESSAY, "id="+id);
 	}
 	
 	static public int recoverEssay(String url){
@@ -136,16 +134,16 @@ public class EssayService {
 		return 0;
 	}
 	
-	static public List<Essay> getDiaries(int start,int end){
+	static public List<Essay> getEssays(int start,int end){
 		String sql="select * from essay limit start-1,end-start+1 where del_flag<>1";
 		@SuppressWarnings("unchecked")
-		List<Essay> diaries=(List<Essay>)SqlUtils.executeQuery(sql, new Object[]{start,end}, Essay.class);
-		return diaries;
+		List<Essay> essays=(List<Essay>)SqlUtils.executeQuery(sql, new Object[]{start,end}, Essay.class);
+		return essays;
 	}
 	
 	
-	static public List<Essay> getDiaries4Page(int page,int pageSize){
-		return getDiaries((page-1)*pageSize+1,page*pageSize);
+	static public List<Essay> getEssays4Page(int page,int pageSize){
+		return getEssays((page-1)*pageSize+1,page*pageSize);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -209,7 +207,6 @@ public class EssayService {
 	}
 	
 	static public int saveEssay(Essay essay){
-		System.out.println(essay.getClass().getSimpleName());
 		return SqlUtils.executeInsert(essay);
 	}
 	
@@ -220,11 +217,12 @@ public class EssayService {
 	static public int updateEssay(String condition ,Essay essay){
 		return SqlUtils.executeUpdate(condition, essay);
 	}
+	static public int updateEssay(int id ,Essay essay){
+		return SqlUtils.executeUpdate("id="+id, essay);
+	}
 	
 	static public int deleteEssay(String condition){
-		Map<String,Object> flag=new HashMap<String, Object>();
-		flag.put("del_flag", 1);
-		return updateEssay(flag,condition);
+		return SqlUtils.executeDelete(TABLE_ESSAY,condition);
 	}
 	
 	

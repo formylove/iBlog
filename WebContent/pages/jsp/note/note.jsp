@@ -7,27 +7,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${note.title} - 札记</title>
 <%request.setAttribute("importParams", "jquery|note.css|end"); %>
-<%@ include file="../snippets/static_js_css.jsp" %>
+<jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>
 <%@ include file="../snippets/navigator.jsp" %>
-<div class="container ct-sm" style="min-height: 221px;">	
+<div class="container ct-sm essay-detail-wrapper" style="min-height: 221px;">	
 		<nav class="article-nav">
 			<a href="notes/" class="nav-back">
 				<i class="icon-back"></i>
 				返回札记首页
 			</a>
 		</nav>
+					<script type="text/javascript">
+
+			
+			</script>
 		<div class="event-head clearfix">
 			<img src="img/depot/${opus.cover}" alt="${note.title}" class="poster rounded">
 			<div class="event-meta">
 				<h1 style="font-size: 24px;">${note.title}</h1>
 				<p class="margin-b-25" style="margin-top: 0;  padding: 0;">
-				<span class="cursor-pointer" onclick="window.location.href='noteAction.action?method:editNote&id=<s:property value='note.id'/>'">修改</span>・
-				<s:if test="note.del_flag==false"><span id="delete" onclick="deleteNote();" class="cursor-pointer">删除</span><span id="recover" class="hidden" onclick="recoverNote();">恢复</span></s:if>
-				<s:else><span id="delete" class="hidden" onclick="deleteNote();">删除</span><span id="recover" onclick="recoverNote();" class="cursor-pointer">恢复</span></s:else>
+				<span class="cursor-pointer" onclick="window.location.href='noteAction.action?method:editNote&id=${id}'">修改</span>・
+				<s:if test="note.del_flag==false"><span id="delete" onclick="deleteObj('note','${id}');" class="cursor-pointer">删除</span><span id="recover" class="hidden cursor-pointer" onclick="recoverObj('note','${id}');">恢复</span></s:if>
+				<s:else><span id="delete" class="hidden" onclick="deleteObj('note','${id}');">删除</span><span id="recover" onclick="recoverObj('note','${id}');" class="cursor-pointer">恢复</span></s:else>
 				・<s:if test="note.original_flag">[原创]</s:if><s:else>[转发自]</s:else>&nbsp;
-				作者・<span><a href="<s:property value="note.author_link"/>"><s:property value="note.author"/></a></span>・<span><s:if test="!note.original_flag"><a href="<s:property value="note.original_link"/>" target="_blank" ><font color="red">[原文链接]</font></a></s:if><s:else>[原创]</s:else></span>・<s:property value="note.create_date"/></p>
+				作者・<span><a href="<s:property value="note.author_link"/>"><s:property value="note.author"/></a></span><s:if test="!note.original_flag">・<span><a href="<s:property value="note.original_link"/>" target="_blank" ><font color="red">[原文链接]</font></a></span></s:if>・<s:property value="note.create_date"/></p>
 				<s:iterator value="opus.getMeta()" id="entry">
 				<p class="meta"><s:property value="key"/>:
 				<s:property value="value"/></p>
@@ -40,7 +44,49 @@
 			<h3 class="title">札记</h3>
 			<div class="ct">${note.content}</div>
 		</div>
-
+			<!-- 点赞区 -->		 
+		<div class="essay-share">
+				<a href="javascript:;" >
+					<span id="like" class="icon-essay-fav"  onclick="like('${id}');" style="margin-right:5px;" ></span>
+					<span id="liked" class="icon-essay-faved hidden"  onclick="undoLike('${id}');" style="margin-right:5px;" ></span>
+					<span id="favorcnt"><s:property value="note.favor_cnt"/></span>
+				</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="javascript:;" class="btn-share btn-action-share" data-app="essay" data-id="520'" data-text="这篇文章值得一读【惘闻：艺术与声音的即兴合作——奇迹寻踪】（分享自@落网）" data-img="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/essays/201508/55d5b1119b303.jpg" title="分享">
+					<span class="icon-essay-share"></span>
+				</a>
+			</div>	
+<!-- 作者信息 -->
+					<s:if test="note.author != null && note.author != '' ">
+					 <div class="essay-author-wrapper clearfix">
+				<div class="essay-author">
+					<p class="title">
+						文章作者
+					</p>
+						<div class="clearfix">
+							<a href="<s:property value='note.author_link'/>" class="avatar-wrapper">
+								<img src="<s:property value='note.portrait'/>" alt="<s:property value='note.author'/>" class="avatar rounded"/>
+							</a>
+							<div class="essay-author-info">
+								<div class="cell">
+									<a href="<s:property value='note.author_link'/>" class="essay-author-name">
+										<s:property value="note.author"/>
+									</a>
+									<p class="essay-author-sign"><s:property value='note.author_desc'/></p>
+								</div>
+							</div>
+						</div>
+										</div>
+				<div class="copyright">
+					<p class="title">
+						版权声明
+					</p>
+					<div class="copyright-ct">
+						「夜网」专栏内文章，如果侵权，立即删除
+					</div>
+				</div>
+			</div>
+			</s:if>
 	</div>
 <%@ include file="../snippets/footer.jsp" %>
 </body>

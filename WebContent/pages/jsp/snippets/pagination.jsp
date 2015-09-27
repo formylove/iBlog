@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%=request.getAttribute("page") %>
     <%
     int index = (request.getAttribute("page") == null || (Integer)request.getAttribute("page") == 0)?1:(Integer)request.getAttribute("page");
     System.out.print(index);

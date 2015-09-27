@@ -13,23 +13,27 @@ import main.src.common.NetStatusManager;
 import main.src.common.SqlUtils;
 import main.src.common.TimeManager;
 import main.src.entity.Comment;
+import main.src.entity.User;
 import main.src.service.CommentService;
+import main.src.service.UserService;
 
 public class CommentAction {
 	List<Comment> comments;
 	Comment comment;
-	String user_id;
+	String target_id;
+	String device;
+	User user;
+	String content;
 	String article_id;
 	String append;
 	String message;
 	int comment_id;
-
+	String date;
 
 	public String saveComment() throws UnsupportedEncodingException{
 		int id=CommentService.generateId();
 		Map<String,Object> data=new HashMap<String,Object>();	
 		data.put("id", id);
-		data.put("user_id", user_id);
 		data.put("target", article_id);
 		data.put("append", append);
 		data.put("content", message);
@@ -40,6 +44,15 @@ public class CommentAction {
 		SqlUtils.executeInsert(data, "comment");
 		comment = CommentService.getComment(id);
 		return "conveycomments";
+	}
+	public String addComment() throws UnsupportedEncodingException{
+		user = UserService.getcurLoginUser();
+		System.out.println("content:"+content);
+		System.out.println("target_id:"+target_id);
+		System.out.println("device:"+device);
+		System.out.println("user:"+user.getNick_name());
+		date = TimeManager.getDate();
+		return "success";
 	}
 
 public String loadComments(){
@@ -54,6 +67,24 @@ CommentService.deleteComment(comment_id);
 	return "conveycomments";
 }
 
+public String getDate() {
+	return date;
+}
+public void setDate(String date) {
+	this.date = date;
+}
+public String getTarget_id() {
+	return target_id;
+}
+public void setTarget_id(String target_id) {
+	this.target_id = target_id;
+}
+public String getContent() {
+	return content;
+}
+public void setContent(String content) {
+	this.content = content;
+}
 public List<Comment> getComments() {
 	return comments;
 }
@@ -70,14 +101,18 @@ public void setComment(Comment comment) {
 	this.comment = comment;
 }
 
-public String getUser_id() {
-	return user_id;
+public String getDevice() {
+	return device;
 }
-
-public void setUser_id(String user_id) {
-	this.user_id = user_id;
+public void setDevice(String device) {
+	this.device = device;
 }
-
+public User getUser() {
+	return user;
+}
+public void setUser(User user) {
+	this.user = user;
+}
 public String getArticle_id() {
 	return article_id;
 }
