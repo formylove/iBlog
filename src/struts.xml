@@ -72,6 +72,9 @@
 			<result name="test">/pages/html/x.html</result>
 			<result name="croped">/pages/jsp/gallery.jsp</result>
 		</action>
+		<action name="testAction" class="test.TestAction">
+			<result name="test">/pages/jsp/single/test.jsp</result>
+		</action>
 		
 		
 	</package>

@@ -44,12 +44,33 @@
 	    <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
 </filter-mapping>
+<filter>
+<filter-name>user detector</filter-name>
+<filter-class>main.src.filter.UserDetectFilter</filter-class>
+</filter>
+<filter-mapping>
+<filter-name>user detector</filter-name>
+		<url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+</filter-mapping>
 	<filter>
 		<filter-name>Struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>Struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>testFilter</filter-name>
+		<filter-class>main.src.filter.testFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>testFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	    <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>

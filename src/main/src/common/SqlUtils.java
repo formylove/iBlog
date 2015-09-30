@@ -210,47 +210,6 @@ public class SqlUtils {
 		executeUpdate(sql, null);
 		return getLatatestId();
 	}
-	// bean转换器
-	@SuppressWarnings("unchecked")
-	public static List<Object> MaptoBean(List<Map<String, Object>> resultSet,
-			Class entity) {
-		Object obj = null;
-		try {
-
-			obj = ConstructorUtils.invokeExactConstructor(entity, null);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// 存放返回对象
-		List<Object> beans = new ArrayList<Object>();
-		if (null != resultSet) {
-			for (Map<String, Object> result : resultSet) {
-				try {
-
-					obj = ConstructorUtils.invokeExactConstructor(entity, null);
-
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				for (Map.Entry<String, Object> entry : result.entrySet()) {
-
-					String key = entry.getKey();
-					Object value = entry.getValue();
-					try {
-						BeanUtils.setProperty(obj, key.toLowerCase(), value);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				beans.add(obj);
-			}
-		}
-		return beans;
-	}
 
 	public static int executeUpdate(Map<String, Object> data, String tableName,String condition) {
 		String sql = "update " + tableName + " set ";
@@ -346,8 +305,66 @@ public class SqlUtils {
 		
 		return 0;
 	}
+	public static String getField(String sql)  {
+		Statement st;
+		ResultSet rs;
+		try {
+			st = cnn.createStatement();
+			if(st.execute(sql)){
+				rs = st.getResultSet();
+				rs.next();
+				System.out.println("latestId:  "+rs.getString(1));
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	
-	
+	// bean转换器
+	@SuppressWarnings("unchecked")
+	public static List<Object> MaptoBean(List<Map<String, Object>> resultSet,
+			Class entity) {
+		Object obj = null;
+		try {
+
+			obj = ConstructorUtils.invokeExactConstructor(entity, null);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 存放返回对象
+		List<Object> beans = new ArrayList<Object>();
+		if (null != resultSet) {
+			for (Map<String, Object> result : resultSet) {
+				try {
+
+					obj = ConstructorUtils.invokeExactConstructor(entity, null);
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for (Map.Entry<String, Object> entry : result.entrySet()) {
+
+					String key = entry.getKey();
+					Object value = entry.getValue();
+					try {
+						BeanUtils.setProperty(obj, key.toLowerCase(), value);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				beans.add(obj);
+			}
+		}
+		return beans;
+	}
 	
 	
 	

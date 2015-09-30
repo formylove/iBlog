@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
@@ -37,8 +38,8 @@ public class Test {
 //    	i.put("", "fff");
 //    	String imgUrl="http://ww4.sinaimg.cn/bmiddle/d54a1fa7jw1ew9wd40pxdj218g0p044p.jpg";
 //    	ImageUtils.saveImageFromUrl(imgUrl);
+    	System.out.println(Pattern.compile("\\w+").matcher("sadf3ww3dfg45645").matches());
     	
-    	
-    	System.out.println("iiii,,f,,,".replaceAll(",+$", ""));
+//    	System.out.println("iiii,,f,,,".replaceAll(",+$", ""));
     }
 }

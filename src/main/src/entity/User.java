@@ -9,6 +9,7 @@ String nick_name;
 String login_name;
 String password;
 String portrait;
+String motto;
 String email;
 String QQ;
 String phone;
@@ -22,6 +23,12 @@ int login_Cnt;
 
 
 
+public String getMotto() {
+	return motto;
+}
+public void setMotto(String motto) {
+	this.motto = motto;
+}
 public int getId() {
 	return id;
 }

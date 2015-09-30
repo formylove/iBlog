@@ -62,6 +62,6 @@ static {
 	RATE.put("可以一读", "可以一读");
 	RATE.put("不值得读", "不值得读");
 	RATE.put("烂", "烂");
-	System.out.println("ios move on");
+	System.out.println("msgConstant moves on");
 }
 }

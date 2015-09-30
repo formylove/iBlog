@@ -23,4 +23,16 @@ static public String truncate(String raw,int cnt){
 	}
 	return raw;
 }
+static public String zeroFill(int raw_num,int length){
+	String raw = (String.valueOf(raw_num));
+	int org_length=raw.length();
+	for(int i = 0;i< length - org_length;i++){
+		raw = "0" + raw; //+=要练起来的！！！,而且加载了右边
+	}
+	return raw;
+}
+static public void main(String[] a){
+	
+	System.out.println(zeroFill(15,4));
+}
 }

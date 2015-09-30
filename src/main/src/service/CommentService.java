@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.src.common.SqlUtils;
+import main.src.common.StringUtils;
 import main.src.entity.Comment;
 
 public class CommentService {
@@ -32,6 +33,23 @@ public class CommentService {
 	static public int deleteComment(int id){
 		String sql="update comment set del_flag=1 where id="+id;
 		return SqlUtils.executeUpdate(sql, null);
+	}
+	static public String getFloor(String target_id){
+		String ceiling = SqlUtils.getField("SELECT SUBSTRING(MAX(id)+100 FROM 6 FOR 2) from `comment` WHERE id LIKE " + target_id + "'%'  ORDER BY id");
+		return ceiling;
+	}
+	static public String getCellula(String target_id,int floor){
+		String cellula = SqlUtils.getField("SELECT SUBSTRING(MAX(id)+1 FROM 8 FOR 2) from `comment` WHERE id LIKE " + target_id + StringUtils.zeroFill(floor,2) + "'%'  ORDER BY id");
+		return cellula;
+	}
+	static public int getCurId(String target_id,int floor){
+		int curId;
+		if(floor == 0){
+			curId = Integer.parseInt(target_id + getFloor(target_id) + "01");
+		}else{
+			curId = Integer.parseInt(target_id + StringUtils.zeroFill(floor,2) + getCellula(target_id,floor));
+		}
+		return curId;
 	}
 	
 	static public List<Comment> getComments(int start,int end){

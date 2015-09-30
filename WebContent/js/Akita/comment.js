@@ -1,7 +1,7 @@
 $(
 		function(){
 			$("#commentEditor").on("input",function(){detectAreaVal("commentEditor","commentSubmit","btn-not-ready","");});
-			$("#commentForm").submit(
+			$("#commentSubmit").click(
 				function (){ 
 				var Browsers;
 				$.getScript(getAgentJS(),function(){
@@ -18,8 +18,6 @@ $(
 				    }); 
 				
 				});
-
-			    return false; //阻止表单的默认提交事件 
 			    });
 	
 			

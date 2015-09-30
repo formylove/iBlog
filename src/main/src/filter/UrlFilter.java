@@ -28,27 +28,26 @@ public class UrlFilter implements Filter{
 	public void doFilter(ServletRequest req, ServletResponse res,	FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request=(HttpServletRequest)req;
 		String url=request.getRequestURI().toLowerCase();
-		request.getHeader("user-agent");
-	Log.print("agent:"+request.getHeader("user-agent"));
-	Log.print("url:"+url);
-	Log.print("RemoteAddr:"+request.getRemoteAddr());
-	Log.print("LocalAddr:"+request.getLocalAddr());
-	Log.print("LocalName:"+request.getLocalName());
-	Log.print("getRealPath:"+request.getRealPath(null));
+		System.out.println("###########urlFilter###########"+request.getRequestURI());
+//	Log.print("agent:"+request.getHeader("user-agent"));
+//	Log.print("url:"+url);
+//	Log.print("RemoteAddr:"+request.getRemoteAddr());
+//	Log.print("LocalAddr:"+request.getLocalAddr());
+//	Log.print("LocalName:"+request.getLocalName());
 	HttpServletResponse response=(HttpServletResponse) res;
 	
 	
 	if(Pattern.compile("essay/edit/?$").matcher(url).find()){
 		response.sendRedirect("essayAction.action?method:editEssay");//等于完全重新发出一次请求，还需要重新过滤
-	}else if(Pattern.compile("essay/edit/2\\d{3}?$").matcher(url).find()){
-		Matcher m = Pattern.compile("2\\d{3}/?$").matcher(url);
+	}else if(Pattern.compile("essay/edit/2\\d{4}?$").matcher(url).find()){
+		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
 		m.find();
 		String id = m.group().replace("/", "");
 		response.sendRedirect("essayAction.action?method:editEssay&id=" + id);//等于完全重新发出一次请求，还需要重新过滤
 	}else if(Pattern.compile("note/edit/?$").matcher(url).find()){
 		response.sendRedirect("noteAction.action?method:editNote");//等于完全重新发出一次请求，还需要重新过滤
-	}else if(Pattern.compile("note/edit/2\\d{3}?$").matcher(url).find()){
-		Matcher m = Pattern.compile("2\\d{3}/?$").matcher(url);
+	}else if(Pattern.compile("note/edit/2\\d{4}?$").matcher(url).find()){
+		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
 		m.find();
 		String id = m.group().replace("/", "");
 		response.sendRedirect("noteAction.action?method:editNote&id=" + id);//等于完全重新发出一次请求，还需要重新过滤
@@ -63,23 +62,23 @@ public class UrlFilter implements Filter{
 		m.find();
 		int page = Integer.parseInt(m.group().replace("/", ""));
 		response.sendRedirect("essayAction.action?method:listEssay&page=" + page +"&category=5000&category=5006");//等于完全重新发出一次请求，还需要重新过滤
-	}else if(Pattern.compile("/essays/\\d{1,100}/c(/5\\d{3})+/?$").matcher(url).find()){//$要加上
+	}else if(Pattern.compile("/essays/\\d{1,100}/c(/5\\d{4})+/?$").matcher(url).find()){//$要加上
 		Matcher m = Pattern.compile("\\d{1,100}/c").matcher(url);
 		m.find();
 		int page = Integer.parseInt(m.group().replace("/c", ""));		
-		m = Pattern.compile("5\\d{3}").matcher(url);
+		m = Pattern.compile("5\\d{4}").matcher(url);
 		String categories = "";
 		while(m.find()){
 			categories = categories + "&category=" + m.group();
 		}
 		response.sendRedirect("essayAction.action?method:listEssay&page=" + page + categories);//等于完全重新发出一次请求，还需要重新过滤
-	} else if(Pattern.compile("/essay/2\\d{3}/?$").matcher(url).find()){//$要加上
-		Matcher m = Pattern.compile("2\\d{3}/?$").matcher(url);
+	} else if(Pattern.compile("/essay/2\\d{4}/?$").matcher(url).find()){//$要加上
+		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
 		m.find();
 		String id = m.group().replace("/", "");
 		response.sendRedirect("essayAction.action?method:loadEssay&id=" + id);//等于完全重新发出一次请求，还需要重新过滤
-	} else if(Pattern.compile("/edit/2\\d{3}/?$").matcher(url).find()){
-		Matcher m = Pattern.compile("2\\d{3}/?$").matcher(url);
+	} else if(Pattern.compile("/edit/2\\d{4}/?$").matcher(url).find()){
+		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
 		m.find();
 		String id = m.group().replace("/", "");
 		response.sendRedirect("essayAction.action?method:editEssay&id=" + id);

@@ -46,12 +46,15 @@ public class CommentAction {
 		return "conveycomments";
 	}
 	public String addComment() throws UnsupportedEncodingException{
-		user = UserService.getcurLoginUser();
+		
+		Comment comment = new Comment(target_id,0);
+		comment.setContent(content);
+		comment.setDev_name(device);
 		System.out.println("content:"+content);
 		System.out.println("target_id:"+target_id);
 		System.out.println("device:"+device);
 		System.out.println("user:"+user.getNick_name());
-		date = TimeManager.getDate();
+		date = comment.getCreate_date();
 		return "success";
 	}
 

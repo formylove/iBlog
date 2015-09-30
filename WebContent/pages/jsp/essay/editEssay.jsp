@@ -20,7 +20,7 @@ width:100px;
 </style>
 </head>
 <body style="position:relative;">
- <div class="overlay hidden"></div>
+	<%@ include file="../snippets/hidden_part.jsp"%>
 	<%@ include file="../snippets/navigator.jsp"%>
  <div class="overlay hidden"></div>
 	<div class="container index-ct round-container clearfix" style="min-height: 221px;">

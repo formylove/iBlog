@@ -2,24 +2,25 @@ package main.src.action;
 
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.StrutsStatics;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
-import main.src.common.SqlUtils;
 import main.src.common.StringUtils;
-import main.src.common.TimeManager;
 import main.src.entity.Category;
+import main.src.entity.User;
 import main.src.entity.essay.Essay;
 import main.src.service.CategoryService;
 import main.src.service.EssayService;
-import main.src.service.NoteService;
+import main.src.service.UserService;
 public class EssayAction {
 private float w;
 private float h;
@@ -39,6 +40,8 @@ List<Essay> recommendations;
 int page;
 int pages;
 String category;
+User user;
+boolean loginStatus;
 public String listEssay(){
 	HttpServletRequest request=ServletActionContext.getRequest();
 	String[] categories =  request.getParameterValues("category");
@@ -70,6 +73,7 @@ public String readEssay(){
 }
 public String loadEssay(){
 	essay=EssayService.getEssay(id);
+	user = UserService.getcurLoginUser(null);
 	EssayService.readEssay(id);
 	return MsgConstants.ESSAYPAGE;
 }
@@ -109,6 +113,18 @@ public String undoLike(){
 }
 
 
+public boolean isLoginStatus() {
+	return loginStatus;
+}
+public void setLoginStatus(boolean loginStatus) {
+	this.loginStatus = loginStatus;
+}
+public User getUser() {
+	return user;
+}
+public void setUser(User user) {
+	this.user = user;
+}
 public Map<String, String> getAuthorities() {
 	return authorities;
 }

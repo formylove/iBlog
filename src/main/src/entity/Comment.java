@@ -1,5 +1,10 @@
 package main.src.entity;
 
+import main.src.common.SqlUtils;
+import main.src.common.TimeManager;
+import main.src.service.CommentService;
+import main.src.service.UserService;
+
 public class Comment {
 public int id;
 public int user_id;
@@ -15,7 +20,21 @@ public boolean is_visitor;
 public String create_date;
 public String create_time;
 public boolean del_flag;
-
+	public Comment(){
+		setCreate_date(TimeManager.getDate());
+		setCreate_time(TimeManager.getTime());
+}
+	public Comment(String target_id,int floor){
+		setCreate_date(TimeManager.getDate());
+		setCreate_time(TimeManager.getTime());
+		setId(CommentService.getCurId(target_id, floor));
+		User user = UserService.getcurLoginUser();
+		setUser_id(user.getId());
+		setIs_visitor(true);
+		setUser_name(user.getNick_name());
+		setPortrait(user.getPortrait());
+		setSignature(user.getMotto());
+	}
 public int getId() {
 	return id;
 }

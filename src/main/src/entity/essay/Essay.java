@@ -2,13 +2,15 @@ package main.src.entity.essay;
 
 import main.src.common.StringUtils;
 import main.src.common.TimeManager;
+import main.src.entity.User;
+import main.src.service.UserService;
 
 public class Essay {
 	
 public int id;
 public String title;
 public String subtitle;
-public String author = "徐大海";
+public String author;
 public String author_link;
 public String author_desc;
 public String profile;
@@ -30,12 +32,29 @@ public Essay(){
 	setCreate_date(TimeManager.getDate());
 	setCreate_time(TimeManager.getTime());
 }
+public Essay(boolean original_flag){
+	setCreate_date(TimeManager.getDate());
+	setCreate_time(TimeManager.getTime());
+	setOriginal_flag(original_flag);
+	
+	
+	setWebmasterDetail();
+}
 public String[] getLabels(){
 	if(!StringUtils.isEmpty(label)){
 		return label.split(splitTag);
 	}else{
 		return null;
 	}
+}
+public void setWebmasterDetail() {
+	if(original_flag){
+		User user = UserService.getUser(2);
+		author = user.getNick_name();
+		author_desc = user.getMotto();
+		author_link = "user/2";
+		portrait = user.getPortrait();
+		}
 }
 public String getSubtitle() {
 	return subtitle;
@@ -129,9 +148,6 @@ public boolean isOriginal_flag() {
 	return original_flag;
 }
 public void setOriginal_flag(boolean original_flag) {
-	if(!original_flag){
-		this.author = this.author.replace("徐大海", "");
-	}
 	this.original_flag = original_flag;
 }
 public String getOriginal_link() {
