@@ -42,6 +42,11 @@ int pages;
 String category;
 User user;
 boolean loginStatus;
+public String execute(){
+	System.out.println("into!!!");
+	
+	return MsgConstants.ESSAYPAGE;
+}
 public String listEssay(){
 	HttpServletRequest request=ServletActionContext.getRequest();
 	String[] categories =  request.getParameterValues("category");

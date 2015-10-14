@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,7 @@
 <title>微信号</title>
 <%request.setAttribute("importParams", "jquery|common.css|agent|end"); %>
 <jsp:include page="../snippets/static_js_css.jsp"/>
+<jsp:include page="../snippets/hidden_box.jsp" />
 </head>
 <body>
 <%@ include file="../snippets/navigator.jsp" %>

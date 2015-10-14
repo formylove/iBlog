@@ -18,22 +18,7 @@
     </jsp-property-group>
  </jsp-config>
 	<display-name>iBlog</display-name>
-<!-- <filter>  -->
-<!--   <filter-name>UrlRewriteFilter</filter-name>  -->
-<!--    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>  -->
-<!--   <init-param>  -->
-<!--     <param-name>logLevel</param-name>  -->
-<!--      <param-value>9</param-value>  -->
-<!--   </init-param>  -->
 
-<!--  </filter>  -->
-
-<!--  <filter-mapping>  -->
-<!--    <filter-name>UrlRewriteFilter</filter-name>  -->
-<!--    <url-pattern>/*</url-pattern> -->
-<!--    		<dispatcher>REQUEST</dispatcher>   -->
-<!--         <dispatcher>FORWARD</dispatcher>   -->
-<!--   </filter-mapping> -->
 <filter>
 <filter-name>url filter</filter-name>
 <filter-class>main.src.filter.UrlFilter</filter-class>
@@ -54,15 +39,42 @@
 	    <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
 </filter-mapping>
+
+<filter> 
+  <filter-name>UrlRewriteFilter</filter-name> 
+   <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class> 
+  <init-param> 
+    <param-name>logLevel</param-name> 
+     <param-value>9</param-value> 
+  </init-param> 
+ </filter> 
+ <filter-mapping> 
+   <filter-name>UrlRewriteFilter</filter-name> 
+   <url-pattern>/*</url-pattern>
+   		<dispatcher>REQUEST</dispatcher>  
+        <dispatcher>FORWARD</dispatcher>  
+  </filter-mapping>
+  
+<filter>
+<filter-name>Interceptor</filter-name>
+<filter-class>main.src.filter.Interceptor</filter-class>
+</filter>
+<filter-mapping>
+<filter-name>Interceptor</filter-name>
+		<url-pattern>/*</url-pattern>
+</filter-mapping>
+
 	<filter>
 		<filter-name>Struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>Struts2</filter-name>
-		<url-pattern>*.action</url-pattern>
+		<url-pattern>/*</url-pattern>
 	    <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 	
 	<filter>
@@ -77,23 +89,21 @@
 	</filter-mapping>
 
 
-  
-<filter>
-<filter-name>Interceptor</filter-name>
-<filter-class>main.src.filter.Interceptor</filter-class>
-</filter>
-<filter-mapping>
-<filter-name>Interceptor</filter-name>
-		<url-pattern>/*</url-pattern>
-</filter-mapping>
-
 	<error-page>
 		<error-code>404</error-code>
 		<location>/pages/jsp/common/404.jsp</location>
 	</error-page>
 	
-	<welcome-file-list>
-		<welcome-file>/pages/jsp/homepage/homepage.jsp</welcome-file>
-	</welcome-file-list>
+	<session-config>  
+    <session-timeout>15</session-timeout>  
+	</session-config> 
+	
+	<listener>
+    <listener-class>main.src.listener.SessionListener</listener-class>
+	</listener>
+	<listener>
+	
+    <listener-class>main.src.listener.RequestListener</listener-class>
+	</listener>
 	
 </web-app> 

@@ -2,9 +2,15 @@ package main.src.common;
 
 import java.io.*;
 
-public class IPParser {
-	private String DbPath = "/home/hachi/workspace4iblog/iBlog/WebContent/data/QQWry.Dat"; // 纯真IP数据库地址
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.ActionContext;
+
+public class IPParser {
+//	static public String baseRealPath = ((HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST)).getRealPath("/");
+	private String DbPath = "d:\\"+MessageUtils.getMessageFromUrl("ip.data");
 	private String Country, LocalStr;
 
 	private long IPN;

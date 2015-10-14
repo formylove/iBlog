@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-    
 <!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="essay.title"/></title>
-<%request.setAttribute("importParams", "jquery|essay.css|agent|comment|Akita.js|end"); %>
+<%request.setAttribute("importParams", "jquery|Akita.js|qtip|form|validate|essay.css|comment|end"); %>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>
+<jsp:include page="../snippets/hidden_box.jsp"/>
 <%@ include file="../snippets/navigator.jsp" %>
 <input type="hidden" id="target_id" value="${essay.id}">
 <div class="container ct-sm" style="min-height: 221px;">	
@@ -23,7 +23,7 @@
 		<div class="essay-detail-wrapper">	
 			<h1 class="essay-title">${essay.title}</h1>
 			<!-- essay meta -->
-			<jsp:include page="../snippets/essayMeta.jsp"></jsp:include>
+			<jsp:include page="../snippets/essayMeta.jsp"/>
 				<!-- 音乐 -->
 		<s:if test="essay.music != 0">
 		<jsp:include page="../snippets/musicColumn.jsp"></jsp:include>

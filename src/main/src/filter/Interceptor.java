@@ -23,8 +23,10 @@ public class Interceptor implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,	FilterChain filterChain) throws IOException, ServletException {
 		@SuppressWarnings("unused")
-		HttpServletRequest request=(HttpServletRequest)req;		
-//		Log.print("last",request.getRequestURL());
+		HttpServletRequest request=(HttpServletRequest)req;	
+		String url = (String)request.getRequestURL().toString();
+		if(!(url.indexOf(".js")>=0 || url.indexOf(".css")>=0 || url.indexOf(".png")>=0)){
+		Log.print("interceptor£º"+url);}
 		filterChain.doFilter(req, res);
 	}
 

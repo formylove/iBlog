@@ -202,7 +202,7 @@
 .clearfix:before,.clearfix:after {
     clear: both;
     display: table;
-    content: "\200B";
+    content: "";
     line-height: 0
 }
 .jcrop-holder #preview-pane {

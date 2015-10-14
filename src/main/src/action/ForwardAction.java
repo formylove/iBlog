@@ -15,8 +15,6 @@ boolean hasForwarded;
 int essayId;
 	
 	public String forward(){
-		
-		
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		url = request.getParameter("url");

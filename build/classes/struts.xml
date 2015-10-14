@@ -67,6 +67,13 @@
 			<result name="conveycategory" type="json"></result>
 		</action>
 		
+		<action name="loginAction" class="main.src.action.LoginAction">
+			<result name="done" type="json"></result>
+			<result name="activated" type="redirect">homepage/</result>
+<!-- 			<result name="activated" type="redirectAction">hpAction!load</result> -->
+			<result name="expired">/pages/jsp/single/generalPrompt.jsp?message=${message}</result>
+		</action>
+		
 		<action name="imageAction" class="main.src.action.ImageAction">
 			<result name="success" type="json"></result>
 			<result name="test">/pages/html/x.html</result>
@@ -74,6 +81,9 @@
 		</action>
 		<action name="testAction" class="test.TestAction">
 			<result name="test">/pages/jsp/single/test.jsp</result>
+		</action>
+		<action name="hpAction" class="main.src.action.HPAction">
+			<result name="homepage">/pages/jsp/homepage/homepage.jsp</result>
 		</action>
 		
 		

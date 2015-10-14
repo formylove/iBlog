@@ -18,7 +18,7 @@ import main.src.entity.note.Opus;
 import main.src.service.EssayService;
 import main.src.service.NoteService;
 public class NoteAction {
-Essay note;
+Essay essay;
 Essay notes;
 Opus opus;
 int id;
@@ -52,13 +52,13 @@ public String saveNote() throws NumberFormatException, UnsupportedEncodingExcept
 	    	if(!StringUtils.isEmpty(cover)){
 	    		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
 	    	}
-	    	id = NoteService.saveNote(note, opus);
+	    	id = NoteService.saveNote(essay, opus);
 	    }else{
 	    	if(!opus.getCover().equals(cover)){
 	    		ImageUtils.deleteImg(opus.getCover());
 	    		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
 	    	}
-	    	NoteService.updateNote(id, note, opus);
+	    	NoteService.updateNote(id, essay, opus);
 	    }
 		return MsgConstants.NOTEPAGE;
 }
@@ -68,14 +68,14 @@ public String readNote(){
 	    return null;
 }
 public String loadNote(){
-	note=(Essay) EssayService.getEssay(id);
+	essay=(Essay) EssayService.getEssay(id);
 	opus=NoteService.getOpus(id);
 	return MsgConstants.NOTEPAGE;
 }
 
 public String editNote(){
 	if(id!=0){
-		note=EssayService.getEssay(id);
+		essay=EssayService.getEssay(id);
 		opus = NoteService.getOpus(id);
 	}
 	genres = (List<Genre>) Genre.getAllGenre(false);
@@ -84,7 +84,7 @@ public String editNote(){
 
 public String deleteNote(){
 	NoteService.deleteNote(id);
-	note=EssayService.getEssay(id);
+	essay=EssayService.getEssay(id);
 	opus = NoteService.getOpus(id);
 	return MsgConstants.DELETED;
 }
@@ -177,12 +177,11 @@ public void setY(float y) {
 public void setGenres(List<Genre> genres) {
 	this.genres = genres;
 }
-
-public Essay getNote() {
-	return note;
+public Essay getEssay() {
+	return essay;
 }
-public void setNote(Essay note) {
-	this.note = note;
+public void setEssay(Essay essay) {
+	this.essay = essay;
 }
 public Essay getNotes() {
 	return notes;

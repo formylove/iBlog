@@ -21,3 +21,6 @@ function getAgentJS() {
     p.push('h=' + screen.height);
     return '//api.whichbrowser.net/rel/detect.js?' + p.join('&');
 };
+$(function(){
+	$.getScript(getAgentJS());
+});

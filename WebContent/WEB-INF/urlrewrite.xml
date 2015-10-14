@@ -18,10 +18,25 @@
         <from>/test/status/</from>
         <to type="redirect">%{context-path}/rewrite-status</to>
     </rule>
+
+<rule>
+   <from>^/$</from>
+   <to>/hpAction!load.action</to>
+ </rule>
     
 <rule>
    <from>/QRcode/?$</from> 
    <to>/pages/jsp/single/QRcode.jsp</to>
+ </rule>
+
+<rule>
+   <from>/term/?$</from> 
+   <to>/pages/jsp/single/term.jsp</to>
+ </rule>
+
+<rule>
+   <from>user/prompt/([^/]+)/([^/]+)/?$</from> 
+   <to>/pages/jsp/single/activatePrompt.jsp?email=$1&amp;nick_name=$2</to>
  </rule>
  
 <rule>
@@ -31,27 +46,47 @@
  
 <rule>
    <from>/edit/?$</from> 
-   <to>/pages/jsp/essay/editEssay.jsp</to>
+   <to>/essayAction!editEssay.action</to>
  </rule>
  
-<!-- <rule> -->
-<!--    <from>/essays/?$</from>  -->
-<!--    <to type="forward">/essayAction.action?method:listEssay</to> -->
-<!--  </rule> -->
+<rule>
+   <from>/register/?$</from> 
+   <to>/loginAction!register.action</to>
+ </rule>
  
-<!-- <rule> -->
-<!--    <from>/edit/(2[0-9]{3})$</from>  -->
-<!--    <to>/essayAction.action?method=editEssay&amp;id=$1</to> -->
-<!--  </rule> -->
-<!--  <outbound-rule>   -->
-<!--     <from>/essayAction.action/?method:editEssay&amp;id=(2[0-9]{3})$</from>   -->
-<!--     <to>/edit/$1</to>   -->
-<!-- </outbound-rule>   -->
+<rule>
+   <from>/homepage/?$</from> 
+   <to>/hpAction!load.action</to>
+ </rule>
+<rule>
+   <from>/logout/?$</from> 
+   <to>/loginAction!logout.action</to>
+ </rule>
+ 
+<rule>
+   <from>/login/?$</from> 
+   <to>/loginAction!login.action</to>
+ </rule>
+ 
+<rule>
+   <from>/activate/([^/]+)/?$</from> 
+   <to>/loginAction!activate.action?token=$1</to>
+ </rule>
+ 
+<rule>
+   <from>/essays/?$</from> 
+   <to type="forward">/essayAction!listEssay.action</to>
+ </rule>
+ 
+<rule>
+   <from>/edit/(2[0-9]{4})/?$</from> 
+   <to>/essayAction.action!editEssay?id=$1</to>
+ </rule>
 
-<!-- <rule> -->
-<!--    <from>/essay/(2[0-9]{3})$</from>  -->
-<!--    <to  type="forward">/essayAction.action?method=loadEssay&amp;id=$1</to> -->
-<!--  </rule> -->
+<rule>
+   <from>/essay/(2[0-9]{4})/?$</from> 
+   <to  type="forward">/essayAction!loadEssay.action?id=$1</to>
+ </rule>
 
 <!--     <outbound-rule> -->
 <!--         <from>/rewrite-status</from> -->

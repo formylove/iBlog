@@ -32,3 +32,13 @@ s:select disabled="true"
 UPDATE genre SET id=8,name='谍战片',type='movie' 不成立
 $('#'+me).prop("checked") == val true 和 "true"不相等
 ajax 的回调函数是非阻塞的，先执行下面函数，在回调
+getRequestURI短，getRequestURL长，返回stringbuffer
+rewirte 方法调用:actionName!methodName?param=...
+validate只能一次绑定一个
+404错误页面的struts标签无效，因为没有经过struts 过滤器过滤，加上<dispatcher>ERROR</dispatcher>
+window.open('链接地址','_blank')
+_blank参数可以去掉或者修改为_self让链接在当前窗口打开
+timestamp设置默认值为CURRENT_TIMESTAMP才能插入式更新 `register_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+"0>        <p id=\"salutation\">XX, 感谢你注册夜网</p> ".replaceAll(Salutation_Reg, "xuyang, 感谢你注册夜网")),replaceALL才生效，用于正则表达式
+ $('.qtip  form[name=login_form]').submit(function() {}事件可以绑定多个函数，多次执行
+ 

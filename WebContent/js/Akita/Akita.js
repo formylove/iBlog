@@ -92,6 +92,9 @@ function addLabel(me){
 	}
 		checkTokenDis($("span[name='labelIterm']").size());
 }
+function setNav(data){
+	$(".logged-in-wrapper .ln-account").html("<img src='"+data.portrait+"' alt='"+data.nick_name+"' class='avatar'>&nbsp;" + data.nick_name);
+}
 function redLabel(me){
 	if($("span[name='labelIterm']").size()>1){
 		$("span[name='labelIterm']").last().remove();
@@ -135,6 +138,11 @@ function checkToken(size){
 		$("#add2").removeClass("hidden");
 		$("#reduce2").removeClass("hidden");
 	}
+}
+function suspendToBottom(me,she){
+	var left = me.offset().left +  me.width()/2 - she.width()/2;
+	var top =  me.offset().top +  me.height();
+	she.css({"left":left,"top":top});
 }
 function getScreenWidth(){
 	if(window.innerWidth){

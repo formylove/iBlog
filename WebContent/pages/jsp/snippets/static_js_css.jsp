@@ -18,6 +18,12 @@ if(importParams.indexOf("Jcrop")>=0){ %>
 <script type="text/javascript" src="js/Jcrop/jquery.Jcrop.js"></script>
 <link href="js/Jcrop/jquery.Jcrop.css" type="text/css" rel="stylesheet">
 <%}
+if(importParams.indexOf("qtip")>=0){ %>
+<script type="text/javascript" src="js/qtip/jquery.qtip.min.js"></script>
+<%}
+if(importParams.indexOf("form")>=0){ %>
+<script type="text/javascript" src="js/form/jquery.form.js"></script>
+<%}
 if(importParams.indexOf("flexSlider.js")>=0){ %>
 <script type="text/javascript" src="js/flexSlider/jquery.flexslider-min.js"></script>
 <%}
@@ -32,6 +38,7 @@ if(importParams.indexOf("upload.js")>=0){ %>
 <%}
 if(importParams.indexOf("ckeditor.js")>=0){ %>
 <script src="ckeditor/ckeditor.js"></script>
+<link href="ckeditor/plugins/codesnippet/lib/highlight/styles/default.css" type="text/css" rel="stylesheet">
 <%}
 if(importParams.indexOf("common.css")>=0){ %>
 <link href="css/common.css" type="text/css" rel="stylesheet">
@@ -53,5 +60,28 @@ if(importParams.indexOf("ZeroClipboard.js")>=0){ %>
 <%}
 if(importParams.indexOf("agent")>=0){ %>
 <script src="js/agent/agent.js"></script>
+<script src="js/agent/ua-parser.min.js"></script>
 <%}
-}%>
+}
+if(session.getAttribute("hasDeviceDetail") == null){%>
+<script src="js/agent/ua-parser.min.js"></script>
+<script>
+$(function(){
+	var parser = new UAParser();//atool网方法
+		if(parser != null){
+		r = parser.getResult();
+		$.ajax({
+			url:'loginAction!getDeviceDetails.action',
+			type:'post',
+			data:{"browser":r.browser.name + ' ' + r.browser.major,"device":r.device.model + ' ' + r.device.type + ' ' + r.device.vendor,"os":r.os.name + ' ' + r.os.version,}
+		});
+	}
+});
+</script>
+
+<%
+}
+
+
+
+%>

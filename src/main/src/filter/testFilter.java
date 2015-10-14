@@ -28,7 +28,9 @@ public class testFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,	FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request=(HttpServletRequest)req;
-			System.out.println("###########testFilter###########"+request.getRequestURI());
+		String url=request.getRequestURI().toLowerCase();
+		if(!(url.indexOf(".js")>=0 || url.indexOf(".css")>=0 || url.indexOf(".png")>=0)){
+			System.out.println("###########testFilter###########"+request.getRequestURI());}
 		filterChain.doFilter(req, res);
 	
 	}

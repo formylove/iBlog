@@ -1,28 +1,72 @@
 package main.src.entity;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.UUID;
+
+import main.src.common.IPParser;
+import main.src.common.TimeManager;
 
 public class User {
-	
-int id;
-String user_name;
-String nick_name;
-String login_name;
-String password;
-String portrait;
-String motto;
-String email;
-String QQ;
-String phone;
-String last_login_ip;
-String last_login_date;
-String last_login_time;
-char gender;
-boolean del_flag;
-int authority;
-int login_Cnt;
+
+public int id;
+public String user_name;
+public String nick_name;
+public String login_name;
+public String password;
+public String md5;
+public char gender;
+public String portrait;
+public String motto;
+public String email;
+public String qq;
+public String phone;
+public String device;
+public String city;
+public String register_ip;
+public Timestamp register_date;
+public String token;
+public int authority;
+public boolean email_val_flag;
+public boolean del_flag;
+public User(String nick_name,String email,String password,String ip,String city,String device){
+	setNick_name(nick_name);
+	setEmail(email);
+	setPassword(password);
+	setCity(city);
+	setDevice(device);
+	setToken(UUID.randomUUID().toString());
+//	Date date = new Date();       
+//	setRegister_date(new Timestamp(date.getTime()));
+}
+public User(){
+}
 
 
-
+public String getDevice() {
+	return device;
+}
+public void setDevice(String device) {
+	this.device = device;
+}
+public String getMd5() {
+	return md5;
+}
+public void setMd5(String md5) {
+	this.md5 = md5;
+}
+public boolean isEmail_val_flag() {
+	return email_val_flag;
+}
+public Timestamp getRegister_date() {
+	return register_date;
+}
+public void setRegister_date(Timestamp register_date) {
+	this.register_date = register_date;
+}
+public void setEmail_val_flag(boolean email_val_flag) {
+	this.email_val_flag = email_val_flag;
+}
 public String getMotto() {
 	return motto;
 }
@@ -71,61 +115,82 @@ public String getEmail() {
 public void setEmail(String email) {
 	this.email = email;
 }
-public String getQQ() {
-	return QQ;
-}
-public void setQQ(String qQ) {
-	QQ = qQ;
-}
-public String getPhone() {
-	return phone;
-}
 public void setPhone(String phone) {
 	this.phone = phone;
 }
-public String getLast_login_ip() {
-	return last_login_ip;
+
+public String getQq() {
+	return qq;
 }
-public void setLast_login_ip(String last_login_ip) {
-	this.last_login_ip = last_login_ip;
+
+
+public void setQq(String qq) {
+	this.qq = qq;
 }
-public String getLast_login_date() {
-	return last_login_date;
+
+
+public String getPhone() {
+	return phone;
 }
-public void setLast_login_date(String last_login_date) {
-	this.last_login_date = last_login_date;
+
+
+public String getCity() {
+	return city;
 }
-public String getLast_login_time() {
-	return last_login_time;
+
+
+public void setCity(String city) {
+	this.city = city;
 }
-public void setLast_login_time(String last_login_time) {
-	this.last_login_time = last_login_time;
+
+
+public String getRegister_ip() {
+	return register_ip;
 }
+
+
+public void setRegister_ip(String register_ip) {
+	this.register_ip = register_ip;
+}
+
+
+public String getToken() {
+	return token;
+}
+
+
+public void setToken(String token) {
+	this.token = token;
+}
+
+
 public char getGender() {
 	return gender;
 }
+
+
 public void setGender(char gender) {
 	this.gender = gender;
 }
-public boolean isDel_flag() {
-	return del_flag;
-}
-public void setDel_flag(boolean del_flag) {
-	this.del_flag = del_flag;
-}
+
+
 public int getAuthority() {
 	return authority;
 }
+
+
 public void setAuthority(int authority) {
 	this.authority = authority;
 }
-public int getLogin_Cnt() {
-	return login_Cnt;
-}
-public void setLogin_Cnt(int login_Cnt) {
-	this.login_Cnt = login_Cnt;
+
+
+public boolean isDel_flag() {
+	return del_flag;
 }
 
 
+public void setDel_flag(boolean del_flag) {
+	this.del_flag = del_flag;
+}
 
 }

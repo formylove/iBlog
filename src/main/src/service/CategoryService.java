@@ -51,7 +51,6 @@ public class CategoryService {
 	}
 	public static void main(String[]args){
 		main.src.entity.User user=UserService.getUser(1000);
-		CategoryService.getCategoryName(user.getLogin_Cnt());
 	}
 }
 

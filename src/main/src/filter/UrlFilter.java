@@ -28,7 +28,9 @@ public class UrlFilter implements Filter{
 	public void doFilter(ServletRequest req, ServletResponse res,	FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request=(HttpServletRequest)req;
 		String url=request.getRequestURI().toLowerCase();
-		System.out.println("###########urlFilter###########"+request.getRequestURI());
+		if(!(url.indexOf(".js")>=0 || url.indexOf(".css")>=0 || url.indexOf(".png")>=0)){
+			System.out.println("###########urlFilter###########"+request.getRequestURI());
+		}
 //	Log.print("agent:"+request.getHeader("user-agent"));
 //	Log.print("url:"+url);
 //	Log.print("RemoteAddr:"+request.getRemoteAddr());
@@ -36,10 +38,7 @@ public class UrlFilter implements Filter{
 //	Log.print("LocalName:"+request.getLocalName());
 	HttpServletResponse response=(HttpServletResponse) res;
 	
-	
-	if(Pattern.compile("essay/edit/?$").matcher(url).find()){
-		response.sendRedirect("essayAction.action?method:editEssay");//等于完全重新发出一次请求，还需要重新过滤
-	}else if(Pattern.compile("essay/edit/2\\d{4}?$").matcher(url).find()){
+	 if(Pattern.compile("essay/edit/2\\d{4}?$").matcher(url).find()){
 		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
 		m.find();
 		String id = m.group().replace("/", "");
@@ -72,12 +71,14 @@ public class UrlFilter implements Filter{
 			categories = categories + "&category=" + m.group();
 		}
 		response.sendRedirect("essayAction.action?method:listEssay&page=" + page + categories);//等于完全重新发出一次请求，还需要重新过滤
-	} else if(Pattern.compile("/essay/2\\d{4}/?$").matcher(url).find()){//$要加上
-		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
-		m.find();
-		String id = m.group().replace("/", "");
-		response.sendRedirect("essayAction.action?method:loadEssay&id=" + id);//等于完全重新发出一次请求，还需要重新过滤
-	} else if(Pattern.compile("/edit/2\\d{4}/?$").matcher(url).find()){
+	} 
+//	else if(Pattern.compile("/essay/2\\d{4}/?$").matcher(url).find()){//$要加上
+//		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
+//		m.find();
+//		String id = m.group().replace("/", "");
+//		response.sendRedirect("essayAction.action?method:loadEssay&id=" + id);//等于完全重新发出一次请求，还需要重新过滤
+//	} 
+	else if(Pattern.compile("/edit/2\\d{4}/?$").matcher(url).find()){
 		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
 		m.find();
 		String id = m.group().replace("/", "");

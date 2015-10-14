@@ -8,6 +8,7 @@ import org.apache.struts2.StrutsStatics;
 import com.opensymphony.xwork2.ActionContext;
 
 import main.src.entity.User;
+import main.src.service.UserService;
 
 public class TestAction {
 	User user;
@@ -19,9 +20,7 @@ public class TestAction {
 			c.setMaxAge(3600);
 			res.addCookie(c);
 		}else{
-			Cookie c = new Cookie("night_user_id",null);
-			c.setMaxAge(0);
-			res.addCookie(c);
+			UserService.logout();
 		}
 		if(user!=null)
 		System.out.println(user.getNick_name());

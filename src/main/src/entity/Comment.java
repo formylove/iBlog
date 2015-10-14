@@ -28,7 +28,7 @@ public boolean del_flag;
 		setCreate_date(TimeManager.getDate());
 		setCreate_time(TimeManager.getTime());
 		setId(CommentService.getCurId(target_id, floor));
-		User user = UserService.getcurLoginUser();
+		User user = UserService.getcurLoginUser(null);
 		setUser_id(user.getId());
 		setIs_visitor(true);
 		setUser_name(user.getNick_name());

@@ -7,15 +7,22 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import main.src.common.IPParser;
 import main.src.common.ImageUtils;
+import main.src.common.MailUtils;
 import main.src.common.MsgConstants;
+import main.src.common.Spider;
+import main.src.common.StringUtils;
 import main.src.entity.Comment;
-
+import main.src.multithread.CheckINThread;
 public class Test {
     /**
      * @param args
+     * @throws Exception 
      */
-    public static void main(String[] args) {
+	static private final String Salutation_Reg="(?<=id=\"salutation\">)[^<]+(?=</p>)";
+	static private final String Href_Reg = "(?<=href=\")[^\"]*(?=\")";
+    public static void main(String[] args) throws Exception {
         // TODO Auto-generated method stub
 //        System.out.println("Bingo!");
 //        Calendar cal=Calendar.getInstance();
@@ -38,8 +45,36 @@ public class Test {
 //    	i.put("", "fff");
 //    	String imgUrl="http://ww4.sinaimg.cn/bmiddle/d54a1fa7jw1ew9wd40pxdj218g0p044p.jpg";
 //    	ImageUtils.saveImageFromUrl(imgUrl);
-    	System.out.println(Pattern.compile("\\w+").matcher("sadf3ww3dfg45645").matches());
-    	
+//    	System.out.println(Pattern.compile("\\w+").matcher("sadf3ww3dfg45645").matches());
+//    	System.out.println(StringUtils.valiEmail("1@e."));
+//    	System.out.println(StringUtils.valiName("a¹þ°¡¹þsdfas_fsadf"));
 //    	System.out.println("iiii,,f,,,".replaceAll(",+$", ""));
+    	IPParser i = new IPParser();
+    	i.seek("221.131.128.201");
+    	System.out.println(i.getCountry());
+//    	String html = Spider.SendGet("http://ip.taobao.com/service/getIpInfo.php?ip=122.95.231.214");
+//    	
+//    	System.out.println(html);
+//    	System.out.println(decodeUnicode("\u4e2d\u56fd"));
+//    	MailUtils m = new MailUtils();
+//    	m.sendEmail("satan199@163.com", "hi", "<a href='baidu.com'>hello</a>");
+//    	String content = StringUtils.fileToString("d://d.txt");
+//    System.out.println(content);
+//    System.out.println("0>        <p id=\"salutation\">XX, ¸ÐÐ»Äã×¢²áÒ¹Íø</p> ".replaceAll(Salutation_Reg, "xuyang, ¸ÐÐ»Äã×¢²áÒ¹Íø"));
+    
+    
+//    	String url="http://api.91cha.com/ip?key=e7cd6cbceca6415bb7817f913162ef39&ip=122.95.231.214";//    	CheckINThread ct = new CheckINThread("122.95.231.214");
+//    			ct.start();
+//    	System.out.println("go!");
     }
+    public static String decodeUnicode(final String ascii) {   
+    	    int n = ascii.length() / 6;  
+    	    StringBuilder sb = new StringBuilder(n);  
+    	    for (int i = 0, j = 2; i < n; i++, j += 6) {  
+    	        String code = ascii.substring(j, j + 4);  
+    	        char ch = (char) Integer.parseInt(code, 16);  
+    	        sb.append(ch);  
+    	    }  
+    	    return sb.toString();  
+    	}   
 }

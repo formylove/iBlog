@@ -4,10 +4,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.lang.Number;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -112,21 +114,21 @@ public class SqlUtils {
 	// ×Ö¶Î²éÑ¯Æ÷
 	@SuppressWarnings("unchecked")
 	public static int executeQueryForCount(String sql, Object[] params) {
-		int result = -1;
+		Number num  = -1;
 		try {
 			if (null == cnn) {
 				cnn = getConnection();
 			}
 			QueryRunner qr = new QueryRunner();
 			if (params == null || params.length == 0)
-				result = (int)(long)qr.query(cnn, sql, new ScalarHandler());
+				  num = (Number)qr.query(cnn, sql, new ScalarHandler());
 			else
-				result = (int)qr.query(cnn, sql, new ScalarHandler(), params);
+				  num = (Number)qr.query(cnn, sql, new ScalarHandler(), params);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return result;
+		return num.intValue();
 	}
 
 	// update
@@ -175,7 +177,7 @@ public class SqlUtils {
 		@SuppressWarnings("rawtypes")
 		Class class_ = entity.getClass();
 		for(Field field:class_.getFields()){
-			if(field.getType() == String.class){
+			if(field.getType() == String.class || field.getType() == Timestamp.class || field.getType() == char.class){
 				try {
 					if(null == BeanUtils.getProperty(entity, field.getName()) || "".equalsIgnoreCase(BeanUtils.getProperty(entity, field.getName())))
 					{
@@ -240,7 +242,7 @@ public class SqlUtils {
 			}
 			String sql = "update " + tableName + " set ";
 			for(Field field:class_.getFields()){
-				if(field.getType() == String.class){
+				if(field.getType() == String.class || field.getType() == Timestamp.class || field.getType() == char.class){
 					try {
 						if(null == BeanUtils.getProperty(entity, field.getName()) || "".equalsIgnoreCase(BeanUtils.getProperty(entity, field.getName())))
 						{
@@ -261,7 +263,7 @@ public class SqlUtils {
 					}
 				}
 			}
-			sql = sql.substring(0, sql.length() - 1)+" where "+condition;
+			sql = sql.substring(0, sql.length() - 1) + " where " + condition;
 			Log.print(sql);
 			return executeUpdate(sql, null);
 	}

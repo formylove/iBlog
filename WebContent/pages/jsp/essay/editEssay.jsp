@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>文字</title>
 <%
-	request.setAttribute("importParams", "jquery|common.css|Akita.js|upload.js|Jcrop|ckeditor.js|end");
+	request.setAttribute("importParams", "jquery|common.css|Akita.js|qtip|upload.js|Jcrop|ckeditor.js|end");
 
 %>
 <jsp:include page="../snippets/static_js_css.jsp"/>
@@ -20,7 +20,7 @@ width:100px;
 </style>
 </head>
 <body style="position:relative;">
-	<%@ include file="../snippets/hidden_part.jsp"%>
+	<jsp:include page="../snippets/hidden_box.jsp"/>
 	<%@ include file="../snippets/navigator.jsp"%>
  <div class="overlay hidden"></div>
 	<div class="container index-ct round-container clearfix" style="min-height: 221px;">
@@ -77,13 +77,8 @@ width:100px;
 					</div>
 				</div>
 			</div>
-			<div class="section">
-				<textarea id="editor" name="essay.content" placeholder="文章内容" rows="30"
-					style="width: 99.4%;">${essay.content}</textarea>
-			</div>
-			<script type="text/javascript">
-				var editortext = CKEDITOR.replace('editor');
-			</script>
+				<!-- 正文 -->
+			<jsp:include page="../snippets/contentEditor.jsp"/>
 			<br/>
 			<p>
 				选择分类 [<a href="/category" target="_blank">编辑分类</a>]
@@ -104,28 +99,6 @@ width:100px;
 					placeholder="标签"  style="width: 15%; height: 20px;"/>&nbsp;|&nbsp;</span></s:else><span id="add" class="cursor-pointer" onclick="addLabel($(this));">&nbsp;<font size="4px">+</font> |</span>
 				<span id="reduce" class="hidden cursor-pointer" onclick="redLabel($(this));">&nbsp;<font size="4px">—</font>&nbsp;</span>
 			</div>
-			<script type="text/javascript">
-				var duplicateCheck = function() {
-					$.ajax({
-								url : 'essayAction.action?method:hasExisted',
-								type : 'post',
-								contentType : 'application/x-www-form-urlencoded;charset=UTF-8',
-								data : 'title=' + $('#title').val(),
-								success : function(data) {
-									if (data.hasExisted
-											& document.getElementById('id').value == '') {
-										alert('不要重复发布文章');
-									} else if (editortext.document.getBody()
-											.getText().replace(/\s/g, '') == '') {
-										alert('文章内容为空');
-									} else {
-										document.getElementById('form')
-												.submit();
-									}
-								}
-							});
-				};
-			</script>
 			<div style="text-align: center; margin-top: 15px;">
 				<input id="btnPublish" type="button" onclick="duplicateCheck()" class="btn rounded btn-positive"
 					class="input_btn_1" value="发表文章" title="保存并跳转"  style="margin-right:40px"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
