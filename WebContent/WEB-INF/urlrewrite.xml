@@ -9,21 +9,8 @@
 
 -->
 <urlrewrite>
-
-    <rule>
-        <note>
-            The rule means that requests to /test/status/ will be redirected to /rewrite-status
-            the url will be rewritten.
-        </note>
-        <from>/test/status/</from>
-        <to type="redirect">%{context-path}/rewrite-status</to>
-    </rule>
-
-<rule>
-   <from>^/$</from>
-   <to>/hpAction!load.action</to>
- </rule>
     
+<!-- single page -->
 <rule>
    <from>/QRcode/?$</from> 
    <to>/pages/jsp/single/QRcode.jsp</to>
@@ -43,34 +30,21 @@
    <from>/about/?$</from> 
    <to>/pages/jsp/single/about.jsp</to>
  </rule>
+
+<!-- redirect action -->
+<rule>
+   <from>^/$</from>
+   <to>/hpAction!load.action</to>
+ </rule>
+ 
+ <rule>
+   <from>/homepage/?$</from> 
+   <to>/hpAction!load.action</to>
+ </rule>
  
 <rule>
    <from>/edit/?$</from> 
    <to>/essayAction!editEssay.action</to>
- </rule>
- 
-<rule>
-   <from>/register/?$</from> 
-   <to>/loginAction!register.action</to>
- </rule>
- 
-<rule>
-   <from>/homepage/?$</from> 
-   <to>/hpAction!load.action</to>
- </rule>
-<rule>
-   <from>/logout/?$</from> 
-   <to>/loginAction!logout.action</to>
- </rule>
- 
-<rule>
-   <from>/login/?$</from> 
-   <to>/loginAction!login.action</to>
- </rule>
- 
-<rule>
-   <from>/activate/([^/]+)/?$</from> 
-   <to>/loginAction!activate.action?token=$1</to>
  </rule>
  
 <rule>
@@ -82,17 +56,119 @@
    <from>/edit/(2[0-9]{4})/?$</from> 
    <to>/essayAction.action!editEssay?id=$1</to>
  </rule>
-
+ 
 <rule>
    <from>/essay/(2[0-9]{4})/?$</from> 
    <to  type="forward">/essayAction!loadEssay.action?id=$1</to>
  </rule>
+ 
+<rule>
+   <from>/activate/([^/]+)/?$</from> 
+   <to>/loginAction!activate.action?token=$1</to>
+ </rule>
+ 
+<rule>
+   <from>user/profile/([0-9]*)/?$</from> 
+   <to>/loginAction!loadProfile.action?id=$1</to>
+ </rule>
+ 
+<rule>
+   <from>user/profile/?$</from> 
+   <to>/loginAction!loadProfile.action</to>
+ </rule>
+ 
+<rule>
+   <from>user/setting/?$</from> 
+   <to>/loginAction!userSetting.action</to>
+ </rule>
+ 
+ 
+
+
+<!--  ajax request -->
+<rule>
+   <from>/ajax/logout/?$</from> 
+   <to>/loginAction!logout.action</to>
+ </rule>
+ 
+<rule>
+   <from>/ajax/login/?$</from> 
+   <to>/loginAction!login.action</to>
+ </rule>
+ 
+<rule>
+   <from>/ajax/ua/?$</from> 
+   <to>/loginAction!gainDeviceDetails.action</to>
+ </rule>
+
+<rule>
+   <from>/ajax/register/?$</from> 
+   <to>/loginAction!register.action</to>
+ </rule>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--     <rule> -->
+<!--         <note> -->
+<!--             The rule means that requests to /test/status/ will be redirected to /rewrite-status -->
+<!--             the url will be rewritten. -->
+<!--         </note> -->
+<!--         <from>/test/status/</from> -->
+<!--         <to type="redirect">%{context-path}/rewrite-status</to> -->
+<!--     </rule> -->
 
 <!--     <outbound-rule> -->
 <!--         <from>/rewrite-status</from> -->
 <!--         <to>/test/status/</to> -->
 <!--     </outbound-rule> -->
-
 
     <!--
 

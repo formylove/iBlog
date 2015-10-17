@@ -33,13 +33,14 @@ public class UserDetectFilter implements Filter{
 		HttpServletRequest request=(HttpServletRequest)req;
 		HttpSession session = request.getSession();
 		String url=request.getRequestURI().toLowerCase();
-		if(!(url.indexOf(".action")>=0 || url.indexOf(".js")>=0 || url.indexOf(".css")>=0 || url.indexOf(".png")>=0 || url.indexOf(".jpg")>=0)){
-		if(session.getAttribute("notFirst") == null || WebUtils.neededRecord(request)){
+		if(!(url.indexOf(".action")>=0 || url.indexOf(".js")>=0 || url.indexOf(".swf")>=0 || url.indexOf(".gif")>=0 || url.indexOf(".css")>=0 || url.indexOf(".png")>=0 || url.indexOf(".jpg")>=0)){
+		if((session.getAttribute("notFirst") == null || WebUtils.neededRecord(request)) && url.indexOf("ajax")<0 ){
 			CheckINThread cit = new CheckINThread(request);
 			cit.start();
 		}
 			request.setAttribute("user", UserService.getcurLoginUser((HttpServletRequest)req));
-		System.out.println("###########user-agent###########"+request.getHeader("user-agent"));
+			System.out.println("###########detectFilter###########"+request.getRequestURI());
+			System.out.println("###########user-agent###########"+request.getHeader("user-agent"));
 		}
 		filterChain.doFilter(req, res);
 	

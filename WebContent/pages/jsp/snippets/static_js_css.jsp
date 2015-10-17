@@ -14,12 +14,18 @@ if(importParams.indexOf("Akita.js")>=0){ %>
 if(importParams.indexOf("validate")>=0){ %>
 <script type="text/javascript" src="js/validate/jquery.validate.min.js"></script>
 <%}
+if(importParams.indexOf("user.css")>=0){ %>
+<link href="css/user.css" type="text/css" rel="stylesheet">
+<%}
 if(importParams.indexOf("Jcrop")>=0){ %>
 <script type="text/javascript" src="js/Jcrop/jquery.Jcrop.js"></script>
 <link href="js/Jcrop/jquery.Jcrop.css" type="text/css" rel="stylesheet">
 <%}
 if(importParams.indexOf("qtip")>=0){ %>
 <script type="text/javascript" src="js/qtip/jquery.qtip.min.js"></script>
+<%}
+if(importParams.indexOf("qtip")>=0){ %>
+<script type="text/javascript" src="js/artDialog/jquery.qtip.min.js"></script>
 <%}
 if(importParams.indexOf("form")>=0){ %>
 <script type="text/javascript" src="js/form/jquery.form.js"></script>
@@ -71,7 +77,7 @@ $(function(){
 		if(parser != null){
 		r = parser.getResult();
 		$.ajax({
-			url:'loginAction!getDeviceDetails.action',
+			url:$("base").attr("href") + 'ajax/ua/',
 			type:'post',
 			data:{"browser":r.browser.name + ' ' + r.browser.major,"device":r.device.model + ' ' + r.device.type + ' ' + r.device.vendor,"os":r.os.name + ' ' + r.os.version,}
 		});

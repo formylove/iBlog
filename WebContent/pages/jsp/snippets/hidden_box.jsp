@@ -17,7 +17,7 @@
 		</a>
 		<span class="fright">没有账号？</span>
 	</div>
-	<form class="form-ajax" action="login/" method="post" name ="login_form" callback="login_cback">
+	<form class="form-ajax" action="ajax/login/" method="post" name ="login_form" callback="login_cback">
 		<div class="inline-input">
 			<span class="label">邮箱</span>
 			<input type="email" class="input-passport" name="email" required="">
@@ -59,7 +59,7 @@
 			返回登录
 		</a>
 	</div>
-	<form class="form-ajax" name="register_form" action="register/" method="post" callback="register_cback">
+	<form class="form-ajax" name="register_form" action="ajax/register/" method="post" callback="register_cback">
 		<div class="inline-input">
 			<span class="label">昵称</span>
 			<input type="text" name="nick_name" class="input-passport" autocomplete="off" placeholder="14位以内中英文数字" required="">
@@ -100,13 +100,13 @@
 <!-- account detail-->
 <div class="account hidden">
 <div class="account-links rounded" id="accountLinks">
-			<a class="account-link link-uc" href="user/" rel="nofollow">
+			<a class="account-link link-uc" href="user/profile/${user.id}" target="_blank" rel="nofollow">
 				<span class="icon-account"></span>我的落网
 			</a>
-			<a class="account-link link-setting" href="user/profile/" rel="nofollow">
+			<a class="account-link link-setting" href="user/setting/" target="_blank" rel="nofollow">
 				<span class="icon-setting"></span>账号设置
 			</a>
-			<a class="account-link link-logout" href="" rel="nofollow">
+			<a class="account-link link-logout" href="javaScript:void(0);" rel="nofollow">
 				<span class="icon-logout"></span>退出
 			</a>
 		</div>
@@ -127,48 +127,8 @@ $(function(){
           return /^[a-zA-Z0-9]*$/.test(value);  
          },$.validator.format("密码只可以是字母和数字组合")  
          );  
-  	var options = {
-			type:"post",
-			dataType:'json',
-		    success: function(data) {
-		    	console.info("register1");
-              	$(".qtip #login_submit").hide();
-            	$(".qtip span[name=error_placement]").text(data.message);
-            	$(".qtip span[name=error_placement]").show();
-		      if(data.isGood=="true"){
-		      $(".logged-out-wrapper").hide();
-		      setNav(data)
-		      $(".logged-in-wrapper").show();
-		      $("#loggedOutWrapper .ln-top-login").qtip('hide');
-		      }
-		    } };
-	var options2 = {
-			type:"post",
-			dataType:'json',
-		    success: function(data) {
-		    	console.info("register2");
-              	$(".qtip #register_submit").hide();
-            	$(".qtip span[name=error_placement2]").text(data.message);
-            	$(".qtip span[name=error_placement2]").show();
-		      if(data.isGood=="true"){
-		    	  window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nick_name+"/",'_blank')
-		    	  $("#loggedOutWrapper .ln-top-login").qtip('hide');
-		      }
-		    } };
-	   $('form[name=login_form]').submit(function() {
-		    // 提交表单
-		    $(this).ajaxSubmit(options);
-		    // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
-		    return false;
-		   });
-	   $('form[name=register_form]').submit(function(event) {
-		    // 提交表单
-		    	console.info("register0");
-		    $(this).ajaxSubmit(options2);
-		    event.preventDefault();
-		    // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
-		    return false;
-		   });
+
+
  $("#loggedOutWrapper .ln-top-login").qtip({
 content:$(".total").html() ,
 			show:{
@@ -176,7 +136,10 @@ content:$(".total").html() ,
 			effect:{type:'slide'},
 			length:2000
 			},
-			hide:'unfocus',
+			hide:{
+				event:'unfocus',
+				delay: 1260, 
+			},
         position: {
           my: 'top center',
           at: 'bottom center'
@@ -188,7 +151,55 @@ content:$(".total").html() ,
         events: {  
             render: null,  
             visible:function(){
-            	$(".qtip  form[name=login_form]").validate({rules:{
+              	var options = {
+            			type:"post",
+            			dataType:'json',
+            		    success: function(data) {
+            		    	console.info("register1");
+                          	$(".qtip #login_submit").hide();
+                        	$(".qtip span[name=error_placement]").text(data.message);
+                        	$(".qtip span[name=error_placement]").show();
+            		      if(data.isGood=="true"){
+            		      $(".logged-out-wrapper").hide();
+            		      setNav(data);
+            		      $(".logged-in-wrapper").qtip('api').set('content.text',$(".account").html());
+            		      $(".logged-in-wrapper").show();
+            		      $("#loggedOutWrapper .ln-top-login").qtip('hide');
+                        	$(".qtip span[name=error_placement]").hide();
+                          	$(".qtip #login_submit").show();
+            		      
+            		      }
+            		    } };
+            	var options2 = {
+            			type:"post",
+            			dataType:'json',
+            		    success: function(data) {
+            		    	console.info("register2");
+                          	$(".qtip #register_submit").hide();
+                        	$(".qtip span[name=error_placement2]").text(data.message);
+                        	$(".qtip span[name=error_placement2]").show();
+            		      if(data.isGood=="true"){
+            		    	  window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nick_name+"/",'_blank')
+            		    	  $("#loggedOutWrapper .ln-top-login").qtip('hide');
+                          	$(".qtip span[name=error_placement2]").hide();
+                          	$(".qtip #login_submit").show();
+            		      }
+            		    } };
+         	   $('.qtip form[name=login_form]').submit(function() {
+       		    // 提交表单
+       		    $(this).ajaxSubmit(options);
+       		    // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
+       		    return false;
+       		   });
+       	   $('.qtip form[name=register_form]').submit(function(event) {
+       		    // 提交表单
+       		    	console.info("register0");
+       		    $(this).ajaxSubmit(options2);
+       		    event.preventDefault();
+       		    // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
+       		    return false;
+       		   });
+            	$(".qtip form[name=login_form]").validate({rules:{
                     "password":{
                         required: true,
                         rangelength: [8, 16]
@@ -283,12 +294,18 @@ content:$(".total").html() ,
 		show:{
 		solo:true,
 		effect:{type:'slide'},
-		length:2000
+		length:2000,
+		distance: 32
 		},
+		
 		hide:'unfocus',
    position: {
      my: 'top center',
-     at: 'bottom center'
+     at: 'bottom center',
+     adjust: { 
+		// 提示信息位置偏移 
+		x: 20, y: -10
+		} 
    },
    style: {
      classes: 'qtip-luoo'
@@ -296,15 +313,17 @@ content:$(".total").html() ,
    events: {  
        render: null,  
        visible:function(){
-       	$(".link-logout").click(function(){
-       		theUrl = 'logout/';
-       		xmlHttp = new XMLHttpRequest();
-       		xmlHttp.open( "GET", theUrl, false );
-       		xmlHttp.send( null );
-       		$(".logged-in-wrapper").hide();
-       		$(".logged-in-wrapper .ln-account").html("");
-       		$(".logged-out-wrapper").show();
-       	});
+    		$(".link-logout").click(function(){
+    	   		theUrl = 'ajax/logout/';
+    	   		xmlHttp = new XMLHttpRequest();
+    	   		xmlHttp.open( "GET", theUrl, false );
+    	   		xmlHttp.send( null );
+    	   		$(".logged-in-wrapper").hide();
+    	   		$(".logged-in-wrapper .ln-account").html("");
+    	   		$(".logged-out-wrapper").show();
+    	   		$(".logged-in-wrapper").qtip("hide");
+    	   		clearNav();
+    	   	});
        }
    }
  });

@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import main.src.common.IPParser;
 import main.src.common.TimeManager;
 
@@ -29,13 +32,15 @@ public String token;
 public int authority;
 public boolean email_val_flag;
 public boolean del_flag;
-public User(String nick_name,String email,String password,String ip,String city,String device){
+public User(String nick_name,String email,String password,HttpServletRequest request){
+	HttpSession session = request.getSession();
 	setNick_name(nick_name);
 	setEmail(email);
 	setPassword(password);
-	setCity(city);
-	setDevice(device);
+	setCity(session.getAttribute("city") + " " + session.getAttribute("district") + " " +  session.getAttribute("provider"));
+	setDevice(session.getAttribute("device") + " " + session.getAttribute("browser") + " " +  session.getAttribute("os"));
 	setToken(UUID.randomUUID().toString());
+	register_date.
 //	Date date = new Date();       
 //	setRegister_date(new Timestamp(date.getTime()));
 }

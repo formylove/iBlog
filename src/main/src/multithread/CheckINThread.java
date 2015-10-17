@@ -15,12 +15,16 @@ public class CheckINThread extends Thread {
 		HttpSession session = request.getSession();
 		Record record = new Record(request);
 		SqlUtils.executeInsert(record);
-		session.setAttribute("notFirst", "true");
+		if(session == null){
+			session = request.getSession();
+			if(session != null){
+				session.setAttribute("notFirst", "true");
+			}
+		}else{
+			session.setAttribute("notFirst", "true");
+		}
 	}
 	
-	public HttpServletRequest getRequest() {
-		return request;
-	}
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}

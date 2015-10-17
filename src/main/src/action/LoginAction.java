@@ -1,7 +1,5 @@
 package main.src.action;
 
-import java.nio.file.attribute.UserPrincipalLookupService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,7 +8,6 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
 
-import main.src.common.Log;
 import main.src.common.MailUtils;
 import main.src.common.SqlUtils;
 import main.src.entity.Record;
@@ -24,8 +21,6 @@ public class LoginAction {
 	String psw_conf;
 	String rule;
 	String remember;
-	String curUrl;
-	String city;
 	String device;
 	String browser;
 	String os;
@@ -36,6 +31,7 @@ public class LoginAction {
 	String nick_name;
 	String motto;
 	String message;
+	String self = "true";
 	String isGood = "false";
 	public String login(){
 		message = UserService.loginDetect(email, password);
@@ -59,7 +55,7 @@ public class LoginAction {
 			return "done";
 		}
 		message = "注册成功！";
-		user = new User(nick_name, email.toLowerCase(), password,req.getRemoteAddr(),city,device);
+		user = new User(nick_name, email.toLowerCase(), password,req);
 		SqlUtils.executeInsert(user);
 		MailUtils mailSender = new MailUtils();
 		mailSender.sendActivateEmail(user.email.toLowerCase(), user.nick_name, user.token);
@@ -88,9 +84,23 @@ public class LoginAction {
 	}
 	public String logout() {
 		UserService.logout();
-		return "success";
+		return null;
 	}
-	public String getDeviceDetails(){
+	public String loadProfile() {
+		user = UserService.getUser(id);
+		HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		User loginedUser = UserService.getcurLoginUser(req);
+		if(loginedUser == null || loginedUser.getId() != id){
+			self = "false";
+		}
+		return "profile";
+	}
+	public String userSetting() {
+		HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		user = UserService.getcurLoginUser(req);
+		return "setting";
+	}
+	public String gainDeviceDetails(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setHeader("Access-Control-Allow-Origin", "*");//解决跨域请求的问题，这个header就是让服务器支持CORS的
 		HttpServletRequest request=ServletActionContext.getRequest();
@@ -110,6 +120,12 @@ public class LoginAction {
 		return "success";
 	}
 	
+	public String getSelf() {
+		return self;
+	}
+	public void setSelf(String self) {
+		this.self = self;
+	}
 	public String getBrowser() {
 		return browser;
 	}
@@ -146,18 +162,6 @@ public class LoginAction {
 	}
 	public void setPsw_conf(String psw_conf) {
 		this.psw_conf = psw_conf;
-	}
-	public String getCurUrl() {
-		return curUrl;
-	}
-	public void setCurUrl(String curUrl) {
-		this.curUrl = curUrl;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
 	}
 	public User getUser() {
 		return user;

@@ -2,43 +2,49 @@
           "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
           "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-
-
 	<constant name="struts.action.extension" value="action,do,iBlog" />
 	<constant name="struts.i18n.reload" value="true" />
 	<constant name="struts.configuration.xml.reload" value="true" />
 	<constant name="struts.custom.i18n.resources" value="dbinfo" />
 	<constant name="struts.devMode" value="true" />
     <constant name="struts.multipart.maxSize" value="10000000" />
-
-	<package name="default" extends="struts-default">
-
-
-		
-
-		
-		
-
-
-
-
-	</package>
 	
-
 		<package name="default2" extends="json-default">  
 		<global-results>
 			<result name="exception">/pages/jsp/common/runtimeExceptionPage.jsp</result>
 			<result name="login">/pages/jsp/login.jsp</result>
-			<result name="main">/pages/jsp/main.jsp</result>
 		</global-results>
-		
-		
 		<global-exception-mappings>
-			<exception-mapping result="exception" exception="java.lang.Exception" />
+			<exception-mapping result="exception" exception="java.lang.Throwable" />
 		</global-exception-mappings>
+		
+		
+		<action name="loginAction" class="main.src.action.LoginAction">
+			<result name="done" type="json"></result>
+			<result name="activated" type="redirect">homepage/</result>
+			<result name="profile">pages/jsp/user/profile.jsp</result>
+			<result name="setting">pages/jsp/user/setting.jsp</result>
+			<result name="expired">/pages/jsp/single/generalPrompt.jsp?message=${message}</result>
+		</action>
+		
+		<action name="categoryAction" class="main.src.action.CategoryAction">
+			<result name="conveycategory" type="json"></result>
+		</action>
+		
+		<action name="commentAction" class="main.src.action.CommentAction">
+			<result name="success" type="json"></result>
+		</action>
+		
 		<action name="forwardAction" class="main.src.action.ForwardAction">
 			<result name="success" type="json"></result>
 		</action>
+				
+		<action name="imageAction" class="main.src.action.ImageAction">
+			<result name="success" type="json"></result>
+			<result name="test">/pages/html/x.html</result>
+			<result name="croped">/pages/jsp/gallery.jsp</result>
+		</action>
+		
 		<action name="essayAction" class="main.src.action.EssayAction" >
 			<result name="essaypage">/pages/jsp/essay/essay.jsp</result>
 			<result name="editessay">/pages/jsp/essay/editEssay.jsp</result>
@@ -49,9 +55,7 @@
 			<result name="recovered" type="json"></result>
 			<result name="like" type="json"></result>
 		</action>
-		<action name="commentAction" class="main.src.action.CommentAction">
-			<result name="success" type="json"></result>
-		</action>
+
 		<action name="noteAction" class="main.src.action.NoteAction" >
 			<result name="notepage">/pages/jsp/note/note.jsp</result>
 			<result name="editnote">/pages/jsp/note/editNote.jsp</result>
@@ -62,31 +66,16 @@
 			<result name="recovered" type="json"></result>
 			<result name="like" type="json"></result>
 		</action>
-		
-		<action name="categoryAction" class="main.src.action.CategoryAction">
-			<result name="conveycategory" type="json"></result>
-		</action>
-		
-		<action name="loginAction" class="main.src.action.LoginAction">
-			<result name="done" type="json"></result>
-			<result name="activated" type="redirect">homepage/</result>
-<!-- 			<result name="activated" type="redirectAction">hpAction!load</result> -->
-			<result name="expired">/pages/jsp/single/generalPrompt.jsp?message=${message}</result>
-		</action>
-		
-		<action name="imageAction" class="main.src.action.ImageAction">
-			<result name="success" type="json"></result>
-			<result name="test">/pages/html/x.html</result>
-			<result name="croped">/pages/jsp/gallery.jsp</result>
-		</action>
+
 		<action name="testAction" class="test.TestAction">
 			<result name="test">/pages/jsp/single/test.jsp</result>
 		</action>
+		
 		<action name="hpAction" class="main.src.action.HPAction">
 			<result name="homepage">/pages/jsp/homepage/homepage.jsp</result>
 		</action>
 		
-		
+
 	</package>
 
 </struts>

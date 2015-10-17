@@ -41,4 +41,11 @@ _blank参数可以去掉或者修改为_self让链接在当前窗口打开
 timestamp设置默认值为CURRENT_TIMESTAMP才能插入式更新 `register_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 "0>        <p id=\"salutation\">XX, 感谢你注册夜网</p> ".replaceAll(Salutation_Reg, "xuyang, 感谢你注册夜网")),replaceALL才生效，用于正则表达式
  $('.qtip  form[name=login_form]').submit(function() {}事件可以绑定多个函数，多次执行
- 
+ org.apache.struts2.json.JSONException: java.lang.reflect.InvocationTargetException
+ json返回类型，如果异常，返回html就会出现这个错误提示
+ action,函数名get慎用啊啊啊。getDeviceDetails，否则struts将他返回值作为响应的内容
+ /iBlog/ajaxloginAction!gainDeviceDetails.actionurlrewirte完成url的部分匹配替换，未匹配部分不变
+ <result name="activated" type="redirectAction">hpAction!load</result> result 的一个用法
+ 配置struts，global-results要放在global-exception-mappings以及所有引用前
+  点击a标签，先执行绑定时间，后打开链接
+${user.register_date.year + 1900}-${user.register_date.month + 1}注意timestamp时间

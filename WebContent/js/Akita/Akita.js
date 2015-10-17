@@ -94,6 +94,11 @@ function addLabel(me){
 }
 function setNav(data){
 	$(".logged-in-wrapper .ln-account").html("<img src='"+data.portrait+"' alt='"+data.nick_name+"' class='avatar'>&nbsp;" + data.nick_name);
+	$(".link-uc").attr("href","user/profile/" + data.id);
+}
+function clearNav(){
+	$(".logged-in-wrapper .ln-account").html("");
+	$(".link-uc").attr("href","profile/");
 }
 function redLabel(me){
 	if($("span[name='labelIterm']").size()>1){

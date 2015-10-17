@@ -101,9 +101,13 @@
 	<listener>
     <listener-class>main.src.listener.SessionListener</listener-class>
 	</listener>
-	<listener>
 	
+	<listener>
     <listener-class>main.src.listener.RequestListener</listener-class>
+	</listener>
+	
+	<listener>
+    <listener-class>main.src.listener.ApplicationListener</listener-class>
 	</listener>
 	
 </web-app> 

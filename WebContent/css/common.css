@@ -2433,7 +2433,7 @@ html[xmlns] .slides {
     display: inline-block;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-index.png);
+    background-image: url(../img/icon/icon-index.png);
     background-position: top left;
     background-repeat: no-repeat
 }
@@ -2442,7 +2442,7 @@ html[xmlns] .slides {
     display: inline-block;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-index.png);
+    background-image: url(../img/icon/icon-index.png);
     background-position: top left;
     background-repeat: no-repeat;
     height: 115px;
@@ -2459,7 +2459,7 @@ html[xmlns] .slides {
     display: inline-block;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-index.png);
+    background-image: url(../img/icon/icon-index.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -120px;
@@ -2476,7 +2476,7 @@ html[xmlns] .slides {
     display: inline-block;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-index.png);
+    background-image: url(../img/icon/icon-index.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -210px;
@@ -2644,7 +2644,7 @@ html[xmlns] .slides {
     display: inline-block;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-index.png);
+    background-image: url(../img/icon/icon-index.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: 0 -190px;
@@ -2656,7 +2656,7 @@ html[xmlns] .slides {
     display: inline-block;
     line-height: 1;
     vertical-align: middle;
-    background-image: url(../img/icon-index.png);
+    background-image: url(../img/icon/icon-index.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-position: -100px -190px;
