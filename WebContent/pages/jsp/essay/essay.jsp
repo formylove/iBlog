@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="essay.title"/></title>
-<%request.setAttribute("importParams", "jquery|Akita.js|qtip|form|validate|essay.css|comment|end"); %>
+<%request.setAttribute("importParams", "general|essay.css|comment|end"); %>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>

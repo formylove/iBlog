@@ -13,10 +13,10 @@ public class Test_reflection {
     public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException, SecurityException {
 
         Comment comment=new Comment();
-        comment.setId(33);comment.setAppend(33);
-        comment.setCity("xian");
-        comment.setContent("my hapiine");
-        comment.setCreate_date("2012");
+//        comment.setId(33);comment.setAppend(33);
+//        comment.setCity("xian");
+//        comment.setContent("my hapiine");
+//        comment.setCreate_date("2012");
         print(comment.getClass().getDeclaredFields()[0].getName());
        Field f= comment.getClass().getDeclaredFields()[0];
        f.setAccessible(true);

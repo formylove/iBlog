@@ -49,3 +49,7 @@ timestamp设置默认值为CURRENT_TIMESTAMP才能插入式更新 `register_date` timestamp N
  配置struts，global-results要放在global-exception-mappings以及所有引用前
   点击a标签，先执行绑定时间，后打开链接
 ${user.register_date.year + 1900}-${user.register_date.month + 1}注意timestamp时间
+//           	   //autocomplete 绑定
+//           	   $("input[type=email]").mailAutoComplete();
+格式不合适
+<script type="text/javascript" src="js/autocomplete/jquery.mailAutoComplete-4.0.js"></script>

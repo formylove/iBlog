@@ -25,8 +25,8 @@ public class ApplicationListener implements ServletContextListener{
 		// TODO Auto-generated method stub
 		Timer time = new Timer();
 		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 20);
-		cal.set(Calendar.MINUTE, 37);
+		cal.set(Calendar.HOUR_OF_DAY, 4);
+		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		Date date = cal.getTime();
 		if (date.before(new Date())) {
@@ -34,6 +34,6 @@ public class ApplicationListener implements ServletContextListener{
 			date = cal.getTime();
 			}
 
-		time.scheduleAtFixedRate(new StartUpTask(), date, 1000*120);
+		time.scheduleAtFixedRate(new StartUpTask(), date, 1000*60*60*24);
 	}
 }
