@@ -8,8 +8,8 @@
 	$.fn.mailAutoComplete = function(options) {
 		var defaults = {
 			className: "emailist",
-			email: 	["qq.com","gmail.com","126.com","163.com","hotmail.com","yahoo.com","yahoo.com.cn","live.com","sohu.com","sina.com"], //邮件数组
-			zIndex: 11	
+			email: 	["163.com","qq.com","gmail.com","126.com","sohu.com","sina.com"], //邮件数组
+			zIndex: 1111	
 		};
 		// 最终参数
 		var params = $.extend({}, defaults, options || {});
@@ -33,7 +33,7 @@
 				}
 			});	
 			$.each(arrEmailNew, function(index, email) {
-				htmlEmailList = htmlEmailList + '<li'+ (input.indexSelected===index? ' class="on"':'') +'>'+ arrValue[0] + "@" + email +'</li>';	
+				htmlEmailList = htmlEmailList + "<li class='cursor-pointer' style='margin-top: 2px;'"+ (input.indexSelected===index? " class='on'":"") +">"+ arrValue[0] + "@" + email +"</li>";	
 			});		
 			return htmlEmailList;			
 		};
@@ -55,8 +55,13 @@
 			var eleUl = $('<ul></ul>').css({
 				position: "absolute",
 				marginTop: element.offsetHeight,
-				minWidth: element.offsetWidth - 2,
+				width: element.offsetWidth + 7,
+				marginLeft: "36px",
 				visibility: "hidden",
+				border: "1px solid #e5e5e5",
+				borderRadius: "4px",
+				marginTop: "8px",
+				background:"rgb(255, 255, 255)",
 				zIndex: params.zIndex
 			}).addClass(params.className).bind("click", function(e) {
 				var target = e && e.target;

@@ -20,7 +20,7 @@
 	<form class="form-ajax" action="ajax/login/" method="post" name ="login_form" callback="login_cback">
 		<div class="inline-input">
 			<span class="label">邮箱</span>
-			<input type="email" class="input-passport" name="email" required="">
+			<input type="email" class="input-passport" autocomplete="off" name="email" required="">
 		</div>
 		<div class="inline-input">
 			<span class="label">密码</span>

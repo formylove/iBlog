@@ -40,7 +40,6 @@ public User(String nick_name,String email,String password,HttpServletRequest req
 	setCity(session.getAttribute("city") + " " + session.getAttribute("district") + " " +  session.getAttribute("provider"));
 	setDevice(session.getAttribute("device") + " " + session.getAttribute("browser") + " " +  session.getAttribute("os"));
 	setToken(UUID.randomUUID().toString());
-	register_date.
 //	Date date = new Date();       
 //	setRegister_date(new Timestamp(date.getTime()));
 }

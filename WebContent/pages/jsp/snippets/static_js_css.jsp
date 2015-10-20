@@ -9,7 +9,8 @@ if(importParams.indexOf("general")>=0){ %>
 <script type="text/javascript" src="js/qtip/jquery.qtip.min.js"></script>
 <script type="text/javascript" src="js/form/jquery.form.js"></script>
 <script type="text/javascript" src="js/validate/jquery.validate.min.js"></script>
-<script type="text/javascript" src="js/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="js/autocomplete/jquery.mailAutoComplete-4.0.js"></script>
+<script type="text/javascript" src="js/artDialog/dialog-min.js"></script>
 <script type="text/javascript" src="js/Akita/nav.js"></script>
 <%}else{
 if(importParams.indexOf("jquery")>=0){ %>

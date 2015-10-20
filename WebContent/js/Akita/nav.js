@@ -163,6 +163,7 @@ $(function(){
             events: {  
                 render: null,  
                 visible:function(){
+                $("input[type=email]").mailAutoComplete({  boxClass: "emailist"});
              	   $('.qtip form[name=login_form]').submit(function() {
            		    $(this).ajaxSubmit(options);
            		    return false;
@@ -223,7 +224,6 @@ $(function(){
  $("#loggedOutWrapper .ln-top-login").qtip(options6);
  //为登录名添加qtip
  $(".logged-in-wrapper").qtip(options7);
-
 //$("button[data-tipid='commentSubmitDialog']").qtip({
 //content:$(".total").html() ,
 //			show:{
