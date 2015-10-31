@@ -21,15 +21,20 @@ public String md5;
 public char gender;
 public String portrait;
 public String motto;
+public Date birthday;
 public String email;
 public String qq;
 public String phone;
+public String weibo;
+public String weixin;
+public String job;
 public String device;
 public String city;
 public String register_ip;
 public Timestamp register_date;
 public String token;
 public int authority;
+public boolean autoplay;
 public boolean email_val_flag;
 public boolean del_flag;
 public User(String nick_name,String email,String password,HttpServletRequest request){
@@ -47,6 +52,36 @@ public User(){
 }
 
 
+public String getWeibo() {
+	return weibo;
+}
+public void setWeibo(String weibo) {
+	this.weibo = weibo;
+}
+public String getWeixin() {
+	return weixin;
+}
+public void setWeixin(String weixin) {
+	this.weixin = weixin;
+}
+public String getJob() {
+	return job;
+}
+public void setJob(String job) {
+	this.job = job;
+}
+public Date getBirthday() {
+	return birthday;
+}
+public void setBirthday(Date birthday) {
+	this.birthday = birthday;
+}
+public boolean isAutoplay() {
+	return autoplay;
+}
+public void setAutoplay(boolean autoplay) {
+	this.autoplay = autoplay;
+}
 public String getDevice() {
 	return device;
 }

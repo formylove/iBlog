@@ -25,8 +25,8 @@ public class Interceptor implements Filter{
 		@SuppressWarnings("unused")
 		HttpServletRequest request=(HttpServletRequest)req;	
 		String url = (String)request.getRequestURL().toString();
-		if(!(url.indexOf(".js")>=0 || url.indexOf(".css")>=0 || url.indexOf(".png")>=0)){
-		Log.print("interceptor£º"+url);}
+//		if(!(url.indexOf(".js")>=0 || url.indexOf(".css")>=0 || url.indexOf(".png")>=0)){
+//		Log.print("interceptor£º"+url);}
 		filterChain.doFilter(req, res);
 	}
 

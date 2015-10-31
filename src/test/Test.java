@@ -12,7 +12,7 @@ import main.src.common.ImageUtils;
 import main.src.common.MailUtils;
 import main.src.common.MsgConstants;
 import main.src.common.Spider;
-import main.src.common.StringUtils;
+import main.src.common.StrUtils;
 import main.src.entity.Comment;
 import main.src.multithread.CheckINThread;
 public class Test {

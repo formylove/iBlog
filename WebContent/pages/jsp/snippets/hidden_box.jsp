@@ -17,7 +17,7 @@
 		</a>
 		<span class="fright">没有账号？</span>
 	</div>
-	<form class="form-ajax" action="ajax/login/" method="post" name ="login_form" callback="login_cback">
+	<form class="form-ajax" action="ajax/login/" method="post" name ="login_form" onsubmit="">
 		<div class="inline-input">
 			<span class="label">邮箱</span>
 			<input type="email" class="input-passport" autocomplete="off" name="email" required="">
@@ -100,7 +100,7 @@
 <!-- account detail-->
 <div class="account hidden">
 <div class="account-links rounded" id="accountLinks">
-			<a class="account-link link-uc" href="user/profile/${user.id}" target="_blank" rel="nofollow">
+			<a class="account-link link-uc" href="user/profile/${requestScope.logined_user.id}" target="_blank" rel="nofollow">
 				<span class="icon-account"></span>我的落网
 			</a>
 			<a class="account-link link-setting" href="user/setting/" target="_blank" rel="nofollow">

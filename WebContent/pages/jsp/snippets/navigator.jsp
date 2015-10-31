@@ -1,4 +1,5 @@
 	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	<%@taglib prefix="s" uri="/struts-tags"%>
 	<div class="header">
 		<div class="header-ct">
 			<a href="" class="logo">
@@ -24,7 +25,7 @@
 						</button>
 					</form>
 				</div>	
-		<s:if test="#request.user == null">
+		<s:if test="#request.logined_user == null">
 		<!-- logged-out-wrapper -->
 			<div style="display: block;" class="logged-out-wrapper" id="loggedOutWrapper" >
 				<a href="javascript:;" rel="nofollow" class="ln-top-login"> 注册/登录 </a>
@@ -53,8 +54,8 @@
 				</a>
 				<div class="account-more">
 					<a href="javascript:;" rel="nofollow" class="ln-account"
-						id="lnAccountMore"> <img src="${user.portrait}"
-						alt="${user.nick_name}" class="avatar"> ${user.nick_name}
+						id="lnAccountMore"> <img src="${requestScope.logined_user.portrait}"
+						alt="${requestScope.logined_user.nick_name}" class="avatar"> ${requestScope.logined_user.nick_name}
 					</a>
 				</div>
 			</div>

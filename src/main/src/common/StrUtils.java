@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-public class StringUtils {
+import org.apache.commons.lang3.StringUtils;
+
+public class StrUtils {
 	static final String MAIL_REG ="\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*"; 
 	static final String Name_REG ="^[0-9a-zA-Z\\u4E00-\\u9FA5_]+$"; 
 	static final String SIMPLE_REG ="^[0-9a-zA-Z]+$"; 
@@ -19,6 +21,14 @@ static public String removeTag(String raw){
 }
 static public boolean isEmpty(String raw){
 	return (raw==null || "".equals(raw));
+}
+static public boolean contains(String raw,String[] params){
+	for(String param : params){
+		if(StringUtils.contains(raw, param)){
+			return true;
+		}
+	}
+	return false;
 }
 static public String fileToString(String filePath){
 	String line = "";

@@ -1,12 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:property value="essay.title"/></title>
-<%request.setAttribute("importParams", "general|essay.css|comment|end"); %>
+<s:set name="importParams" value="'general|essay.css|comment|end'" scope="request"/>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>

@@ -3,7 +3,7 @@ package main.src.entity.note;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import main.src.common.StringUtils;
+import main.src.common.StrUtils;
 import main.src.common.TimeManager;
 import main.src.service.NoteService;
 
@@ -49,23 +49,23 @@ public class Opus{
 				if(!"nope".equals(dynasty)){
 					meta.put("作家", author_directior+"("+dynasty+")");
 				}else{
-					if(!StringUtils.isEmpty(author_directior)){
+					if(!StrUtils.isEmpty(author_directior)){
 						meta.put("作家", author_directior);
 					}
 				}
 				
 			}else if(!"nope".equals(nationality)){
 				meta.put("作家", author_directior+"("+nationality+")");
-				if(!StringUtils.isEmpty(original_name)){
+				if(!StrUtils.isEmpty(original_name)){
 					meta.put("译名", original_name);
 				}
 				
 			}else{
-				if(!StringUtils.isEmpty(author_directior)){
+				if(!StrUtils.isEmpty(author_directior)){
 					meta.put("作家", author_directior);
 				}
 			}
-			if(!StringUtils.isEmpty(protagonists)){
+			if(!StrUtils.isEmpty(protagonists)){
 				meta.put("主角", protagonists);
 			}
 			if(genre !=0){
@@ -74,31 +74,31 @@ public class Opus{
 		}else{
 				if(!"中国".equals(nationality) && !"nope".equals(nationality)){
 						meta.put("电影名", name+"("+nationality+")");
-						if(!StringUtils.isEmpty(original_name)){
+						if(!StrUtils.isEmpty(original_name)){
 							meta.put("译名", original_name);
 						}
 						
 				}else {
 					meta.put("电影名", name);
 				}
-				if(!StringUtils.isEmpty(author_directior)){
+				if(!StrUtils.isEmpty(author_directior)){
 					meta.put("导演", author_directior);
 				}
-				if(!StringUtils.isEmpty(protagonists)){
+				if(!StrUtils.isEmpty(protagonists)){
 					meta.put("主演", protagonists);
 				}
 				if(rec_flag){
-					if(!StringUtils.isEmpty(remark)){
+					if(!StrUtils.isEmpty(remark)){
 						meta.put("推荐评语", remark);
 					}
 				}
-					if(!StringUtils.isEmpty(rating)){
+					if(!StrUtils.isEmpty(rating)){
 						meta.put("评价", rating);
 					}
 				if(genre !=0){
 					meta.put("类型", NoteService.getGenreName(genre));
 				}
-				if(!StringUtils.isEmpty(publish_date)){
+				if(!StrUtils.isEmpty(publish_date)){
 					meta.put("上映时间", publish_date+"月");
 				}
 		}
@@ -113,7 +113,7 @@ public class Opus{
 		}
 	}
 	public String[] getAllProtagonists(){
-		if(!StringUtils.isEmpty(protagonists)){
+		if(!StrUtils.isEmpty(protagonists)){
 			return protagonists.trim().split(splitTag);
 		}else{
 			return null;
@@ -217,7 +217,7 @@ public class Opus{
 		return protagonists;
 	}
 	public void setProtagonists(String protagonists) {
-		if(StringUtils.notEmpty(protagonists)){
+		if(StrUtils.notEmpty(protagonists)){
 			this.protagonists = protagonists.replaceAll(" ","").replaceAll(splitTag+"+$", "");
 		}else{
 			this.protagonists = protagonists;

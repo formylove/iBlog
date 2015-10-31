@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//WebContent/css/common.css=UTF-8
 encoding//WebContent/pages/jsp/essay/essay.jsp=UTF-8
+encoding//WebContent/pages/jsp/essay/essays.jsp=UTF-8
+encoding//WebContent/pages/jsp/homepage/homepage.jsp=UTF-8
 encoding//WebContent/pages/jsp/note/editNote.jsp=UTF-8
 encoding//WebContent/pages/jsp/single/QRcode.jsp=UTF-8
 encoding//WebContent/pages/jsp/single/sss.jsp=UTF-8

@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-import="main.src.entity.essay.Essay,main.src.common.StringUtils,main.src.common.Log"
-    pageEncoding="UTF-8"%>
+<%@ page import="main.src.entity.essay.Essay,main.src.common.StrUtils,main.src.common.Log""%>
 <%@ taglib prefix="s" uri="/struts-tags"%>   
 <!DOCTYPE html>
 <html>
@@ -59,22 +57,22 @@ import="main.src.entity.essay.Essay,main.src.common.StringUtils,main.src.common.
 									<%
 									Essay e = (Essay) request.getAttribute("essay");
 									String subtitle = e.getSubtitle();
-									if(!StringUtils.isEmpty(subtitle))
+									if(!StrUtils.isEmpty(subtitle))
 									{
-									subtitle = StringUtils.removeTag(subtitle);
+									subtitle = StrUtils.removeTag(subtitle);
 										if(e.getTitle().length()>19){
-											subtitle = StringUtils.truncate(subtitle, 70);
+											subtitle = StrUtils.truncate(subtitle, 70);
 										}else{
-											subtitle = StringUtils.truncate(subtitle, 100);
+											subtitle = StrUtils.truncate(subtitle, 100);
 										}%>
 									<%=subtitle%><% 
 									}else{
 										String content = e.getContent();
-										content = StringUtils.removeTag(content);
+										content = StrUtils.removeTag(content);
 										if(e.getTitle().length()>19){
-										content = StringUtils.truncate(content, 70);
+										content = StrUtils.truncate(content, 70);
 										}else{
-										content = StringUtils.truncate(content, 100);
+										content = StrUtils.truncate(content, 100);
 										}%>
 										<%=content%>
 										<%}%>

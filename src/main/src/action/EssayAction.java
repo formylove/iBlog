@@ -14,7 +14,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
-import main.src.common.StringUtils;
+import main.src.common.StrUtils;
 import main.src.entity.Category;
 import main.src.entity.User;
 import main.src.entity.essay.Essay;
@@ -58,7 +58,7 @@ public String listEssay(){
 }
 public String saveEssay() throws NumberFormatException, UnsupportedEncodingException{
     if(id==0){
-    	if(!StringUtils.isEmpty(profile)){
+    	if(!StrUtils.isEmpty(profile)){
     		essay.setProfile(ImageUtils.cut(profile, w, h, x, y));
     	}
     	id = EssayService.saveEssay(essay);
@@ -100,21 +100,21 @@ public String deleteEssay(){
 
 public String recoverEssay(){
 	EssayService.recoverEssay(id);
-	return MsgConstants.RECOVERED;
+	return MsgConstants.DONE;
 }
 
 public String hasExisted(){
 	hasExisted = EssayService.hasExisted(title);
-	return MsgConstants.REDUPLICATIVE;
+	return MsgConstants.DONE;
 }
 public String like(){
 	EssayService.likeEssay(id);
-	return MsgConstants.LIKE;
+	return MsgConstants.DONE;
 }
 
 public String undoLike(){
 	EssayService.undoLikeEssay(id);
-	return MsgConstants.LIKE;
+	return MsgConstants.DONE;
 }
 
 

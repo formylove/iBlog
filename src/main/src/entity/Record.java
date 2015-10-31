@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import main.src.common.MessageUtils;
 import main.src.common.Spider;
-import main.src.common.StringUtils;
+import main.src.common.StrUtils;
 import main.src.common.WebUtils;
 import net.sf.json.JSONObject;
 
@@ -50,10 +50,10 @@ public class Record {
 		setDevice((String)session.getAttribute("device"));
 		setOs((String)session.getAttribute("os"));
 		//提取位置信息
-		if(StringUtils.isEmpty(province) && StringUtils.isEmpty(city) && StringUtils.isEmpty(district) && StringUtils.isEmpty(provider)){
+		if(StrUtils.isEmpty(province) && StrUtils.isEmpty(city) && StrUtils.isEmpty(district) && StrUtils.isEmpty(provider)){
 			//ToDo replace Ip here
 			String location = Spider.SendGet(MessageUtils.getMessageFromUrl("api.location") + "122.95.231.214");
-			if(StringUtils.notEmpty(location)){
+			if(StrUtils.notEmpty(location)){
 				JSONObject js = JSONObject.fromObject(location);
 				if(js != null){
 					JSONObject data = js.getJSONObject("data");

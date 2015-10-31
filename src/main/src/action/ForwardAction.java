@@ -26,7 +26,7 @@ int essayId;
 		}else{
 			hasForwarded = true;
 		}
-		return MsgConstants.SUCCESS;
+		return MsgConstants.DONE;
 	}
 	
 	public String hasForwarded(){
@@ -37,7 +37,7 @@ int essayId;
 		Log.print(url);
 		response.setHeader("Access-Control-Allow-Origin", "*");//解决跨域请求的问题，这个header就是让服务器支持CORS的
 		hasForwarded = EssayService.hasForwarded(url);
-		return MsgConstants.SUCCESS;
+		return MsgConstants.DONE;
 	}
 
 

@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user.nick_name}</title>
-<%request.setAttribute("importParams", "jquery|Akita.js|qtip|form|validate|user.css|end"); %>
+<%request.setAttribute("importParams", "general|user|end"); %>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>
@@ -28,12 +28,13 @@
 		<div class="sign">			
 			<div style="display: block;" id="textMood">
 				<span id="txtMoodCt" class="mood-ct" data-editable="true">${(user.motto==null || user.motto==null)?"说两句吧...":user.motto}</span>
-				<a class="ln-edit-mood" href="javascript:;" id="lnEditMood">${self == "true"?"编辑":""}</a>					
+				<a class="ln-edit-mood" href="javascript:;" id="lnEditMood">${self == "true"?"编辑":""}</a>
 			</div>
 			
-			<div style="display: none;" id="formMood" class="form-mood">
-				<form action="http://www.luoo.net/mood/add" method="post" class="form-ajax" callback="add_mood_cback">
-					<input type="text" id="txtContent" name="content" style="width:355px;" value="" data-value="" maxlength="70">
+			<div  id="formMood" class="form-mood hidden">
+				<form id="motto-form" action="ajax/user/update/" method="post" class="form-ajax">
+				<input type="hidden" name="update_type" value="motto"/>
+				<input type="text" id="motto" name="motto" style="width:355px;" value="" maxlength="70">
 					&nbsp;
 					<a href="javascript:;" class="helper" id="lnSaveMood">保存</a> 
 					<a href="javascript:;" class="helper" id="lnCancleMood">取消</a>
@@ -51,18 +52,15 @@
 		<div class="uc-ct">
 			<!-- setting-base -->
 			<div class="setting-base tab-content-item" style="display: block;">
-				<p class="setting-row nickname">
-					了不起的提利昂					<a href="javascript:;" class="ln-setting-edit" id="lnEditUsername" rel="nofollow">更改</a>
-				</p>
 				<div class="setting-row" style="border-bottom: 1px solid #E5E5E5; padding-bottom: 25px;">
-					<div class="setting-email">
+					<div class="setting-name">
 						<span class="helper">
-							登录邮箱
+							昵称
 						</span>
 						<br>
-						<p>
-							ansyx@163.com							<a href="javascript:;" class="ln-setting-edit" id="lnEditEmail" rel="nofollow">更改</a>
-						</p>
+				<p >
+					${user.nick_name}					<a href="javascript:;" class="ln-setting-edit" id="lnEditUsername" rel="nofollow">更改</a>
+				</p>
 					</div>
 					<div class="setting-autoplay">
 						<span class="helper">
@@ -80,10 +78,10 @@
 					<div class="setting-row">
 						<span class="label">性别</span>
 						<label>
-							<input type="radio" name="sex" value="1" class="input-listener"> 男
+							<input type="radio" name="gender" value="m" class="input-listener"> 男
 						</label>
 						<label>
-							<input type="radio" name="sex" value="2" class="input-listener"> 女
+							<input type="radio" name="gender" value="f" class="input-listener"> 女
 						</label>
 					</div>
 					<div class="setting-row" style="position: relative;">
@@ -92,14 +90,7 @@
 						<input type="text" id="txtBirthday" name="birthday" style="width: 185px; visibility: hidden; position: absolute; top: -26px; margin-left: 5px;">				
 					</div>
 					<div class="setting-row">
-						<span class="label">常居</span>
-						<span id="areaSelector">
-							<select class="province input-listener" name="province" data-val=""><option value="0">请选择</option><option value="北京">北京</option><option value="天津">天津</option><option value="河北">河北</option><option value="山西">山西</option><option value="内蒙古">内蒙古</option><option value="辽宁">辽宁</option><option value="吉林">吉林</option><option value="黑龙江">黑龙江</option><option value="上海">上海</option><option value="江苏">江苏</option><option value="浙江">浙江</option><option value="安徽">安徽</option><option value="福建">福建</option><option value="江西">江西</option><option value="山东">山东</option><option value="河南">河南</option><option value="湖北">湖北</option><option value="湖南">湖南</option><option value="广东">广东</option><option value="广西">广西</option><option value="海南">海南</option><option value="重庆">重庆</option><option value="四川">四川</option><option value="贵州">贵州</option><option value="云南">云南</option><option value="西藏">西藏</option><option value="陕西">陕西</option><option value="甘肃">甘肃</option><option value="青海">青海</option><option value="宁夏">宁夏</option><option value="新疆">新疆</option><option value="香港">香港</option><option value="澳门">澳门</option><option value="台湾">台湾</option></select> 
-							<select class="city input-listener" name="city" data-val="" disabled="disabled" style="display: none;"></select>
-						</span>					
-					</div>
-					<div class="setting-row">
-						<span class="label">职业</span>
+						<span class="label">QQ</span>
 						<input type="text" name="vocation" style="width: 52px;" class="rounded input-listener" value="">
 					</div>
 					<div class="setting-row setting-bottom">
@@ -125,7 +116,7 @@
 					</div>
 					<div class="setting-row">
 						<span class="label">确认密码</span>
-						<input type="password" name="cmfpassword" class="rounded" id="txtCmfpassword" autocomplete="off">
+						<input type="password" name="psw_conf" class="rounded" id="txtCmfpassword" autocomplete="off">
 						<span class="valid-msg"></span>
 					</div>
 					<div class="setting-row setting-bottom">

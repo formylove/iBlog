@@ -8,10 +8,14 @@
 	<constant name="struts.custom.i18n.resources" value="dbinfo" />
 	<constant name="struts.devMode" value="true" />
     <constant name="struts.multipart.maxSize" value="10000000" />
-	
+<!--     <constant name="struts.multipart.saveDir " value="设置上传临时文件的默认目录" /> -->
+<!-- 	<constant name="struts.action.excludePattern" value=".*\\.png,/ajax/.*" />   -->
 		<package name="default2" extends="json-default">  
 		<global-results>
 			<result name="exception">/pages/jsp/common/runtimeExceptionPage.jsp</result>
+			<result name="done" type="json">
+			<param name="excludeNullProperties">true</param>
+			</result>
 			<result name="login">/pages/jsp/login.jsp</result>
 		</global-results>
 		<global-exception-mappings>
@@ -20,7 +24,10 @@
 		
 		
 		<action name="loginAction" class="main.src.action.LoginAction">
-			<result name="done" type="json"></result>
+			<result name="done" type="json">
+			<param name="excludeProperties">user,password,newpassword,psw_conf</param>
+			<param name="excludeNullProperties">true</param>
+			</result>
 			<result name="activated" type="redirect">homepage/</result>
 			<result name="profile">pages/jsp/user/profile.jsp</result>
 			<result name="setting">pages/jsp/user/setting.jsp</result>
@@ -28,19 +35,15 @@
 		</action>
 		
 		<action name="categoryAction" class="main.src.action.CategoryAction">
-			<result name="conveycategory" type="json"></result>
 		</action>
 		
 		<action name="commentAction" class="main.src.action.CommentAction">
-			<result name="success" type="json"></result>
 		</action>
 		
 		<action name="forwardAction" class="main.src.action.ForwardAction">
-			<result name="success" type="json"></result>
 		</action>
 				
 		<action name="imageAction" class="main.src.action.ImageAction">
-			<result name="success" type="json"></result>
 			<result name="test">/pages/html/x.html</result>
 			<result name="croped">/pages/jsp/gallery.jsp</result>
 		</action>
@@ -51,9 +54,6 @@
 			<result name="success">/pages/jsp/essay/saved.jsp</result>
 			<result name="deleted">/pages/jsp/essay/deletedConfirmation.jsp</result>
 			<result name="essays">/pages/jsp/essay/essays.jsp</result>
-			<result name="reduplicative" type="json"></result>
-			<result name="recovered" type="json"></result>
-			<result name="like" type="json"></result>
 		</action>
 
 		<action name="noteAction" class="main.src.action.NoteAction" >
@@ -62,9 +62,6 @@
 			<result name="success">/pages/jsp/note/saved.jsp</result>
 			<result name="deleted">/pages/jsp/note/deletedConfirmation.jsp</result>
 			<result name="notes">/pages/jsp/note/notes.jsp</result>
-			<result name="reduplicative" type="json"></result>
-			<result name="recovered" type="json"></result>
-			<result name="like" type="json"></result>
 		</action>
 
 		<action name="testAction" class="test.TestAction">

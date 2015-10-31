@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>My gf is as nice as my mum</title>
 <%
-	request.setAttribute("importParams", "jquery|common.css|ZeroClipboard.js|Akita.js|end");
+	request.setAttribute("importParams", "general|end");
 %>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 	<script type="text/javascript">

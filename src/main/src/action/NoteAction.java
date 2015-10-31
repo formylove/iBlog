@@ -11,7 +11,7 @@ import org.apache.struts2.ServletActionContext;
 
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
-import main.src.common.StringUtils;
+import main.src.common.StrUtils;
 import main.src.entity.Genre;
 import main.src.entity.essay.Essay;
 import main.src.entity.note.Opus;
@@ -49,7 +49,7 @@ public String listNote(){
 }
 public String saveNote() throws NumberFormatException, UnsupportedEncodingException{
 	    if(id==0){
-	    	if(!StringUtils.isEmpty(cover)){
+	    	if(!StrUtils.isEmpty(cover)){
 	    		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
 	    	}
 	    	id = NoteService.saveNote(essay, opus);
@@ -91,21 +91,21 @@ public String deleteNote(){
 
 public String recoverNote(){
 	NoteService.recoverNote(id);
-	return MsgConstants.RECOVERED;
+	return MsgConstants.DONE;
 }
 
 public String hasExisted(){
 	hasExisted = EssayService.hasExisted(title);
-	return MsgConstants.REDUPLICATIVE;
+	return MsgConstants.DONE;
 }
 public String like(){
 	EssayService.likeEssay(id);
-	return MsgConstants.LIKE;
+	return MsgConstants.DONE;
 }
 
 public String undoLike(){
 	EssayService.undoLikeEssay(id);
-	return MsgConstants.LIKE;
+	return MsgConstants.DONE;
 }
 public String getCover() {
 	return cover;

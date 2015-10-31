@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.src.common.SqlUtils;
-import main.src.common.StringUtils;
+import main.src.common.StrUtils;
 import main.src.entity.Comment;
 
 public class CommentService {
@@ -39,7 +39,7 @@ public class CommentService {
 		return ceiling;
 	}
 	static public String getCellula(String target_id,int floor){
-		String cellula = SqlUtils.getField("SELECT SUBSTRING(MAX(id)+1 FROM 8 FOR 2) from `comment` WHERE id LIKE " + target_id + StringUtils.zeroFill(floor,2) + "'%'  ORDER BY id");
+		String cellula = SqlUtils.getField("SELECT SUBSTRING(MAX(id)+1 FROM 8 FOR 2) from `comment` WHERE id LIKE " + target_id + StrUtils.zeroFill(floor,2) + "'%'  ORDER BY id");
 		return cellula;
 	}
 	static public int getCurId(String target_id,int floor){
@@ -47,7 +47,7 @@ public class CommentService {
 		if(floor == 0){
 			curId = Integer.parseInt(target_id + getFloor(target_id) + "01");
 		}else{
-			curId = Integer.parseInt(target_id + StringUtils.zeroFill(floor,2) + getCellula(target_id,floor));
+			curId = Integer.parseInt(target_id + StrUtils.zeroFill(floor,2) + getCellula(target_id,floor));
 		}
 		return curId;
 	}

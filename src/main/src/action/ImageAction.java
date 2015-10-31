@@ -55,7 +55,7 @@ public class ImageAction {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setCharacterEncoding("utf-8");
 		imgName = ImageUtils.saveTemp(file, fileFileName);
-		return MsgConstants.SUCCESS;
+		return MsgConstants.DONE;
 	}
 
 

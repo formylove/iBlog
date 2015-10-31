@@ -97,6 +97,11 @@
  </rule>
  
 <rule>
+   <from>/ajax/user/update/?$</from> 
+   <to>/loginAction!update.action</to>
+ </rule>
+ 
+<rule>
    <from>/ajax/ua/?$</from> 
    <to>/loginAction!gainDeviceDetails.action</to>
  </rule>

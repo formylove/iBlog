@@ -1,56 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance
+	http://www.springmodules.org/schema/cache/springmodules-cache.xsd http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-<jsp-config>
-    <jsp-property-group>  
-      <description>  
-     Special property group for JSP Configuration JSP example.  
-     </description>  
-     <display-name>JSPConfiguration</display-name>  
-     <url-pattern>*.jdsp</url-pattern>  
-     <el-ignored>true</el-ignored>  
-     <page-encoding>UTF-8</page-encoding>  
-     <scripting-invalid>false</scripting-invalid>  
-     <include-prelude></include-prelude>  
-     <include-coda></include-coda>
-    </jsp-property-group>
- </jsp-config>
 	<display-name>iBlog</display-name>
-
-<filter>
-<filter-name>url filter</filter-name>
-<filter-class>main.src.filter.UrlFilter</filter-class>
-</filter>
-<filter-mapping>
-<filter-name>url filter</filter-name>
-		<url-pattern>/*</url-pattern>
-	    <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-</filter-mapping>
-<filter>
-<filter-name>user detector</filter-name>
-<filter-class>main.src.filter.UserDetectFilter</filter-class>
-</filter>
-<filter-mapping>
-<filter-name>user detector</filter-name>
-		<url-pattern>/*</url-pattern>
-	    <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-</filter-mapping>
-
 <filter> 
   <filter-name>UrlRewriteFilter</filter-name> 
    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class> 
-  <init-param> 
-    <param-name>logLevel</param-name> 
-     <param-value>9</param-value> 
-  </init-param> 
  </filter> 
  <filter-mapping> 
    <filter-name>UrlRewriteFilter</filter-name> 
    <url-pattern>/*</url-pattern>
+<!--    <url-pattern>/</url-pattern> -->
    		<dispatcher>REQUEST</dispatcher>  
         <dispatcher>FORWARD</dispatcher>  
   </filter-mapping>
@@ -77,18 +39,6 @@
         <dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 	
-	<filter>
-		<filter-name>testFilter</filter-name>
-		<filter-class>main.src.filter.testFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>testFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	    <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-	</filter-mapping>
-
-
 	<error-page>
 		<error-code>404</error-code>
 		<location>/pages/jsp/common/404.jsp</location>
@@ -99,15 +49,35 @@
 	</session-config> 
 	
 	<listener>
-    <listener-class>main.src.listener.SessionListener</listener-class>
-	</listener>
-	
-	<listener>
-    <listener-class>main.src.listener.RequestListener</listener-class>
-	</listener>
-	
-	<listener>
     <listener-class>main.src.listener.ApplicationListener</listener-class>
 	</listener>
 	
+	<jsp-config>
+	<jsp-property-group>
+	<url-pattern>*.jsp</url-pattern>
+	<icon></icon>
+	<el-ignored>false</el-ignored>
+	<scripting-invalid>false</scripting-invalid>
+	<default-content-type>text/html; charset=UTF-8</default-content-type>
+	<page-encoding>utf-8</page-encoding>
+	</jsp-property-group>
+	
+<!-- 	<jsp-property-group> -->
+<!-- 	<url-pattern>/pages/jsp/user/*</url-pattern> -->
+<!-- 	<url-pattern>/pages/jsp/usersingle/*</url-pattern> -->
+<!-- 	<url-pattern>/pages/jsp/note/*</url-pattern> -->
+<!-- 	<url-pattern>/pages/jsp/essay/*</url-pattern> -->
+<!-- 	<url-pattern>/pages/jsp/common/*</url-pattern> -->
+<!-- 	<include-prelude> -->
+<!-- 	/pages/jsp/snippets/navigator.jspf -->
+<!-- 	</include-prelude> -->
+<!-- 	<include-coda> -->
+<!-- 	/pages/jsp/snippets/hidden_box.jsp -->
+<!-- 	</include-coda> -->
+<!-- 	<include-coda> -->
+<!-- 	/pages/jsp/snippets/footer.jsp -->
+<!-- 	</include-coda> -->
+<!-- 	</jsp-property-group> -->
+	
+	</jsp-config>
 </web-app> 

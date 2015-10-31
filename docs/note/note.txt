@@ -53,3 +53,17 @@ ${user.register_date.year + 1900}-${user.register_date.month + 1}注意timestamp时
 //           	   $("input[type=email]").mailAutoComplete();
 格式不合适
 <script type="text/javascript" src="js/autocomplete/jquery.mailAutoComplete-4.0.js"></script>
+Accept:application/json, text/javascript, */*; q=0.01
+Accept-Encoding:gzip, deflate
+Accept-Language:zh-CN,zh;q=0.8
+Connection:keep-alive
+Content-Length:31
+Content-Type:application/x-www-form-urlencoded; charset=UTF-8
+Cookie:night_user_id=3; JSESSIONID=90880E47779F563AA7D4DE0DDA48E848
+cookie值包含在了request里
+include-coda 会为每个jsp添加
+<s:set name="importParams" value="'generalessay.css|comment|end'" scope="request"/> 加单引号
+去上下文：打开右侧服务器配置，server.xml文件中<Context docBase="iBlog" path="" reloadable="true" source="org.eclipse.jst.jee.server:iBlog"/></Host>
+将path清空，并将端口该文80
+	192.168.1.102	hachi.space host修改无需重启立即生效
+

@@ -12,7 +12,7 @@ import org.apache.struts2.StrutsStatics;
 import com.opensymphony.xwork2.ActionContext;
 
 import main.src.common.SqlUtils;
-import main.src.common.StringUtils;
+import main.src.common.StrUtils;
 import main.src.common.WebUtils;
 import main.src.entity.User;
 
@@ -54,10 +54,10 @@ public class UserService {
 	static public String loginDetect(String email,String password){
 		email = email.trim();
 		String message = null;
-		if(!StringUtils.valiEmail(email)){
+		if(!StrUtils.valiEmail(email)){
 			return "邮箱格式错误";
 		}
-		if(!StringUtils.simpleChar(password)){
+		if(!StrUtils.simpleChar(password)){
 			return "密码错误";
 		}
 		if(getUserByMail(email) == null){
@@ -75,25 +75,25 @@ public class UserService {
 	static public String registerDetect(String nick_name,String email,String password,String psw_conf,String rule){
 		email = email.trim();
 		String message = null;
-		if(!StringUtils.valiName(nick_name)){
+		if(!StrUtils.valiName(nick_name)){
 			return "昵称必须只包含英文中文数字以及下划线";
 		}
-		if(!StringUtils.valiEmail(email)){
+		if(!StrUtils.valiEmail(email)){
 			return "邮箱格式错误";
 		}
 		if(getUserByMail(email) != null){
 			return "邮箱已注册";
 		}
-		if(!StringUtils.simpleChar(password)){
+		if(!StrUtils.simpleChar(password)){
 			return "密码只能包含数字及字母";
 		}
-		if(StringUtils.isEmpty(password) || password.length()<8 || password.length()>16){
+		if(StrUtils.isEmpty(password) || password.length()<8 || password.length()>16){
 			return "密码长度必须在8到16位之间";
 		}
 		if(!password.equals(psw_conf)){
 			return "两次输入密码不同";
 		}
-		if(StringUtils.isEmpty(rule)){
+		if(StrUtils.isEmpty(rule)){
 			return "请先阅读并同意夜网使用协议";
 		}
 		return null;

@@ -1,7 +1,8 @@
 <%@ page import="main.src.common.MessageUtils" %>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <base href="<%=MessageUtils.getMessageFromUrl("base")%>"/>
-
-<%String importParams=(String)request.getAttribute("importParams"); 
+<link rel="SHORTCUT ICON" href="img/icon/favicon.ico">
+<%String importParams=(String)request.getAttribute("importParams");
 if(importParams!=null){
 if(importParams.indexOf("general")>=0){ %>
 <script type="text/javascript" src="js/jquery/jquery.js"></script>
@@ -10,8 +11,9 @@ if(importParams.indexOf("general")>=0){ %>
 <script type="text/javascript" src="js/form/jquery.form.js"></script>
 <script type="text/javascript" src="js/validate/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js/autocomplete/jquery.mailAutoComplete-4.0.js"></script>
-<script type="text/javascript" src="js/artDialog/dialog-min.js"></script>
 <script type="text/javascript" src="js/Akita/nav.js"></script>
+<script type="text/javascript" src="js/artDialog/dialog-min.js"></script>
+<link href="js/artDialog/ui-dialog.css" type="text/css" rel="stylesheet">
 <%}else{
 if(importParams.indexOf("jquery")>=0){ %>
 <script type="text/javascript" src="js/jquery/jquery.js"></script>
@@ -33,8 +35,9 @@ if(importParams.indexOf("form")>=0){ %>
 <%}
 }
 //另
-if(importParams.indexOf("user.css")>=0){ %>
+if(importParams.indexOf("user")>=0){ %>
 <link href="css/user.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="js/Akita/user.js"></script>
 <%}
 if(importParams.indexOf("Jcrop")>=0){ %>
 <script type="text/javascript" src="js/Jcrop/jquery.Jcrop.js"></script>

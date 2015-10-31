@@ -21,40 +21,7 @@ $(function(){
           return /^[a-zA-Z0-9]*$/.test(value);  
          },$.validator.format("密码只可以是字母和数字组合")  
          );  
-    	var options = {
-    			type:"post",
-    			dataType:'json',
-    		    success: function(data) {
-    		    	console.info("register1");
-                  	$(".qtip #login_submit").hide();
-                	$(".qtip span[name=error_placement]").text(data.message);
-                	$(".qtip span[name=error_placement]").show();
-    		      if(data.isGood=="true"){
-    		      $(".logged-out-wrapper").hide();
-    		      setNav(data);
-    		      $(".logged-in-wrapper").qtip('api').set('content.text',$(".account").html());
-    		      $(".logged-in-wrapper").show();
-    		      $("#loggedOutWrapper .ln-top-login").qtip('hide');
-                	$(".qtip span[name=error_placement]").hide();
-                  	$(".qtip #login_submit").show();
-    		      
-    		      }
-    		    } };
-    	var options2 = {
-    			type:"post",
-    			dataType:'json',
-    		    success: function(data) {
-    		    	console.info("register2");
-                  	$(".qtip #register_submit").hide();
-                	$(".qtip span[name=error_placement2]").text(data.message);
-                	$(".qtip span[name=error_placement2]").show();
-    		      if(data.isGood=="true"){
-    		    	  window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nick_name+"/",'_blank')
-    		    	  $("#loggedOutWrapper .ln-top-login").qtip('hide');
-                  	$(".qtip span[name=error_placement2]").hide();
-                  	$(".qtip #login_submit").show();
-    		      }
-    		    } };
+
     	
     	var options4 = {rules:{
             "password":{
@@ -164,15 +131,6 @@ $(function(){
                 render: null,  
                 visible:function(){
                 $("input[type=email]").mailAutoComplete({  boxClass: "emailist"});
-             	   $('.qtip form[name=login_form]').submit(function() {
-           		    $(this).ajaxSubmit(options);
-           		    return false;
-           		   });
-           	   $('.qtip form[name=register_form]').submit(function(event) {
-           		    $(this).ajaxSubmit(options2);
-           		    event.preventDefault();
-           		    return false;
-           		   });
            	   //绑定 validate
                $(".qtip form[name=login_form]").validate(options4);
                	//注册表单验证
@@ -220,7 +178,45 @@ $(function(){
     		       }
     		   }
     		 };
-    	
+  	   $('form[name=login_form]').submit(function() {
+  		 console.info("register2");
+  		    $(this).ajaxSubmit({
+  	    			type:"post",
+  	    			dataType:'json',
+  	    		    success: function(data) {
+  	    		      console.info("register1");
+  	                  $(".qtip #login_submit").hide();
+  	                  $(".qtip span[name=error_placement]").text(data.message);
+  	                  $(".qtip span[name=error_placement]").show();
+  	    		      if(data.isGood=="true"){
+  	    		      $(".logged-out-wrapper").hide();
+  	    		      setNav(data);
+  	    		      $(".logged-in-wrapper").qtip('api').set('content.text',$(".account").html());
+  	    		      $(".logged-in-wrapper").show();
+  	    		      $("#loggedOutWrapper .ln-top-login").qtip('hide');
+  	                  $(".qtip span[name=error_placement]").hide();
+  	                  $(".qtip #login_submit").show();
+  	    		      }
+  	    		    } });
+  		    return false;
+  		   });
+  	   $('form[name=register_form]').submit(function(event) {
+  		    $(this).ajaxSubmit({
+  	    			type:"post",
+  	    			dataType:'json',
+  	    		    success: function(data) {
+  	                  	$(".qtip #register_submit").hide();
+  	                	$(".qtip span[name=error_placement2]").text(data.message);
+  	                	$(".qtip span[name=error_placement2]").show();
+  	    		      if(data.isGood=="true"){
+  	    		    	  window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nick_name+"/",'_blank')
+  	    		    	  $("#loggedOutWrapper .ln-top-login").qtip('hide');
+  	                  	$(".qtip span[name=error_placement2]").hide();
+  	                  	$(".qtip #register_submit").show();
+  	    		      }
+  	    		    } });
+  		    return false;
+  		   });
  $("#loggedOutWrapper .ln-top-login").qtip(options6);
  //为登录名添加qtip
  $(".logged-in-wrapper").qtip(options7);

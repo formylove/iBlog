@@ -65,7 +65,7 @@ public class MailUtils {
 		return null;
 	}
 	public String sendActivateEmail(String recipient,String nick_name,String token){
-		String content = StringUtils.fileToString(templatePath+"activateMail.html");
+		String content = StrUtils.fileToString(templatePath+"activateMail.html");
 		content = content.replaceAll(Salutation_Reg, nick_name+", ¸ÐÐ»Äã×¢²áÒ¹Íø");
 		content = content.replaceAll(Href_Reg, base + "activate/" + token +"/");
 		sendEmail(recipient, SUBJECT, content);

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -177,7 +178,7 @@ public class SqlUtils {
 		@SuppressWarnings("rawtypes")
 		Class class_ = entity.getClass();
 		for(Field field:class_.getFields()){
-			if(field.getType() == String.class || field.getType() == Timestamp.class || field.getType() == char.class){
+			if(field.getType() == String.class || field.getType() == Timestamp.class || field.getType() == char.class || field.getType() == Date.class){
 				try {
 					if(null == BeanUtils.getProperty(entity, field.getName()) || "".equalsIgnoreCase(BeanUtils.getProperty(entity, field.getName())))
 					{
@@ -242,7 +243,7 @@ public class SqlUtils {
 			}
 			String sql = "update " + tableName + " set ";
 			for(Field field:class_.getFields()){
-				if(field.getType() == String.class || field.getType() == Timestamp.class || field.getType() == char.class){
+				if(field.getType() == String.class || field.getType() == Timestamp.class || field.getType() == char.class || field.getType() == Date.class){
 					try {
 						if(null == BeanUtils.getProperty(entity, field.getName()) || "".equalsIgnoreCase(BeanUtils.getProperty(entity, field.getName())))
 						{
@@ -327,7 +328,7 @@ public class SqlUtils {
 	}
 	
 	// bean×ª»»Æ÷
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	public static List<Object> MaptoBean(List<Map<String, Object>> resultSet,
 			Class entity) {
 		Object obj = null;
@@ -356,7 +357,9 @@ public class SqlUtils {
 					String key = entry.getKey();
 					Object value = entry.getValue();
 					try {
-						BeanUtils.setProperty(obj, key.toLowerCase(), value);
+						if(value != null){
+							BeanUtils.setProperty(obj, key.toLowerCase(), value);
+						}
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

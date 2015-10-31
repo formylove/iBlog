@@ -1,5 +1,7 @@
 package main.src.action;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 import main.src.common.MailUtils;
 import main.src.common.SqlUtils;
+import main.src.common.StrUtils;
 import main.src.entity.Record;
 import main.src.entity.User;
 import main.src.service.UserService;
@@ -33,6 +36,15 @@ public class LoginAction {
 	String message;
 	String self = "true";
 	String isGood = "false";
+	//修改账户
+	String update_type;
+	String qq;
+	String autoplay;
+	String newpassword;
+	String job;
+	char gender;
+	Date birthday;
+	
 	public String login(){
 		message = UserService.loginDetect(email, password);
 		if(message != null){
@@ -115,6 +127,93 @@ public class LoginAction {
 		session.setAttribute("os", record.getOs());
 		SqlUtils.executeUpdate("session_id='"+ session.getId() + "'", record);
 		return null;
+	}
+	public String update(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		user = UserService.getcurLoginUser(request);
+		if(null == user){
+			if(!StrUtils.valiName(nick_name)){
+				message = "请先登录账户";
+			}
+		}else if("nick_name".equalsIgnoreCase(update_type)){
+			if(!StrUtils.valiName(nick_name)){
+				message = "昵称必须只包含英文中文数字以及下划线";
+			}else {
+				user.setNick_name(nick_name);
+			}
+		}else if("autoplay".equalsIgnoreCase(update_type)){
+			if(StrUtils.notEmpty(autoplay)){
+				user.setAutoplay(true);
+			}else {
+				user.setAutoplay(false);
+			}
+		}else if("motto".equalsIgnoreCase(update_type)){
+				user.setMotto(motto);
+		}else if("details".equalsIgnoreCase(update_type)){
+			user.setBirthday(birthday);
+			user.setGender(gender);
+			user.setJob(job);
+		}else if("password".equalsIgnoreCase(update_type)){
+			if(!StrUtils.simpleChar(password) || StrUtils.isEmpty(password) || password.length()<8 || password.length()>16 || !password.equals(user.getPassword())){
+				message = "原密码输入错误";
+			}else if(!StrUtils.simpleChar(newpassword) || StrUtils.isEmpty(newpassword) || newpassword.length()<8 || newpassword.length()>16){
+				message = "新密码必须由8到16位的字母和数字组成";
+				}else if(!user.getPassword().equals(psw_conf)){
+				message = "两次输入密码不同";
+			}else{
+				user.setPassword(newpassword);
+			}
+		}else if("binding".equalsIgnoreCase(update_type)){
+			
+		}
+		if(StrUtils.isEmpty(message)){
+			isGood = "true";
+			SqlUtils.executeInsert(user);
+		}
+		return "done";
+	}
+	
+	public String getUpdate_type() {
+		return update_type;
+	}
+	public void setUpdate_type(String update_type) {
+		this.update_type = update_type;
+	}
+	public String getQq() {
+		return qq;
+	}
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+	public String getAutoplay() {
+		return autoplay;
+	}
+	public void setAutoplay(String autoplay) {
+		this.autoplay = autoplay;
+	}
+	public String getNewpassword() {
+		return newpassword;
+	}
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	public char getGender() {
+		return gender;
+	}
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+	public Date getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 	public String isLogined(){
 		return "success";

@@ -1,6 +1,6 @@
 package main.src.entity.essay;
 
-import main.src.common.StringUtils;
+import main.src.common.StrUtils;
 import main.src.common.TimeManager;
 import main.src.entity.User;
 import main.src.service.UserService;
@@ -41,7 +41,7 @@ public Essay(boolean original_flag){
 	setWebmasterDetail();
 }
 public String[] getLabels(){
-	if(!StringUtils.isEmpty(label)){
+	if(!StrUtils.isEmpty(label)){
 		return label.split(splitTag);
 	}else{
 		return null;
@@ -126,7 +126,7 @@ public String getLabel() {
 	return label;
 }
 public void setLabel(String label) {
-	if(StringUtils.notEmpty(label)){
+	if(StrUtils.notEmpty(label)){
 		this.label = label.replaceAll(" ","").replaceAll(splitTag+"+$", "");
 	}else{
 		this.label = label;
