@@ -8,10 +8,11 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 import main.src.common.Log;
-
+@WebFilter
 public class Interceptor implements Filter{
 
 	@Override

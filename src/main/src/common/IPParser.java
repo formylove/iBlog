@@ -1,18 +1,21 @@
 package main.src.common;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
-
-import com.opensymphony.xwork2.ActionContext;
+import org.springframework.core.io.Resource;
+import org.springframework.web.context.support.ServletContextResource;
 
 public class IPParser {
-//	static public String baseRealPath = ((HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST)).getRealPath("/");
-	private String DbPath = "d:\\"+MessageUtils.getMessageFromUrl("ip.data");
+	private String ip ;
+	private File data;
 	private String Country, LocalStr;
-
+	HttpServletRequest request;
 	private long IPN;
 
 	private int RecordCount, CountryFlag;
@@ -23,6 +26,55 @@ public class IPParser {
 	private RandomAccessFile fis;
 
 	private byte[] buff;
+
+	public long getIPN() {
+		return IPN;
+	}
+
+	public void setIPN(long iPN) {
+		IPN = iPN;
+	}
+
+	public IPParser(HttpServletRequest request) {
+		Resource rs = new ServletContextResource(request.getServletContext(), MessageUtils.getMessageFromUrl("ip.data"));
+		ip = request.getRemoteAddr();
+		try {
+			this.data = rs.getFile(); 
+			seek();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.print("ip", ip);
+	}
+	
+	public IPParser(String ip) {
+		Resource rs = new ServletContextResource(request.getServletContext(), MessageUtils.getMessageFromUrl("ip.data"));
+		this.request = ServletActionContext.getRequest();
+		this.ip = ip;
+		try {
+			this.data = rs.getFile(); 
+			seek();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.print("ip", ip);
+	}
+	/**
+	 * 本地测试
+	 */
+	public IPParser(String ip,boolean local) {
+		this.data = new File("C:/Users/Administrator/git/iBlog/WebContent/data/qqwry.dat");
+		this.ip = ip;
+		try {
+			seek();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.print("ip", ip);
+	}
 
 	private long B2L(byte[] b) {
 		long ret = 0;
@@ -51,9 +103,9 @@ public class IPParser {
 		return ret;
 	}
 
-	public void seek(String ip) throws Exception {
+	public void seek() throws Exception {
 		this.IPN = ipToInt(ip);
-		fis = new RandomAccessFile(this.DbPath, "r");
+		fis = new RandomAccessFile(this.data,"r");
 		buff = new byte[4];
 		fis.seek(0);
 		fis.read(buff);
@@ -178,27 +230,24 @@ public class IPParser {
 		return this.Country;
 	}
 
-	public void setPath(String path) {
-		this.DbPath = path;
-	}
 
 	public static void main(String[] args) throws Exception {
 		
-		long initUsedMemory = ( Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() ) ;
-		
-		long start = System.currentTimeMillis();
-		
-		IPParser w = new IPParser();
-		// w.setPath(new File("QQWry2.Dat").getAbsolutePath());
-		w.seek("58.250.110.184");
-		System.out.println(w.getCountry() + " " + w.getLocal());
-		
-		long end = System.currentTimeMillis();
-		
-		long endUsedMemory = ( Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() ) ;
-		
-		System.out.println("time spent:"+ ( end - start ) + " ns" );
-		System.out.println("memory consumes:" + ( endUsedMemory - initUsedMemory ) );
+//		long initUsedMemory = ( Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() ) ;
+//		
+//		long start = System.currentTimeMillis();
+//		
+//		IPParser w = new IPParser();
+//		// w.setPath(new File("QQWry2.Dat").getAbsolutePath());
+//		w.seek("58.250.110.184");
+//		System.out.println(w.getCountry() + " " + w.getLocal());
+//		
+//		long end = System.currentTimeMillis();
+//		
+//		long endUsedMemory = ( Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() ) ;
+//		
+//		System.out.println("time spent:"+ ( end - start ) + " ns" );
+//		System.out.println("memory consumes:" + ( endUsedMemory - initUsedMemory ) );
 		
 	}
 

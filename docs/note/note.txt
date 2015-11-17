@@ -44,7 +44,7 @@ timestamp设置默认值为CURRENT_TIMESTAMP才能插入式更新 `register_date` timestamp N
  org.apache.struts2.json.JSONException: java.lang.reflect.InvocationTargetException
  json返回类型，如果异常，返回html就会出现这个错误提示
  action,函数名get慎用啊啊啊。getDeviceDetails，否则struts将他返回值作为响应的内容
- /iBlog/ajaxloginAction!gainDeviceDetails.actionurlrewirte完成url的部分匹配替换，未匹配部分不变
+ /iBlog/ajaxloginAction!gainDeviceDetails.action urlrewirte完成url的部分匹配替换，未匹配部分不变
  <result name="activated" type="redirectAction">hpAction!load</result> result 的一个用法
  配置struts，global-results要放在global-exception-mappings以及所有引用前
   点击a标签，先执行绑定时间，后打开链接
@@ -66,4 +66,7 @@ include-coda 会为每个jsp添加
 去上下文：打开右侧服务器配置，server.xml文件中<Context docBase="iBlog" path="" reloadable="true" source="org.eclipse.jst.jee.server:iBlog"/></Host>
 将path清空，并将端口该文80
 	192.168.1.102	hachi.space host修改无需重启立即生效
-
+schemaLocation引入顺序会导致错误
+不生成class文件，将eclipse设为build automaticly
+jar报最好来自同一版本的Struts包里
+classpath单机可访问,web context web容器下访问

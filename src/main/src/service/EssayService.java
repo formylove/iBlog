@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.src.common.SqlUtils;
+import main.src.entity.Opus;
 import main.src.entity.essay.CNBlogs;
 import main.src.entity.essay.CSDN;
 import main.src.entity.essay.Douban;
@@ -12,7 +13,6 @@ import main.src.entity.essay.Essay;
 import main.src.entity.essay.ITEye;
 import main.src.entity.essay.Zhidao;
 import main.src.entity.essay.Zhihu;
-import main.src.entity.note.Opus;
 
 public class EssayService {
 	static final String TABLE_ESSAY="essay"; 

@@ -6,11 +6,13 @@ import java.util.Timer;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
+import main.src.common.MsgConstants;
 import main.src.common.TimeManager;
 import task.StartUpTask;
 
-
+@WebListener
 public class ApplicationListener implements ServletContextListener{
 
 	@Override
@@ -21,8 +23,8 @@ public class ApplicationListener implements ServletContextListener{
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
+		MsgConstants.init();
 		System.out.println("app launches:" + TimeManager.getTime());
-		// TODO Auto-generated method stub
 		Timer time = new Timer();
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 4);

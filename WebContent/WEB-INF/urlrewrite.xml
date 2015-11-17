@@ -32,7 +32,8 @@
  </rule>
 
 <!-- redirect action -->
-<rule>
+
+ <rule>
    <from>^/$</from>
    <to>/hpAction!load.action</to>
  </rule>
@@ -51,7 +52,6 @@
    <from>/essays/?$</from> 
    <to type="forward">/essayAction!listEssay.action</to>
  </rule>
- 
 <rule>
    <from>/edit/(2[0-9]{4})/?$</from> 
    <to>/essayAction.action!editEssay?id=$1</to>

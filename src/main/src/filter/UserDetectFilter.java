@@ -38,8 +38,6 @@ public class UserDetectFilter implements Filter{
 			request.setAttribute("logined_user", UserService.getcurLoginUser((HttpServletRequest)req));
 			System.out.println("###########user-agent###########"+request.getHeader("user-agent"));
 		}
-		
-		System.out.println("########### detectFilter ###########"+request.getRequestURI());
 		filterChain.doFilter(req, res);
 	
 	}

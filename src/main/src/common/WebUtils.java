@@ -49,19 +49,13 @@ static public String getMailLoginUrl(String email){
 }
 private final static String[] conditions={"¹ã¶«","Öéº£","ipx","mac"};
 static public boolean neededRecord(HttpServletRequest request){
-	IPParser i = new IPParser();
+	IPParser i = new IPParser(request);
 	String ip = request.getRemoteAddr();
 	// TODO remove this
 	if(ip.equals("127.0.0.1") || ip.equals("192.168.1.110")){
 		ip = "122.95.231.214";
 	}
 	String mac = "mac_xxx";
-    try {
-		i.seek(ip);
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
     String addr = i.getCountry().trim();
     for(String condition:conditions){
     	if(addr.indexOf(condition)>=0 || ip.indexOf(condition)>=0 || mac.indexOf(condition)>=0)

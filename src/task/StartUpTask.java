@@ -1,6 +1,5 @@
 package task;
 import java.util.TimerTask;
-
 import com.opensymphony.xwork2.ActionContext;
 
 import main.src.common.TimeManager;

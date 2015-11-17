@@ -13,7 +13,7 @@ import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-import main.src.entity.note.Opus;
+import main.src.entity.Opus;
 
 public class Douban extends Essay {
 	//页面解析参数

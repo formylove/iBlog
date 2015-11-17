@@ -13,6 +13,7 @@ function clearNav(){
 }
 //         绑定
 $(function(){
+	var hasBinded = false;
 	  jQuery.validator.addMethod("normalName",function(value,element){  
           return /^[a-zA-Z0-9\u4E00-\u9FA5_]*$/.test(value);  
          },$.validator.format("请输入数字或者中英文以及下划线")  
@@ -130,11 +131,52 @@ $(function(){
             events: {  
                 render: null,  
                 visible:function(){
-                $("input[type=email]").mailAutoComplete({  boxClass: "emailist"});
-           	   //绑定 validate
-               $(".qtip form[name=login_form]").validate(options4);
-               	//注册表单验证
-               $(".qtip  form[name=register_form]").validate(options5);
+                	if(!hasBinded){
+                	  	   $('form[name=login_form]').submit(function() {
+                	    		    $(this).ajaxSubmit({
+                	    	    			type:"post",
+                	    	    			dataType:'json',
+                	    	    		    success: function(data) {
+                	    	    		      console.info("register1");
+                	    	                  $(".qtip #login_submit").hide();
+                	    	                  $(".qtip span[name=error_placement]").text(data.message);
+                	    	                  $(".qtip span[name=error_placement]").show();
+                	    	    		      if(data.isGood=="true"){
+                	    	    		      $(".logged-out-wrapper").hide();
+                	    	    		      setNav(data);
+                	    	    		      $(".logged-in-wrapper").qtip('api').set('content.text',$(".account").html());
+                	    	    		      $(".logged-in-wrapper").show();
+                	    	    		      $("#loggedOutWrapper .ln-top-login").qtip('hide');
+                	    	                  $(".qtip span[name=error_placement]").hide();
+                	    	                  $(".qtip #login_submit").show();
+                	    	    		      }
+                	    	    		    } });
+                	    		    return false;
+                	    		   });
+                	    	   $('form[name=register_form]').submit(function(event) {
+                	    		    $(this).ajaxSubmit({
+                	    	    			type:"post",
+                	    	    			dataType:'json',
+                	    	    		    success: function(data) {
+                	    	                  	$(".qtip #register_submit").hide();
+                	    	                	$(".qtip span[name=error_placement2]").text(data.message);
+                	    	                	$(".qtip span[name=error_placement2]").show();
+                	    	    		      if(data.isGood=="true"){
+                	    	    		    	  window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nick_name+"/",'_blank')
+                	    	    		    	  $("#loggedOutWrapper .ln-top-login").qtip('hide');
+                	    	                  	$(".qtip span[name=error_placement2]").hide();
+                	    	                  	$(".qtip #register_submit").show();
+                	    	    		      }
+                	    	    		    } });
+                	    		    return false;
+                	    		   });
+                		$("input[type=email]").mailAutoComplete({  boxClass: "emailist"});
+                		//绑定 validate
+                		$(".qtip form[name=login_form]").validate(options4);
+                		//注册表单验证
+                		$(".qtip  form[name=register_form]").validate(options5);
+                		hasBinded = true;
+                	}
                 	
                 	}  
              }
@@ -178,45 +220,7 @@ $(function(){
     		       }
     		   }
     		 };
-  	   $('form[name=login_form]').submit(function() {
-  		 console.info("register2");
-  		    $(this).ajaxSubmit({
-  	    			type:"post",
-  	    			dataType:'json',
-  	    		    success: function(data) {
-  	    		      console.info("register1");
-  	                  $(".qtip #login_submit").hide();
-  	                  $(".qtip span[name=error_placement]").text(data.message);
-  	                  $(".qtip span[name=error_placement]").show();
-  	    		      if(data.isGood=="true"){
-  	    		      $(".logged-out-wrapper").hide();
-  	    		      setNav(data);
-  	    		      $(".logged-in-wrapper").qtip('api').set('content.text',$(".account").html());
-  	    		      $(".logged-in-wrapper").show();
-  	    		      $("#loggedOutWrapper .ln-top-login").qtip('hide');
-  	                  $(".qtip span[name=error_placement]").hide();
-  	                  $(".qtip #login_submit").show();
-  	    		      }
-  	    		    } });
-  		    return false;
-  		   });
-  	   $('form[name=register_form]').submit(function(event) {
-  		    $(this).ajaxSubmit({
-  	    			type:"post",
-  	    			dataType:'json',
-  	    		    success: function(data) {
-  	                  	$(".qtip #register_submit").hide();
-  	                	$(".qtip span[name=error_placement2]").text(data.message);
-  	                	$(".qtip span[name=error_placement2]").show();
-  	    		      if(data.isGood=="true"){
-  	    		    	  window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nick_name+"/",'_blank')
-  	    		    	  $("#loggedOutWrapper .ln-top-login").qtip('hide');
-  	                  	$(".qtip span[name=error_placement2]").hide();
-  	                  	$(".qtip #register_submit").show();
-  	    		      }
-  	    		    } });
-  		    return false;
-  		   });
+
  $("#loggedOutWrapper .ln-top-login").qtip(options6);
  //为登录名添加qtip
  $(".logged-in-wrapper").qtip(options7);

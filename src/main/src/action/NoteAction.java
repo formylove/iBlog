@@ -7,14 +7,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.ServletActionContext;
 
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
 import main.src.common.StrUtils;
 import main.src.entity.Genre;
+import main.src.entity.Opus;
 import main.src.entity.essay.Essay;
-import main.src.entity.note.Opus;
 import main.src.service.EssayService;
 import main.src.service.NoteService;
 public class NoteAction {
@@ -34,6 +33,7 @@ Map<String, String> authority = MsgConstants.AUTHORITY;
 Map<String, String> rate = MsgConstants.RATE;
 String title;
 String cover;
+NoteService noteService;
 boolean hasExisted;
 //essay list
 List<Essay> essays;
