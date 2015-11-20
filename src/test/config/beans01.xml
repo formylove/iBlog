@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans default-lazy-init="true"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+	
+	<bean id="comments" class="main.src.entity.Comment" 
+	p:user_name="夏洛" scope="prototype">
+	</bean>
+	<bean id="opus" class="main.src.entity.Opus" 
+	p:name="夏洛特烦恼" lazy-init="false" name="@xia" scope="prototype">
+	<constructor-arg index="0" value="thinking in java"/>
+	<constructor-arg index="1" value="miracle"/>
+	</bean>
+	<alias name="opus" alias="xia"/>
+	<bean id="note" class="main.src.entity.Note" autowire="byName"
+	p:opus-ref="opus" lazy-init="true">
+	<property name="title" value="属于我的致青春"/>
+	<constructor-arg name="author" value="沈腾"/>
+	<constructor-arg name="subtitle" value="只属于我的致青春"/>
+	</bean>
+	<bean id="noteDao" class="main.src.dao.impl.NoteDaoHibernate4">
+	<property name="tester" ref="note" />
+	</bean>
+	<bean id="noteService" class="main.src.service.impl.NoteServiceImpl" 
+	p:noteDao-ref="noteDao" scope="prototype"/>
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	<property name="basenames">
+	<list>
+	<value>I18N/common</value>
+	</list>
+	</property>
+	</bean>
+</beans>
+

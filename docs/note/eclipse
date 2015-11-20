@@ -1,0 +1,19 @@
+快捷键：新建，build，大小写，dubug,run,copy line，next editor，constructor,getter setter，go line,comment加注释符号,shift + enter: insert line;preference->key
+template：代码提示，jsp模版，ps,pub,lp
+插件：eexplorer，egit
+tomcat:path 删除，80端口
+菜单，工具栏：http://jingyan.baidu.com/article/cd4c2979eccf06756e6e6034.html
+常用快捷键：ctrl + 1，quick-fix；alt + o，override + implements；
+操作：
+show in terminal,开启cmd；
+show in system explorer，系统文件查看；
+open with system editor,用edit plus查看；
+local history->replace,历史文件替换；
+copy qualified name，复制全路径；
+refactor->extract interface,生成接口；
+incline，将所有调用点换成函数体；
+profile as server ，性能计量模式，一共创建了多少个 instance，总共占用多少内存，每个方法平均调用时间多少毫秒，总共调用了多少次；
+show local history，本地所有更改历史；
+compare with->local history；
+extract String，放到配置文件中
+问题：Project Explorer和Package Explorer没区别
