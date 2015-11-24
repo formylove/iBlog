@@ -1,11 +1,21 @@
 package main.src.entity;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.stereotype.Component;
 
 import main.src.common.StrUtils;
@@ -15,7 +25,7 @@ import main.src.service.UserService;
 @Entity
 @Table(name = "n")
 public class Note {
-@Id
+@Id @Column(name="note_id")
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Integer id;
 private String title;
@@ -23,7 +33,6 @@ private String subtitle;
 private String author;
 private String author_link;
 private String author_desc;
-private String profile;
 private String label;
 private int category;
 private String content;
@@ -31,25 +40,29 @@ private Integer read_cnt=0;
 private Integer favor_cnt=0;
 private boolean original_flag = true;
 private String original_link;
-private int music;
-private String portrait;
-//private Opus opus;
-//private List<Comment> comments;
-//private Properties elses;
-//private Map<String,String> nations;
+@ManyToOne(targetEntity = Music.class)
+@JoinColumn(name="music_id")
+@Cascade(CascadeType.ALL)
+private Music music;
+@ManyToOne(targetEntity = Opus.class)
+@JoinColumn(name="opus_id" , referencedColumnName="opus_id",nullable=false)
+@Cascade(CascadeType.ALL)
+private Opus opus;
+@OneToMany(targetEntity=Comment.class,mappedBy="note")
+@Cascade(CascadeType.ALL)
+private List<Comment> comments = new LinkedList<Comment>();
 private String create_date;
 private String create_time;
 private int authority;
-private boolean del_flag;
-private static final String splitTag =",";
+private boolean del_flag = false;
+@Transient
+private final String splitTag =",";
 public Note(){
 	setCreate_date(TimeManager.getDate());
 	setCreate_time(TimeManager.getTime());
-	System.out.println("note created");
 }
 
 public Note(String subtitle, String author) {
-	System.out.println("note created");
 	this.subtitle = subtitle;
 	this.author = author;
 }
@@ -75,11 +88,30 @@ public void setWebmasterDetail() {
 		author = user.getNick_name();
 		author_desc = user.getMotto();
 		author_link = "user/2";
-		portrait = user.getPortrait();
 		}
 }
 
 
+
+public List<Comment> getComments() {
+	return comments;
+}
+
+public void setComments(List<Comment> comments) {
+	this.comments = comments;
+}
+
+public Opus getOpus() {
+	return opus;
+}
+
+public void setOpus(Opus opus) {
+	this.opus = opus;
+}
+
+public void setId(Integer id) {
+	this.id = id;
+}
 
 public String getSubtitle() {
 	return subtitle;
@@ -99,21 +131,17 @@ public String getAuthor_desc() {
 public void setAuthor_desc(String author_desc) {
 	this.author_desc = author_desc;
 }
-public int getMusic() {
-	return music;
-}
-public void setMusic(int music) {
-	this.music = music;
-}
-public String getPortrait() {
-	return portrait;
-}
-public void setPortrait(String portrait) {
-	this.portrait = portrait;
-}
 public int getAuthority() {
 	return authority;
 }
+public Music getMusic() {
+	return music;
+}
+
+public void setMusic(Music music) {
+	this.music = music;
+}
+
 public void setAuthority(int authority) {
 	this.authority = authority;
 }
@@ -123,17 +151,8 @@ public int getFavor_cnt() {
 public void setFavor_cnt(int favor_cnt) {
 	this.favor_cnt = favor_cnt;
 }
-public String getProfile() {
-	return profile;
-}
-public void setProfile(String profile) {
-	this.profile = profile;
-}
 public int getId() {
 	return id;
-}
-public void setId(int id) {
-	this.id = id;
 }
 public String getTitle() {
 	return title;

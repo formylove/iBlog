@@ -21,7 +21,6 @@ public class NoteServiceImpl implements NoteService {
 	public NoteServiceImpl() {
 	}
 
-	@Override
 	public Serializable save(Note note) {
 		return noteDao.save(note);
 	}
@@ -33,10 +32,25 @@ public class NoteServiceImpl implements NoteService {
 	
 	@Override
 	public void delete(int id) {
+		Note n = get(id); 
+		delete(n);
 	}
 
 	@Override
+	public void delete(Note note) {
+		noteDao.delete(note);
+	}
+	@Override
 	public void update(Note note) {
+		noteDao.update(note);
+	}
+	@Override
+	public void remove(int id) {
+		Note note = get(id);
+		if(null != note){
+			note.setDel_flag(true);
+			noteDao.update(note);
+		}
 	}
 
 	@Override
@@ -46,6 +60,11 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public void recover(int id) {
+		Note note = get(id);
+		if(null != note){
+			note.setDel_flag(false);
+			noteDao.update(note);
+		}
 	}
 
 	public NoteDao getNoteDao() {
@@ -55,6 +74,7 @@ public class NoteServiceImpl implements NoteService {
 	public void setNoteDao(NoteDao noteDao) {
 		this.noteDao = noteDao;
 	}
+
 
 
 

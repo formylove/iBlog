@@ -23,7 +23,9 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	public T get(Class<T> entityClazz , Serializable id)
 	{
 		Session s = sessionFactory.getCurrentSession();
-		return (T)s.load(entityClazz , id);
+		//load返回一个镜像，不加载数据
+		T rvt = (T)s.get(entityClazz , id);
+		return  rvt;
 	}
 	// 保存实体
 	public Serializable save(T entity)
@@ -46,6 +48,8 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	public void delete(T entity)
 	{
 		getSessionFactory().getCurrentSession().delete(entity);
+//		事务管理不需要flush
+//		s.flush();
 	}
 	// 根据ID删除实体
 	public void delete(Class<T> entityClazz , Serializable id)

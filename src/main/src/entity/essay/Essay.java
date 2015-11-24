@@ -1,32 +1,65 @@
 package main.src.entity.essay;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.springframework.stereotype.Component;
+
 import main.src.common.StrUtils;
 import main.src.common.TimeManager;
+import main.src.entity.Category;
+import main.src.entity.Comment;
+import main.src.entity.Music;
+import main.src.entity.Opus;
 import main.src.entity.User;
 import main.src.service.UserService;
-
+@Component("essay")
+@Entity
+@Table(name = "e")
 public class Essay {
-	
-public int id;
-public String title;
-public String subtitle;
-public String author;
-public String author_link;
-public String author_desc;
-public String profile;
-public String label;
-public int category;
-public String content;
-public Integer read_cnt=0;
-public Integer favor_cnt=0;
-public boolean original_flag = true;
-public String original_link;
-public int music;
-public String portrait;
-public String create_date;
-public String create_time;
-public int authority;
-public boolean del_flag;
+@Id @Column(name="essay_id")
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Integer id;
+private String title;
+private String subtitle;
+private String author;
+private String author_link;
+private String author_desc;
+private String label;
+@OneToMany(targetEntity=Comment.class,mappedBy="essay")
+private List<Comment> comments = new LinkedList<Comment>();
+@ManyToOne(targetEntity = Category.class)
+@JoinColumn(name="category_id" , referencedColumnName="category_id",nullable=false)
+@Cascade(CascadeType.SAVE_UPDATE)
+private Category category;
+private String content;
+private Integer read_cnt = 0;
+private Integer favor_cnt = 0;
+private boolean original_flag = true;
+private String original_link;
+@ManyToOne(targetEntity = Music.class)
+@JoinColumn(name="music_id")
+@Cascade(CascadeType.ALL)
+private Music music;
+private String portrait;
+private String create_date;
+private String create_time;
+private int authority = 10;
+public boolean del_flag = false;;
+@Transient
 private final String splitTag =",";
 public Essay(){
 	setCreate_date(TimeManager.getDate());
@@ -53,8 +86,23 @@ public void setWebmasterDetail() {
 		author = user.getNick_name();
 		author_desc = user.getMotto();
 		author_link = "user/2";
-		portrait = user.getPortrait();
 		}
+}
+
+public List<Comment> getComments() {
+	return comments;
+}
+public void setComments(List<Comment> comments) {
+	this.comments = comments;
+}
+public void setId(Integer id) {
+	this.id = id;
+}
+public void setRead_cnt(Integer read_cnt) {
+	this.read_cnt = read_cnt;
+}
+public void setFavor_cnt(Integer favor_cnt) {
+	this.favor_cnt = favor_cnt;
 }
 public String getSubtitle() {
 	return subtitle;
@@ -74,14 +122,14 @@ public String getAuthor_desc() {
 public void setAuthor_desc(String author_desc) {
 	this.author_desc = author_desc;
 }
-public int getMusic() {
-	return music;
-}
-public void setMusic(int music) {
-	this.music = music;
-}
 public String getPortrait() {
 	return portrait;
+}
+public Music getMusic() {
+	return music;
+}
+public void setMusic(Music music) {
+	this.music = music;
 }
 public void setPortrait(String portrait) {
 	this.portrait = portrait;
@@ -97,12 +145,6 @@ public int getFavor_cnt() {
 }
 public void setFavor_cnt(int favor_cnt) {
 	this.favor_cnt = favor_cnt;
-}
-public String getProfile() {
-	return profile;
-}
-public void setProfile(String profile) {
-	this.profile = profile;
 }
 public int getId() {
 	return id;
@@ -132,14 +174,14 @@ public void setLabel(String label) {
 		this.label = label;
 	}
 }
-public int getCategory() {
-	return category;
-}
-public void setCategory(int category) {
-	this.category = category;
-}
 public String getContent() {
 	return content;
+}
+public Category getCategory() {
+	return category;
+}
+public void setCategory(Category category) {
+	this.category = category;
 }
 public void setContent(String content) {
 	this.content = content;

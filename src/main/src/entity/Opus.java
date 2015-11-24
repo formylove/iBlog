@@ -1,33 +1,64 @@
 package main.src.entity;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.springframework.stereotype.Component;
 
 import main.src.common.StrUtils;
 import main.src.common.TimeManager;
 import main.src.service.NoteService;
-
+@Component("opus")
+@Entity
+@Table(name = "o")
 public class Opus{
-	public int id;
-	public String name;
-	public String original_name;
-	public String cover;
-	public String rating;
-	public boolean rec_flag;
-	public String remark;
-	public String nationality;
-	public String dynasty;
-	public String author_directior;
-	public String protagonists;
-	public Integer genre;
-	public String type;
-	public String publish_date;
-	public String view_time;
-	public String create_date;
-	public String create_time;
-	public boolean del_flag;
-	public boolean single_flag;
+	@Id @Column(name="opus_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private String name;
+	private String original_name;
+	private String rating;
+	private boolean rec_flag = false;
+	private String remark;
+	private String nationality;
+	private String dynasty;
+	private String author_directior;
+	private String protagonists;
+	@ManyToMany(targetEntity=Genre.class)
+	@JoinTable(name="Opus_Genre",
+	joinColumns=@JoinColumn(name="opus_id",referencedColumnName="opus_id"),
+	inverseJoinColumns=@JoinColumn(name="genre_id",referencedColumnName="genre_id"))
+	@Cascade(CascadeType.ALL)
+	private Set<Genre> genres = new HashSet<Genre>();
+	private String type;
+	private String publish_date;
+	private String view_time;
+	@Column(updatable=false)
+	private String create_date;
+	@Column(updatable=false)
+	private String create_time;
+	private boolean del_flag = false;
+	@OneToMany(targetEntity=Note.class,mappedBy="opus")
+	private Set<Note> notes = new HashSet<Note>();
+	@Transient
 	private final String splitTag = ",";
+	@Transient
 	private Map<String,String> meta;
 	public Opus(){
 		setCreate_date(TimeManager.getDate());
@@ -43,15 +74,20 @@ public class Opus{
 
 	@Override
 	public String toString() {
-		return "Opus [id=" + id + ", name=" + name + ", original_name=" + original_name + ", cover=" + cover
+		return "Opus [id=" + id + ", name=" + name + ", original_name=" + original_name 
 				+ ", rating=" + rating + ", rec_flag=" + rec_flag + ", remark=" + remark + ", nationality="
 				+ nationality + ", dynasty=" + dynasty + ", author_directior=" + author_directior + ", protagonists="
-				+ protagonists + ", genre=" + genre + ", type=" + type + ", publish_date=" + publish_date
+				+ protagonists + ", genre=" + genres.size() + ", type=" + type + ", publish_date=" + publish_date
 				+ ", view_time=" + view_time + ", create_date=" + create_date + ", create_time=" + create_time
-				+ ", del_flag=" + del_flag + ", single_flag=" + single_flag + ", splitTag=" + splitTag + ", meta="
+				+ ", del_flag=" + del_flag + ", isSingle=" + (notes.size() == 0) + ", splitTag=" + splitTag + ", meta="
 				+ meta + "]";
 	}
-	
+	public int hashCode() {
+		return id.hashCode()*31;
+	}
+	public boolean equals(Object o) {
+		return (o instanceof Opus && this.id == ((Opus) o).id);
+	}
 	public Map<String,String> getMeta() {
 		meta = new LinkedHashMap<String,String>();
 		if(isBook()){
@@ -80,7 +116,7 @@ public class Opus{
 			if(!StrUtils.isEmpty(protagonists)){
 				meta.put("主角", protagonists);
 			}
-			if(genre !=0){
+			if(genres.isEmpty()){
 //				meta.put("类型", NoteService.getGenreName(genre));
 			}
 		}else{
@@ -107,7 +143,7 @@ public class Opus{
 					if(!StrUtils.isEmpty(rating)){
 						meta.put("评价", rating);
 					}
-				if(genre !=0){
+				if(genres.isEmpty()){
 //					meta.put("类型", NoteService.getGenreName(genre));
 				}
 				if(!StrUtils.isEmpty(publish_date)){
@@ -117,6 +153,10 @@ public class Opus{
 		return meta;
 	}
 	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public boolean isBook(){
 		if("book".equals(type)){
 			return true;
@@ -143,18 +183,21 @@ public class Opus{
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int getGenre() {
-		return genre;
+	public Set<Genre> getGenres() {
+		return genres;
 	}
-	public void setGenre(int genre) {
-		this.genre = genre;
+
+	public void setGenres(Set<Genre> genres) {
+		this.genres = genres;
 	}
-	public boolean isSingle_flag() {
-		return single_flag;
+   	public Set<Note> getNotes() {
+		return notes;
 	}
-	public void setSingle_flag(boolean single_flag) {
-		this.single_flag = single_flag;
+
+	public void setNotes(Set<Note> notes) {
+		this.notes = notes;
 	}
+
 	public String getDynasty() {
 		return dynasty;
 	}
@@ -180,9 +223,6 @@ public class Opus{
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}
@@ -194,12 +234,6 @@ public class Opus{
 	}
 	public void setOriginal_name(String original_name) {
 		this.original_name = original_name;
-	}
-	public String getCover() {
-		return cover;
-	}
-	public void setCover(String cover) {
-		this.cover = cover;
 	}
 	public String getRating() {
 		return rating;

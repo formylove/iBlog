@@ -4,39 +4,51 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Component;
+
 import main.src.common.IPParser;
 import main.src.common.TimeManager;
-
+@Component("user")
+@Entity
+@Table(name = "u")
 public class User {
-
-public int id;
-public String user_name;
-public String nick_name;
-public String login_name;
-public String password;
-public String md5;
-public char gender;
-public String portrait;
-public String motto;
-public Date birthday;
-public String email;
-public String qq;
-public String phone;
-public String weibo;
-public String weixin;
-public String job;
-public String device;
-public String city;
-public String register_ip;
-public Timestamp register_date;
-public String token;
-public int authority;
-public boolean autoplay;
-public boolean email_val_flag;
-public boolean del_flag;
+	@Id @Column(name="user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private String user_name;
+	private String nick_name;
+	private String login_name;
+	private String password;
+	private String md5;
+	private char gender = 'f';
+	private String motto;
+	private Date birthday;
+	private String email;
+	private String qq;
+	private String phone;
+	private String weibo;
+	private String weixin;
+	private String job;
+	private String device;
+	private String city;
+	private String register_ip;
+	@Column(updatable=false,nullable=false)
+	private Timestamp register_date;
+	@Column(updatable=false,nullable=false,unique=true)
+	private String token;
+	private int authority;
+	private boolean autoplay = true;
+	private boolean email_val_flag = false;
+	private boolean del_flag = false;
 public User(String nick_name,String email,String password,HttpServletRequest request){
 	HttpSession session = request.getSession();
 	setNick_name(nick_name);
@@ -52,6 +64,9 @@ public User(){
 }
 
 
+public void setId(Integer id) {
+	this.id = id;
+}
 public String getWeibo() {
 	return weibo;
 }
@@ -141,12 +156,6 @@ public String getPassword() {
 }
 public void setPassword(String password) {
 	this.password = password;
-}
-public String getPortrait() {
-	return portrait;
-}
-public void setPortrait(String portrait) {
-	this.portrait = portrait;
 }
 public String getEmail() {
 	return email;

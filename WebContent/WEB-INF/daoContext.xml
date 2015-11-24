@@ -35,6 +35,13 @@
 			<list>
 				<!-- 以下用来列出Hibernate的持久化类 -->
 				<value>main.src.entity.Note</value>
+				<value>main.src.entity.Opus</value>
+				<value>main.src.entity.User</value>
+				<value>main.src.entity.Genre</value>
+				<value>main.src.entity.essay.Essay</value>
+				<value>main.src.entity.Comment</value>
+				<value>main.src.entity.Category</value>
+				<value>main.src.entity.Music</value>
 			</list>
 		</property>
 		<!-- 定义Hibernate的SessionFactory的属性 -->
@@ -47,6 +54,7 @@
 			hibernate.format_sql=true
 			#开启二级缓存
 			hibernate.cache.use_second_level_cache=true
+			hibernate.connection.autocommit=true
 			#设置二级缓存的提供者
 			hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory
 			</value>

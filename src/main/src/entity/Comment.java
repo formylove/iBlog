@@ -1,25 +1,56 @@
 package main.src.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.springframework.stereotype.Component;
+
 import main.src.common.SqlUtils;
 import main.src.common.TimeManager;
+import main.src.entity.essay.Essay;
 import main.src.service.CommentService;
 import main.src.service.UserService;
-
+@Component("comment")
+@Entity
+@Table(name = "c")
 public class Comment {
-public int id;
-public int user_id;
-public String user_name;
-public String portrait;
-public String signature;    
-public String content;
-public int replyer;
-public String replyer_name;
-public String dev_name;
-public int favour_cnt;
-public boolean is_visitor;
-public String create_date;
-public String create_time;
-public boolean del_flag;
+	@Id	 @Column(name="comment_id")
+	private Integer id;
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name="publisher_id" , nullable=false)
+	@Cascade(CascadeType.ALL)
+	private User publisher;
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name="target_id")
+	@Cascade(CascadeType.ALL)
+	private User target;
+	private String content;
+	private String dev_name;
+	private int favour_cnt = 0;
+	@ManyToOne(targetEntity=Note.class)
+	@JoinColumn(name="note_id",referencedColumnName="note_id",nullable=true)
+	private Note note;
+	@ManyToOne(targetEntity=Essay.class)
+	@JoinColumn(name="essay_id",referencedColumnName="essay_id",nullable=true)
+	private Essay essay;
+	@ManyToOne(targetEntity=Music.class)
+	@JoinColumn(name="music_id",referencedColumnName="music_id",nullable=true)
+	private Music music;
+	@Column(updatable=false)
+	private String create_date;
+	@Column(updatable=false)
+	private String create_time;
+	private boolean del_flag = false;;
 	public Comment(){
 		setCreate_date(TimeManager.getDate());
 		setCreate_time(TimeManager.getTime());
@@ -29,17 +60,44 @@ public boolean del_flag;
 		setCreate_time(TimeManager.getTime());
 		setId(CommentService.getCurId(target_id, floor));
 		User user = UserService.getcurLoginUser(null);
-		setUser_id(user.getId());
-		setIs_visitor(true);
-		setUser_name(user.getNick_name());
-		setPortrait(user.getPortrait());
-		setSignature(user.getMotto());
+		setPublisher(user);
+	}
+	
+public Music getMusic() {
+		return music;
+	}
+	public void setMusic(Music music) {
+		this.music = music;
+	}
+public User getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(User publisher) {
+		this.publisher = publisher;
+	}
+	public User getTarget() {
+		return target;
+	}
+	public void setTarget(User target) {
+		this.target = target;
+	}
+public Note getNote() {
+		return note;
+	}
+	public void setNote(Note note) {
+		this.note = note;
+	}
+	public Essay getEssay() {
+		return essay;
+	}
+	public void setEssay(Essay essay) {
+		this.essay = essay;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 public int getId() {
 	return id;
-}
-public void setId(int id) {
-	this.id = id;
 }
 
 public String getDev_name() {
@@ -48,60 +106,17 @@ public String getDev_name() {
 public void setDev_name(String dev_name) {
 	this.dev_name = dev_name;
 }
-public int getUser_id() {
-	return user_id;
-}
-public void setUser_id(int user_id) {
-	this.user_id = user_id;
-}
-public String getUser_name() {
-	return user_name;
-}
-public void setUser_name(String user_name) {
-	this.user_name = user_name;
-}
-public String getPortrait() {
-	return portrait;
-}
-public void setPortrait(String portrait) {
-	this.portrait = portrait;
-}
-public String getSignature() {
-	return signature;
-}
-public void setSignature(String signature) {
-	this.signature = signature;
-}
 public String getContent() {
 	return content;
 }
 public void setContent(String content) {
 	this.content = content;
 }
-
-public int getReplyer() {
-	return replyer;
-}
-public void setReplyer(int replyer) {
-	this.replyer = replyer;
-}
-public String getReplyer_name() {
-	return replyer_name;
-}
-public void setReplyer_name(String replyer_name) {
-	this.replyer_name = replyer_name;
-}
 public int getFavour_cnt() {
 	return favour_cnt;
 }
 public void setFavour_cnt(int favour_cnt) {
 	this.favour_cnt = favour_cnt;
-}
-public boolean isIs_visitor() {
-	return is_visitor;
-}
-public void setIs_visitor(boolean is_visitor) {
-	this.is_visitor = is_visitor;
 }
 public String getCreate_date() {
 	return create_date;

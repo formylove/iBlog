@@ -39,6 +39,9 @@ if(importParams.indexOf("user")>=0){ %>
 <link href="css/user.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="js/Akita/user.js"></script>
 <%}
+if(importParams.indexOf("utils")>=0){ %>
+<script type="text/javascript" src="js/Akita/utils.js"></script>
+<%}
 if(importParams.indexOf("Jcrop")>=0){ %>
 <script type="text/javascript" src="js/Jcrop/jquery.Jcrop.js"></script>
 <link href="js/Jcrop/jquery.Jcrop.css" type="text/css" rel="stylesheet">

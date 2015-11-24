@@ -20,6 +20,10 @@
    <from>/term/?$</from> 
    <to>/pages/jsp/single/term.jsp</to>
  </rule>
+<rule>
+   <from>/date/?$</from> 
+   <to>/pages/jsp/utils/dateSchedule.jsp</to>
+ </rule>
 
 <rule>
    <from>user/prompt/([^/]+)/([^/]+)/?$</from> 
