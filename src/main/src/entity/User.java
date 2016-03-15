@@ -19,19 +19,22 @@ import main.src.common.IPParser;
 import main.src.common.TimeManager;
 @Component("user")
 @Entity
-@Table(name = "u")
+@Table(name = "user")
 public class User {
 	@Id @Column(name="user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String user_name;
+	@Column(nullable=false)
 	private String nick_name;
-	private String login_name;
+	@Column(nullable=false)
+	private String portrait;
+	@Column(nullable=false)
 	private String password;
 	private String md5;
 	private char gender = 'f';
 	private String motto;
 	private Date birthday;
+	@Column(nullable=false)
 	private String email;
 	private String qq;
 	private String phone;
@@ -41,9 +44,9 @@ public class User {
 	private String device;
 	private String city;
 	private String register_ip;
-	@Column(updatable=false,nullable=false)
+//	@Column(updatable=false,nullable=false)
 	private Timestamp register_date;
-	@Column(updatable=false,nullable=false,unique=true)
+    @Column(updatable=false,nullable=false,unique=true)
 	private String token;
 	private int authority;
 	private boolean autoplay = true;
@@ -57,12 +60,15 @@ public User(String nick_name,String email,String password,HttpServletRequest req
 	setCity(session.getAttribute("city") + " " + session.getAttribute("district") + " " +  session.getAttribute("provider"));
 	setDevice(session.getAttribute("device") + " " + session.getAttribute("browser") + " " +  session.getAttribute("os"));
 	setToken(UUID.randomUUID().toString());
-//	Date date = new Date();       
-//	setRegister_date(new Timestamp(date.getTime()));
+	Date date = new Date();       
+	setRegister_date(new Timestamp(date.getTime()));
 }
 public User(){
 }
-
+public User(String name,int id){
+	this.id = id;
+	this.nick_name = name;
+}
 
 public void setId(Integer id) {
 	this.id = id;
@@ -133,29 +139,23 @@ public int getId() {
 public void setId(int id) {
 	this.id = id;
 }
-public String getUser_name() {
-	return user_name;
-}
-public void setUser_name(String user_name) {
-	this.user_name = user_name;
-}
 public String getNick_name() {
 	return nick_name;
 }
 public void setNick_name(String nick_name) {
 	this.nick_name = nick_name;
 }
-public String getLogin_name() {
-	return login_name;
-}
-public void setLogin_name(String login_name) {
-	this.login_name = login_name;
-}
 public String getPassword() {
 	return password;
 }
 public void setPassword(String password) {
 	this.password = password;
+}
+public String getPortrait() {
+	return portrait;
+}
+public void setPortrait(String portrait) {
+	this.portrait = portrait;
 }
 public String getEmail() {
 	return email;

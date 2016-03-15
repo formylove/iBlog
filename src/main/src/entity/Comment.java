@@ -22,19 +22,20 @@ import main.src.service.CommentService;
 import main.src.service.UserService;
 @Component("comment")
 @Entity
-@Table(name = "c")
+@Table(name = "comment")
 public class Comment {
 	@Id	 @Column(name="comment_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name="publisher_id" , nullable=false)
-	@Cascade(CascadeType.ALL)
 	private User publisher;
 	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name="target_id")
-	@Cascade(CascadeType.ALL)
 	private User target;
 	private String content;
+	private int floor;
+	private int unit;
 	private String dev_name;
 	private int favour_cnt = 0;
 	@ManyToOne(targetEntity=Note.class)
@@ -58,11 +59,23 @@ public class Comment {
 	public Comment(String target_id,int floor){
 		setCreate_date(TimeManager.getDate());
 		setCreate_time(TimeManager.getTime());
-		setId(CommentService.getCurId(target_id, floor));
-		User user = UserService.getcurLoginUser(null);
-		setPublisher(user);
+//		setId(CommentService.getCurId(target_id, floor));
+//		User user = UserService.getcurLoginUser(null);
+//		setPublisher(user);
 	}
 	
+public int getFloor() {
+		return floor;
+	}
+	public void setFloor(int floor) {
+		this.floor = floor;
+	}
+	public int getUnit() {
+		return unit;
+	}
+	public void setUnit(int unit) {
+		this.unit = unit;
+	}
 public Music getMusic() {
 		return music;
 	}

@@ -9,11 +9,15 @@
 	<constant name="struts.devMode" value="true" />
     <constant name="struts.multipart.maxSize" value="10000000" />
     <constant name="struts.objectFactory.spring.autoWire" value="type" />
-	
-		<package name="default2" extends="json-default">  
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<constant name="struts.ui.theme" value="simple"/>
+		<package name="default" extends="json-default">  
 		<global-results>
 			<result name="exception">/pages/jsp/common/runtimeExceptionPage.jsp</result>
 			<result name="login">/pages/jsp/login.jsp</result>
+			<result name="done" type="json">
+			<param name="excludeNullProperties">true</param>
+			</result>	
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping result="exception" exception="java.lang.Throwable" />
@@ -21,7 +25,6 @@
 		
 		
 		<action name="loginAction" class="main.src.action.LoginAction">
-			<result name="done" type="json"></result>
 			<result name="activated" type="redirect">homepage/</result>
 			<result name="profile">pages/jsp/user/profile.jsp</result>
 			<result name="setting">pages/jsp/user/setting.jsp</result>
@@ -29,52 +32,58 @@
 		</action>
 		
 		<action name="categoryAction" class="main.src.action.CategoryAction">
-			<result name="conveycategory" type="json"></result>
 		</action>
 		
 		<action name="commentAction" class="main.src.action.CommentAction">
-			<result name="success" type="json"></result>
 		</action>
 		
 		<action name="forwardAction" class="main.src.action.ForwardAction">
-			<result name="success" type="json"></result>
 		</action>
 				
 		<action name="imageAction" class="main.src.action.ImageAction">
-			<result name="success" type="json"></result>
-			<result name="test">/pages/html/x.html</result>
-			<result name="croped">/pages/jsp/gallery.jsp</result>
 		</action>
 		
 		<action name="essayAction" class="main.src.action.EssayAction" >
-			<result name="essaypage">/pages/jsp/essay/essay.jsp</result>
-			<result name="editessay">/pages/jsp/essay/editEssay.jsp</result>
-			<result name="success">/pages/jsp/essay/saved.jsp</result>
-			<result name="deleted">/pages/jsp/essay/deletedConfirmation.jsp</result>
-			<result name="essays">/pages/jsp/essay/essays.jsp</result>
-			<result name="reduplicative" type="json"></result>
-			<result name="recovered" type="json"></result>
-			<result name="like" type="json"></result>
+			<result name="display">/pages/jsp/essay/essay.jsp</result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=eessay</param>
+			</result>
+			<result name="list">/pages/jsp/essay/essays.jsp</result>
 		</action>
 
+		<action name="opusAction" class="main.src.action.OpusAction" >
+			<result name="display">/pages/jsp/opus/opus.jsp</result>
+			<result name="emovie">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=emovie</param>
+			</result>
+			<result name="ebook">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=ebook</param>
+			</result>
+			<result name="list">/pages/jsp/opuses/opuses.jsp</result>
+		</action>
+		
 		<action name="noteAction" class="main.src.action.NoteAction" >
-			<result name="notepage">/pages/jsp/note/note.jsp</result>
-			<result name="editnote">/pages/jsp/note/editNote.jsp</result>
+			<result name="display">/pages/jsp/note/note.jsp</result>
+			<result name="edit">/pages/jsp/edit/editNote.jsp</result>
 			<result name="success">/pages/jsp/note/saved.jsp</result>
-			<result name="deleted">/pages/jsp/note/deletedConfirmation.jsp</result>
-			<result name="notes">/pages/jsp/note/notes.jsp</result>
-			<result name="reduplicative" type="json"></result>
-			<result name="recovered" type="json"></result>
-			<result name="like" type="json"></result>
-		</action>
-
-		<action name="testAction" class="main.src.action.TestAction">
-			<result name="test">/pages/jsp/single/test.jsp</result>
+			<result name="list">/pages/jsp/note/notes.jsp</result>
 		</action>
 		
 		<action name="hpAction" class="main.src.action.HPAction">
 			<result name="homepage">/pages/jsp/homepage/homepage.jsp</result>
 		</action>
+		<action name="managerAction" class="main.src.action.ManagerAction">
+			<result name="success">/pages/jsp/manager/backEnd.jsp</result>
+			<result name="done" type="json"><param name="root">ja</param></result>
+		</action>		
+		<action name="testAction" class="main.src.action.TestAction">
+			<result name="test">/pages/jsp/single/test.jsp</result>
+		</action>
+		<action name="t" class="main.src.action.TestAction2">
+			<result name="test">/pages/jsp/test/t1.jsp</result>
+			<result name="done">/pages/jsp/test/t2.jsp</result>
+		</action>
+		
 		
 
 	</package>

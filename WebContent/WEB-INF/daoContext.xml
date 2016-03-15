@@ -19,7 +19,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close"
 		p:driverClass="com.mysql.jdbc.Driver"
-		p:jdbcUrl="jdbc:mysql://localhost:3306/iBlog"
+		p:jdbcUrl="jdbc:mysql://hachi.space:3306/iBlog"
 		p:user="root"
 		p:password="222000"
 		p:maxPoolSize="200"
@@ -42,21 +42,35 @@
 				<value>main.src.entity.Comment</value>
 				<value>main.src.entity.Category</value>
 				<value>main.src.entity.Music</value>
+				<value>main.src.entity.Record</value>
+				<value>main.src.entity.Notification</value>
+				<value>main.src.entity.gallery.Nation</value>
+				<value>main.src.entity.gallery.State</value>
+				<value>main.src.entity.gallery.City</value>
+				<value>main.src.entity.gallery.Dynasty</value>
+				<value>main.src.entity.gallery.Religion</value>
+				<value>main.src.entity.gallery.Corporation</value>
+				<value>main.src.entity.gallery.People</value>
+				<value>main.src.entity.gallery.item.Scenery</value>
+				<value>main.src.entity.gallery.item.Figure</value>
 			</list>
 		</property>
 		<!-- 定义Hibernate的SessionFactory的属性 -->
 		<property name="hibernateProperties">
 			<!-- 指定数据库方言、是否自动建表、是否生成SQL语句等 	-->
 			<value>
-			hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
+			hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
 			hibernate.hbm2ddl.auto=update
-			hibernate.show_sql=true
+			hibernate.show_sql=false
 			hibernate.format_sql=true
 			#开启二级缓存
 			hibernate.cache.use_second_level_cache=true
 			hibernate.connection.autocommit=true
 			#设置二级缓存的提供者
 			hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory
+			#Disabling contextual LOB creation as createClob() method threw error 
+			hibernate.temp.use_jdbc_metadata_defaults=false
+			hhibernate.query.substitutions=true 1, false 0
 			</value>
 		</property>
 	</bean>

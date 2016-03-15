@@ -55,6 +55,11 @@ if(importParams.indexOf("sticky.js")>=0){ %>
 if(importParams.indexOf("index.js")>=0){ %>
 <script src="js/Akita/index.js"></script>
 <%}
+if(importParams.indexOf("easyui")>=0){ %>
+<link href="js/easyUI/icon.css" type="text/css" rel="stylesheet">
+<link href="js/easyUI/easyui.css" type="text/css" rel="stylesheet">
+<script src="js/easyUI/jquery.easyui.min.js"></script>
+<%}
 if(importParams.indexOf("upload.js")>=0){ %>
 <script src="js/fileUpload/ajaxfileupload.js"></script>
 <%}
@@ -68,6 +73,9 @@ if(importParams.indexOf("common.css")>=0){ %>
 if(importParams.indexOf("essays.css")>=0){ %>
 <link href="css/essays.css" type="text/css" rel="stylesheet">
 <%}
+if(importParams.indexOf("content.css")>=0){ %>
+<link href="css/content.css" type="text/css" rel="stylesheet">
+<%}
 if(importParams.indexOf("note.css")>=0){ %>
 <link href="css/note.css" type="text/css" rel="stylesheet">
 <%}
@@ -76,6 +84,12 @@ if(importParams.indexOf("essay.css")>=0){ %>
 <%}
 if(importParams.indexOf("comment")>=0){ %>
 <script src="js/Akita/comment.js"></script>
+<%}
+if(importParams.indexOf("editor")>=0){ %>
+<script src="js/ckeditor/ckeditor.js"></script>
+<%}
+if(importParams.indexOf("manager")>=0){ %>
+<script src="js/Akita/manager.js"></script>
 <%}
 if(importParams.indexOf("ZeroClipboard.js")>=0){ %>
 <script src="js/zeroclipboard/ZeroClipboard.js"></script>

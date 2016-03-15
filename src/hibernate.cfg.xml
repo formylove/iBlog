@@ -33,8 +33,5 @@
 		<property name="show_sql">true</property>
 		<!-- 将SQL脚本进行格式化后再输出 -->
 		<property name="hibernate.format_sql">true</property>
-		<!-- 罗列所有持久化类的类名 -->
-		<mapping class="main.src.entity.Note"/>
-<!-- 		<mapping class="org.crazyit.app.domain.Address"/> -->
 	</session-factory>
 </hibernate-configuration>

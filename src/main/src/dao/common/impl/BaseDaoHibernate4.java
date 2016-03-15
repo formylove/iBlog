@@ -1,6 +1,7 @@
 package main.src.dao.common.impl;
 
 import org.hibernate.*;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import main.src.dao.common.BaseDao;
@@ -10,17 +11,18 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import java.io.Serializable;
+@Repository("baseDaoHibernate4")
 public class BaseDaoHibernate4<T> implements BaseDao<T>
 {	
-	public static final ThreadLocal<Session> session = new ThreadLocal<Session>();
 	// DAO组件进行持久化操作底层依赖的SessionFactory组件
 	@Resource(name = "sessionFactory")
-	private SessionFactory sessionFactory;
+	protected SessionFactory sessionFactory;
+	public BaseDaoHibernate4() {
+	}
 	// 依赖注入SessionFactory所需的setter方法
 	// 根据ID加载实体
 	@SuppressWarnings("unchecked")
-	public T get(Class<T> entityClazz , Serializable id)
+	public T get(Class<T> entityClazz , int id)
 	{
 		Session s = sessionFactory.getCurrentSession();
 		//load返回一个镜像，不加载数据
@@ -28,10 +30,12 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		return  rvt;
 	}
 	// 保存实体
-	public Serializable save(T entity)
+	public int save(T entity)
 	{
-		return getSessionFactory().getCurrentSession()
+//		getSessionFactory().getCurrentSession().refresh(entity);
+		int cnt = (int) getSessionFactory().getCurrentSession()
 			.save(entity);
+		return cnt;
 	}
 	// 保存实体
 	public void persist(T entity)
@@ -51,8 +55,13 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 //		事务管理不需要flush
 //		s.flush();
 	}
+	@Override
+	public Session getSession()
+	{
+		return sessionFactory.openSession();
+	}
 	// 根据ID删除实体
-	public void delete(Class<T> entityClazz , Serializable id)
+	public void delete(Class<T> entityClazz , int id)
 	{
 		getSessionFactory().getCurrentSession()
 			.createQuery("delete " + entityClazz.getSimpleName()

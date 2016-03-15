@@ -2,34 +2,46 @@ package main.src.entity;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Component;
 
 import main.src.common.MessageUtils;
 import main.src.common.Spider;
 import main.src.common.StrUtils;
 import main.src.common.WebUtils;
 import net.sf.json.JSONObject;
-
+@Component("record")
+@Entity
+@Table(name = "record")
 public class Record {
-	public int id;
-	public String email;
-	public String qq;
-	public String ip;
-	public String mac;
-	public String os;
-	public String browser;
-	public String device;
-	public String province;
-	public String city;
-	public String district;
-	public String provider;
-	public String user_agent;
-	public String module;
-	public String content;
-	public String url;
-	public String session_id;
-	public Timestamp time;
+	@Id @Column(name="record_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private String email;
+	private String qq;
+	private String ip;
+	private String os;
+	private String browser;
+	private String device;
+	private String province;
+	private String city;
+	private String district;
+	private String provider;
+	private String user_agent;
+	private String module;
+	private String content;
+	private String url;
+	private String session_id;
+//	@Column(columnDefinition = "CURRENT_TIMESTAMP" )
+	private Timestamp time;
 	public Record(){
 		
 	}
@@ -70,14 +82,11 @@ public class Record {
 			session.setAttribute("district", getDistrict());
 			session.setAttribute("provider", getProvider());
 		}
-		try {
-			setMac(WebUtils.getMACAddress(ip));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getSession_id() {
 		return session_id;
 	}
@@ -117,12 +126,6 @@ public class Record {
 	}
 	public void setIp(String ip) {
 		this.ip = ip;
-	}
-	public String getMac() {
-		return mac;
-	}
-	public void setMac(String mac) {
-		this.mac = mac;
 	}
 	public String getOs() {
 		return os;

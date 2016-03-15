@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
  <div class="essay-author-wrapper clearfix">
 				<div class="essay-author">
 					<p class="title">
@@ -24,7 +22,7 @@
 						版权声明
 					</p>
 					<div class="copyright-ct">
-						「夜网」专栏内文章，如果侵权，立即删除
+						「夜网」专栏文章，如果侵权，立即删除
 					</div>
 				</div>
 			</div>

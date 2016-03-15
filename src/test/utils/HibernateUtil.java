@@ -29,7 +29,7 @@ public class HibernateUtil
 		throws HibernateException
 	{	String version = StrUtils.zeroFill(v, 2);
 		Configuration cfg = new Configuration()
-				.addResource("test/config/hibernate.cfg"+ version + ".xml")
+				.addResource("test/config/hibernate.cfg01.xml")
 				.configure();
 		// 以Configuration实例来创建SessionFactory实例
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

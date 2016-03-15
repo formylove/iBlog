@@ -21,20 +21,20 @@ import org.springframework.stereotype.Component;
 import main.src.common.SqlUtils;
 @Component("genre")
 @Entity
-@Table(name = "g")
+@Table(name = "genre")
 public class Genre {
 @Id	 @Column(name="genre_id")
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Integer id;
 private String name;
 private String type;
-@ManyToMany(targetEntity=Opus.class)
-@JoinTable(name="Opus_Genre",
-joinColumns=@JoinColumn(name="genre_id",referencedColumnName="genre_id"),
-inverseJoinColumns=@JoinColumn(name="opus_id",referencedColumnName="opus_id"))
-@Cascade(CascadeType.ALL)
-private Set<Opus> opuses = new HashSet<Opus>();
-private boolean del_flag = false;;
+//@ManyToMany(targetEntity=Opus.class)
+//@JoinTable(name="Opus_Genre",
+//joinColumns=@JoinColumn(name="genre_id",referencedColumnName="genre_id"),
+//inverseJoinColumns=@JoinColumn(name="opus_id",referencedColumnName="opus_id"))
+//@Cascade(CascadeType.ALL)
+//private Set<Opus> opuses = new HashSet<Opus>();
+private boolean del_flag = false;
 //public int hashCode() {
 //	return id.hashCode()*31;
 //}
@@ -42,12 +42,12 @@ private boolean del_flag = false;;
 //	return (o instanceof Genre && this.id == ((Genre) o).id);
 //}
 
-public Set<Opus> getOpuses() {
-	return opuses;
-}
-public void setOpuses(Set<Opus> opuses) {
-	this.opuses = opuses;
-}
+//public Set<Opus> getOpuses() {
+//	return opuses;
+//}
+//public void setOpuses(Set<Opus> opuses) {
+//	this.opuses = opuses;
+//}
 public void setId(Integer id) {
 	this.id = id;
 }

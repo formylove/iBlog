@@ -3,14 +3,13 @@ package main.src.action;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Map;
+import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.StrutsStatics;
-
-import com.opensymphony.xwork2.ActionContext;
+import org.apache.struts2.json.annotations.JSON;
 
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
@@ -20,18 +19,21 @@ import main.src.entity.User;
 import main.src.entity.essay.Essay;
 import main.src.service.CategoryService;
 import main.src.service.EssayService;
-import main.src.service.UserService;
 public class EssayAction {
+@Resource(name="essayService")
+private EssayService essayService;
+@Resource(name="categoryService")
+private CategoryService categoryService;
 private float w;
 private float h;
 private float x;
 private float y;
-String profile;
+String cover;
 Essay essay;
 String title;
 //edit essay
 int id;
-Map<String, String> authorities = (new MsgConstants()).AUTHORITY;
+Properties authorities = (new MsgConstants()).AUTHORITY;
 List<Category> categories;
 boolean hasExisted;
 //essay list
@@ -42,78 +44,75 @@ int pages;
 String category;
 User user;
 boolean loginStatus;
-public String execute(){
-	System.out.println("into!!!");
-	
-	return MsgConstants.ESSAYPAGE;
-}
-public String listEssay(){
+public String list(){
 	HttpServletRequest request=ServletActionContext.getRequest();
 	String[] categories =  request.getParameterValues("category");
 	System.out.println("cat  "+category);
-	essays = EssayService.getOnePage(page, categories, null, false);
-	recommendations = EssayService.getRecommendation(categories);
-	pages = EssayService.getPageCnt(false,categories);
-	return MsgConstants.Essays;
+//	essays = EssayService.getOnePage(page, categories, null, false);
+//	recommendations = EssayService.getRecommendation(categories);
+//	pages = EssayService.getPageCnt(false,categories);
+	return MsgConstants.SUCCESS;
 }
-public String saveEssay() throws NumberFormatException, UnsupportedEncodingException{
+public String save() throws NumberFormatException, UnsupportedEncodingException{
     if(id==0){
-    	if(!StrUtils.isEmpty(profile)){
-    		essay.setProfile(ImageUtils.cut(profile, w, h, x, y));
-    	}
-    	id = EssayService.saveEssay(essay);
+    		if(!StrUtils.isEmpty(cover)){
+    			essay.setCover(ImageUtils.cut(cover, w, h, x, y));
+    		}
+    		id = essayService.save(essay);
+    		essay.setId(id);
     }else{
-    	if(!essay.getProfile().equals(profile)){
-    		ImageUtils.deleteImg(essay.getProfile());
-    		essay.setProfile(ImageUtils.cut(profile, w, h, x, y));
+    	if(!essay.getCover().equals(cover)){
+    		ImageUtils.deleteImg(essay.getCover());
+    		essay.setCover(ImageUtils.cut(cover, w, h, x, y));
     	}
-    	EssayService.updateEssay(id, essay);
+    	essayService.update(essay);
     }
-		return MsgConstants.ESSAYPAGE;
+		return MsgConstants.DISPLAY;
 }
 
-public String readEssay(){
-	    EssayService.readEssay(id);
+public String read(){
+	    essayService.read(id);
 	    return null;
 }
-public String loadEssay(){
-	essay=EssayService.getEssay(id);
-	user = UserService.getcurLoginUser(null);
-	EssayService.readEssay(id);
-	return MsgConstants.ESSAYPAGE;
+public String load(){
+	essay=essayService.get(id);
+//	user = UserService.getcurLoginUser(null);
+	essayService.read(id);
+	return MsgConstants.DISPLAY;
 }
 
-public String editEssay(){
+public String edit(){
+	authorities = MsgConstants.AUTHORITY;
+	essay = null;
 	if(id!=0){
-		essay=EssayService.getEssay(id);
+		essay=essayService.get(id);
 	}
-	categories = CategoryService.getAllCategories(true);
+	categories = categoryService.getAll();
 	
-	return "editessay";
+	return MsgConstants.SUCCESS;
 }
 
-public String deleteEssay(){
-	EssayService.deleteEssay(id);
-	essay = EssayService.getEssay(id);
-	return MsgConstants.DELETED;
+public String delete(){
+	essayService.remove(id);
+	return MsgConstants.DONE;
 }
 
-public String recoverEssay(){
-	EssayService.recoverEssay(id);
+public String recover(){
+    essayService.recover(id);
 	return MsgConstants.DONE;
 }
 
 public String hasExisted(){
-	hasExisted = EssayService.hasExisted(title);
+	hasExisted = essayService.hasExisted(title);
 	return MsgConstants.DONE;
 }
 public String like(){
-	EssayService.likeEssay(id);
+	essayService.like(id);
 	return MsgConstants.DONE;
 }
 
 public String undoLike(){
-	EssayService.undoLikeEssay(id);
+	essayService.undoLike(id);
 	return MsgConstants.DONE;
 }
 
@@ -124,24 +123,28 @@ public boolean isLoginStatus() {
 public void setLoginStatus(boolean loginStatus) {
 	this.loginStatus = loginStatus;
 }
+@JSON(serialize=false)
 public User getUser() {
 	return user;
 }
 public void setUser(User user) {
 	this.user = user;
 }
-public Map<String, String> getAuthorities() {
-	return authorities;
-}
-public void setAuthorities(Map<String, String> authorities) {
-	this.authorities = authorities;
-}
+@JSON(serialize=false)
 public List<Essay> getRecommendations() {
 	return recommendations;
+}
+@JSON(serialize=false)
+public Properties getAuthorities() {
+	return authorities;
+}
+public void setAuthorities(Properties authorities) {
+	this.authorities = authorities;
 }
 public void setRecommendations(List<Essay> recommendations) {
 	this.recommendations = recommendations;
 }
+@JSON(serialize=false)
 public String getCategory() {
 	return category;
 }
@@ -160,6 +163,7 @@ public int getPages() {
 public void setPages(int pages) {
 	this.pages = pages;
 }
+@JSON(serialize=false)
 public List<Essay> getEssays() {
 	return essays;
 }
@@ -185,6 +189,13 @@ public void setId(int id) {
 	this.id = id;
 }
 
+public String getCover() {
+	return cover;
+}
+public void setCover(String cover) {
+	this.cover = cover;
+}
+@JSON(serialize=false)
 public List<Category> getCategories() {
 	return categories;
 }
@@ -192,7 +203,7 @@ public List<Category> getCategories() {
 public void setCategories(List<Category> categories) {
 	this.categories = categories;
 }
-
+@JSON(serialize=false)
 public Essay getEssay() {
 	return essay;
 }
@@ -233,11 +244,11 @@ public float getY() {
 public void setY(float y) {
 	this.y = y;
 }
-public String getProfile() {
-	return profile;
+public void setEssayService(EssayService essayService) {
+	this.essayService = essayService;
 }
-public void setProfile(String profile) {
-	this.profile = profile;
+public void setCategoryService(CategoryService categoryService) {
+	this.categoryService = categoryService;
 }
 
 }

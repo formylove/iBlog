@@ -28,40 +28,40 @@ public class UrlFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,	FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request=(HttpServletRequest)req;
-		String url=request.getRequestURI().toLowerCase();
-	HttpServletResponse response=(HttpServletResponse) res;
-	 if(Pattern.compile("/essays/?$").matcher(url).find()){//$要加上
-		response.sendRedirect("essayAction.action?method:listEssay&page=1&category=5000&category=5006");//等于完全重新发出一次请求，还需要重新过滤
-	}else if(Pattern.compile("/essays/\\d{1,100}/?$").matcher(url).find()){//$要加上
-		Matcher m = Pattern.compile("\\d{1,100}/?$").matcher(url);
-		m.find();
-		int page = Integer.parseInt(m.group().replace("/", ""));
-		response.sendRedirect("essayAction.action?method:listEssay&page=" + page +"&category=5000&category=5006");//等于完全重新发出一次请求，还需要重新过滤
-	}else if(Pattern.compile("/essays/\\d{1,100}/c(/5\\d{4})+/?$").matcher(url).find()){//$要加上
-		Matcher m = Pattern.compile("\\d{1,100}/c").matcher(url);
-		m.find();
-		int page = Integer.parseInt(m.group().replace("/c", ""));		
-		m = Pattern.compile("5\\d{4}").matcher(url);
-		String categories = "";
-		while(m.find()){
-			categories = categories + "&category=" + m.group();
-		}
-		response.sendRedirect("essayAction.action?method:listEssay&page=" + page + categories);//等于完全重新发出一次请求，还需要重新过滤
-	} 
+//		String url=request.getRequestURI().toLowerCase();
+//	HttpServletResponse response=(HttpServletResponse) res;
+//	 if(Pattern.compile("/essays/?$").matcher(url).find()){//$要加上
+//		response.sendRedirect("essayAction.action?method:listEssay&page=1&category=5000&category=5006");//等于完全重新发出一次请求，还需要重新过滤
+//	}else if(Pattern.compile("/essays/\\d{1,100}/?$").matcher(url).find()){//$要加上
+//		Matcher m = Pattern.compile("\\d{1,100}/?$").matcher(url);
+//		m.find();
+//		int page = Integer.parseInt(m.group().replace("/", ""));
+//		response.sendRedirect("essayAction.action?method:listEssay&page=" + page +"&category=5000&category=5006");//等于完全重新发出一次请求，还需要重新过滤
+//	}else if(Pattern.compile("/essays/\\d{1,100}/c(/5\\d{4})+/?$").matcher(url).find()){//$要加上
+//		Matcher m = Pattern.compile("\\d{1,100}/c").matcher(url);
+//		m.find();
+//		int page = Integer.parseInt(m.group().replace("/c", ""));		
+//		m = Pattern.compile("5\\d{4}").matcher(url);
+//		String categories = "";
+//		while(m.find()){
+//			categories = categories + "&category=" + m.group();
+//		}
+//		response.sendRedirect("essayAction.action?method:listEssay&page=" + page + categories);//等于完全重新发出一次请求，还需要重新过滤
+//	} 
 //	else if(Pattern.compile("/essay/2\\d{4}/?$").matcher(url).find()){//$要加上
 //		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
 //		m.find();
 //		String id = m.group().replace("/", "");
 //		response.sendRedirect("essayAction.action?method:loadEssay&id=" + id);//等于完全重新发出一次请求，还需要重新过滤
 //	} 
-	else if(Pattern.compile("/edit/2\\d{4}/?$").matcher(url).find()){
-		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
-		m.find();
-		String id = m.group().replace("/", "");
-		response.sendRedirect("essayAction.action?method:editEssay&id=" + id);
-	} else{
+//	else if(Pattern.compile("/edit/2\\d{4}/?$").matcher(url).find()){
+//		Matcher m = Pattern.compile("2\\d{4}/?$").matcher(url);
+//		m.find();
+//		String id = m.group().replace("/", "");
+//		response.sendRedirect("essayAction.action?method:editEssay&id=" + id);
+//	} else{
 filterChain.doFilter(req, res);}
-	}
+//	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {

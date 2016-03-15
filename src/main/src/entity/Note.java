@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ import main.src.common.TimeManager;
 import main.src.service.UserService;
 @Component("note")
 @Entity
-@Table(name = "n")
+@Table(name = "note")
 public class Note {
 @Id @Column(name="note_id")
 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,21 +35,20 @@ private String author;
 private String author_link;
 private String author_desc;
 private String label;
-private int category;
 private String content;
-private Integer read_cnt=0;
-private Integer favor_cnt=0;
+private int read_cnt=0;
+private int favor_cnt=0;
 private boolean original_flag = true;
 private String original_link;
 @ManyToOne(targetEntity = Music.class)
 @JoinColumn(name="music_id")
-@Cascade(CascadeType.ALL)
+@Cascade(CascadeType.SAVE_UPDATE)
 private Music music;
 @ManyToOne(targetEntity = Opus.class)
 @JoinColumn(name="opus_id" , referencedColumnName="opus_id",nullable=false)
 @Cascade(CascadeType.ALL)
 private Opus opus;
-@OneToMany(targetEntity=Comment.class,mappedBy="note")
+@OneToMany(targetEntity=Comment.class,mappedBy="note" ,fetch=FetchType.EAGER)
 @Cascade(CascadeType.ALL)
 private List<Comment> comments = new LinkedList<Comment>();
 private String create_date;
@@ -83,12 +83,12 @@ public String[] getLabels(){
 	}
 }
 public void setWebmasterDetail() {
-	if(original_flag){
-		User user = UserService.getUser(2);
-		author = user.getNick_name();
-		author_desc = user.getMotto();
-		author_link = "user/2";
-		}
+//	if(original_flag){
+//		User user = UserService.getUser(2);
+//		author = user.getNick_name();
+//		author_desc = user.getMotto();
+//		author_link = "user/2";
+//		}
 }
 
 
@@ -176,12 +176,6 @@ public void setLabel(String label) {
 		this.label = label;
 	}
 }
-public int getCategory() {
-	return category;
-}
-public void setCategory(int category) {
-	this.category = category;
-}
 public String getContent() {
 	return content;
 }
@@ -224,9 +218,6 @@ public int getRead_cnt() {
 	return read_cnt;
 }
 public void setRead_cnt(int read_cnt) {
-	this.read_cnt = read_cnt;
-}
-public void setRead_cnt(Integer read_cnt) {
 	this.read_cnt = read_cnt;
 }
 public void setFavor_cnt(Integer favor_cnt) {

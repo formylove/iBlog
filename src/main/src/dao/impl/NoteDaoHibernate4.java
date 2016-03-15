@@ -1,9 +1,6 @@
 package main.src.dao.impl;
 
-import java.io.Serializable;
-
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import main.src.dao.NoteDao;
 import main.src.dao.common.impl.BaseDaoHibernate4;
@@ -15,7 +12,7 @@ public class NoteDaoHibernate4 extends BaseDaoHibernate4<Note> implements NoteDa
 	}
 
 	@Override
-	public Note get(Serializable id) {
+	public Note get(int id) {
 		return get(Note.class,id);
 	}
 	//父类有了就不用再写了

@@ -1,4 +1,4 @@
-快捷键：新建，build，大小写，dubug,run,copy line，next editor，constructor,getter setter，go line,comment加注释符号,shift + enter: insert line;preference->key
+快捷键：新建，build，大小写，copy qualified name:alt + s,genreate constructor:alt+v,dubug,run,copy line，next editor，constructor,getter setter，go line,comment加注释符号,shift + enter: insert line;preference->key
 template：代码提示，jsp模版，ps,pub,lp
 插件：eexplorer，egit
 tomcat:path 删除，80端口
@@ -17,3 +17,4 @@ show local history，本地所有更改历史；
 compare with->local history；
 extract String，放到配置文件中
 问题：Project Explorer和Package Explorer没区别
+选择automotolly publish，否则jsp不能自动更新

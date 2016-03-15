@@ -1,3 +1,77 @@
+var clipboard = function(id){
+  	clip = new ZeroClipboard.Client();
+		ZeroClipboard.setMoviePath("js/zeroclipboard/ZeroClipboard.swf");
+  	clip.setHandCursor(true);  	
+  	clip.addEventListener('mouseOver', function (client){    
+    	clip.setText( $("#stacktrace").text());
+  	});
+  	clip.addEventListener('complete', function (client, text) {   
+    	confirm("复制成功");
+  	});
+	clip.glue(id); // 和上一句位置不可调换 
+	}
+var duplicateCheck = function(type,item,formName) {
+	var reiterationFlag = false;
+	var prefix;
+	var label;
+	var controllers = $("input[name^='controller']");
+	controllers.map(function(k,c){
+		prefix = $(c).attr("name").split("_")[1];
+		label = $(c).attr("name").split("_")[2];
+		var cnt = $(c).val();
+		for(var i = 0;i<cnt-1;i++){
+			for(var j = i+1;j<cnt;j++){
+				if($("#"+prefix+i).combobox("getValue") == $("#"+prefix+j).combobox("getValue")){
+					reiterationFlag = true;
+				}
+			}
+		}
+	}
+	
+	);
+	if(reiterationFlag == true){
+			confirm4easyui("'" + label + "' 选项重复！");
+	}else if($('#' + item).val() == null){
+			confirm4easyui('标题为空！');
+	}else if(type == 'title' && editor.document.getBody().getText().replace(/\s/g, '') == ''){
+			confirm4easyui('内容为空！');
+	}else if(document.getElementById('id').value == '0'){
+	$.ajax({
+		url : 'ajax/manager/' + type + '/hasExisted',
+		type : 'post',
+		contentType : 'application/x-www-form-urlencoded;charset=UTF-8',
+		data : item + '=' + $('#' + item).val(),
+		success : function(data) {
+			if (data.hasExisted) {
+				confirm4easyui('不要重复发布！');
+			}else {
+				document.getElementById(formName).submit();
+			}},
+			
+			error:function(e) {
+				confirm4easyui(e);
+			}});
+	}else{document.getElementById(formName).submit();}
+}
+			function confirm4easyui(message){
+				$.messager.show({
+					title:'信息',
+					msg:message,
+					timeout:1000,
+					showType:'show'
+				});
+			}
+var disableSelect = function(name,cnt){
+	var selects =$("select[id^='genre']");
+	selects.map(function(k,s){//map 取出的是document元素，非jquery(document：select#genre0;jquery:z = [select#genre0)
+		for(var i=1;i<selects.size();i++){
+			$(s).combobox('disable');
+		}
+	});
+	for(var i=0;i<cnt;i++){
+		$("#genre"+i+"").combobox('enable');
+	}
+}
 function detectAreaVal(me,she,emptyClass,availClass){
 	var sub = $("#"+she);
 	if($("#"+me).val()==''){//textarea用val取值
@@ -25,44 +99,33 @@ function detectAreaVal(me,she,emptyClass,availClass){
 				}
 			}
 function deleteObj(type,id){
-				var url;
-				if(type=="note"){
-					url ="noteAction.action?method:deleteNote&id="+id;
-				}else if(type=="essay"){
-					url ="essayAction.action?method:deleteEssay&id="+id ;
-				}
 				 $.ajax({
-					 url:url,
+					 url:"/ajax/manager/" + type + "/delete/" + id,
 					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
 					 type:'post',
 					 success:function(data){
-						 $("delete").addClass("hidden");
-						 $("recover").removeClass("hidden");
-						 alert('文章删除成功');
+						 $("#delete").addClass("hidden");
+						 $("#recover").removeClass("hidden");
+						 confirm( '文章删除成功！');
 					 }
 				 });
 			}
 			function recoverObj(type,id){
-				var url;
-				if(type=="note"){
-					url ="noteAction.action?method:deleteNote&id="+id;
-				}else if(type=="essay"){
-					url ="essayAction.action?method:deleteEssay&id="+id ;
-				}
 				 $.ajax({
-					 url:url,
+					 url:"/ajax/manager/" + type + "/recover/" + id,
 					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
 					 type:'post',
 					 success:function(data){
-						 $("recover").addClass("hidden");
-						 $("delete").removeClass("hidden");
-						 alert('文章恢复成功');
+						 $("#recover").addClass("hidden");
+						 $("#delete").removeClass("hidden");
+						 confirm( '文章恢复成功！');
 					 }
 				 });
 			}
-			 function like(id){
+
+			 function like(type,id){
 				 $.ajax({
-					 url:"noteAction.action?method:like&id="+id,
+					 url:"/ajax/manager/" + type + "/like/" + id,
 					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
 					 type:'post',
 					 success:function(data){
@@ -72,9 +135,9 @@ function deleteObj(type,id){
 					 }
 				 });
 			}
-			 function undoLike(id){
+			 function undoLike(type,id){
 				 $.ajax({
-					 url:"noteAction.action?method:undoLike&id="+id,
+					 url:"/ajax/manager/" + type + "/undoLike/" + id,
 					 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
 					 type:'post',
 					 success:function(data){
@@ -84,8 +147,19 @@ function deleteObj(type,id){
 					 }
 				 });
 			}
+			function confirm(content){
+					var d = dialog({
+						title: '提示',
+					    content: content,
+					    icon: 'succeed'
+					});
+					d.show();
+					setTimeout(function () {
+					    d.close().remove();
+					}, 1000);
+				}
 function addLabel(me){
-	if($("span[name='labelIterm']").size()<5){
+	if($("span[name='labelIterm']").size()<3){
 		var she = $('#labelIterm').clone();
 		she.children().first().val("");
 		me.before(she);
@@ -99,7 +173,7 @@ function redLabel(me){
 	checkTokenDis($("span[name='labelIterm']").size());
 }
 function addCast(me){
-	if($("span[name='CastIterm']").size()<5){
+	if($("span[name='CastIterm']").size()<3){
 		var she = $('#CastIterm').clone();
 		she.children().first().val("");
 		me.before(she);
@@ -113,7 +187,7 @@ function redCast(me){
 	checkToken($("span[name='CastIterm']").size());
 }
 function checkTokenDis(size){
-	if(size==5){
+	if(size==3){
 		$("#add").addClass("hidden");
 		$("#reduce").removeClass("hidden");
 	}else if(size==1){
@@ -125,7 +199,7 @@ function checkTokenDis(size){
 	}
 }
 function checkToken(size){
-	if(size==5){
+	if(size==3){
 		$("#add2").addClass("hidden");
 		$("#reduce2").removeClass("hidden");
 	}else if(size==1){
@@ -178,12 +252,13 @@ function initSelector(id,value){
 	
 }
 function showCouple(i,she,condition){
-	me = document.getElementById(i);
-	var obj = me.options[me.selectedIndex];
+	var obj = i.options[i.selectedIndex];
 	if(obj.value==condition){
 		show(she);
+		she.disabled=false;
 	}else{
 		hide(she);
+		she.disabled=true;
 	}
 }
 function hideCouple(i,she,condition){

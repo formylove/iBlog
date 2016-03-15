@@ -1,8 +1,7 @@
-①　完全匹配
-    <url-pattern>/test/zhidao.action</url-pattern>
-② 目录匹配
-    <url-pattern>/test/*</url-pattern>
-③ 扩展名匹配
-    <url-pattern>*.action</url-pattern>
-    
-    <package name="default" extends="struts-default">解释： http://zhidao.baidu.com/question/242258240.html
+<s:debug></s:debug>
+  <s:if test="#parameters.type[0] =='essay'">   
+<jsp:include page="../manager/essayEditor.jsp" />
+  </s:if>
+  <s:if test="#parameters.type[0] =='opus'">   
+<%@include file="../manager/opusEditor.jsp" %>
+  </s:if>

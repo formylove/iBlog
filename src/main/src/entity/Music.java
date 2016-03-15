@@ -8,19 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.stereotype.Component;
 
-import main.src.common.StrUtils;
 import main.src.common.TimeManager;
-import main.src.service.UserService;
 @Component("music")
 @Entity
 @Table(name = "music")
@@ -31,6 +26,7 @@ private Integer id;
 private String name;
 private String singer;
 private String composer;
+private String cover;
 private String moto;
 private String duration;
 private String nation;
@@ -53,6 +49,12 @@ public void setId(Integer id) {
 }
 public String getName() {
 	return name;
+}
+public String getCover() {
+	return cover;
+}
+public void setCover(String cover) {
+	this.cover = cover;
 }
 public void setName(String name) {
 	this.name = name;

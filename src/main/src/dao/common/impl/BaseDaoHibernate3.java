@@ -1,14 +1,13 @@
 package main.src.dao.common.impl;
 
-import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.*;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import main.src.dao.common.BaseDao;
-
-import org.springframework.orm.hibernate4.HibernateCallback;
 
 /**
  * Description:
@@ -24,15 +23,15 @@ public class BaseDaoHibernate3<T> extends HibernateDaoSupport
 	implements BaseDao<T>
 {
 	// 根据ID加载实体
-	public T get(Class<T> entityClazz, Serializable id)
+	public T get(Class<T> entityClazz, int id)
 	{
 		return getHibernateTemplate().get(entityClazz, id);
 	}
 
 	// 保存实体
-	public Serializable save(T entity)
+	public int save(T entity)
 	{
-		return getHibernateTemplate().save(entity);
+		return (int) getHibernateTemplate().save(entity);
 	}
 
 	// 更新实体
@@ -48,7 +47,7 @@ public class BaseDaoHibernate3<T> extends HibernateDaoSupport
 	}
 
 	// 根据ID删除实体
-	public void delete(Class<T> entityClazz, Serializable id)
+	public void delete(Class<T> entityClazz, int id)
 	{
 		delete(get(entityClazz , id));
 	}
@@ -131,5 +130,14 @@ public class BaseDaoHibernate3<T> extends HibernateDaoSupport
 			}
 		});
 		return list;
+	}
+
+	@Override
+	public void persist(T entity) {
+	}
+
+	@Override
+	public Session getSession() {
+		return null;
 	}
 }

@@ -3,7 +3,7 @@
 <html>
 <head>
 <title><s:property value="essay.title"/></title>
-<s:set name="importParams" value="'general|essay.css|comment|end'" scope="request"/>
+<s:set name="importParams" value="'general|essay.css|content.css|comment|end'" scope="request"/>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>

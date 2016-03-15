@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 		<div class="comment-editor">
 				<a href="javascript:;" class="avatar-wrapper" id="commentAvatarHolder" rel="nofollow">
-					<img src="${user==null?'http://s.luoo.net/img/avatar.gif':user.portrait}" alt="${user.nick_name }" class="avatar rounded">
+					<img src="${user==null?'img/common/avatar.gif':user.portrait}" alt="${user.nick_name }" class="avatar rounded">
 				</a>
 				<div class="editor-wrapper">
 						<div class="editor rounded">

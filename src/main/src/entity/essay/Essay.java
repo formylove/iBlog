@@ -3,6 +3,7 @@ package main.src.entity.essay;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.stereotype.Component;
 
 import main.src.common.StrUtils;
@@ -23,17 +22,16 @@ import main.src.common.TimeManager;
 import main.src.entity.Category;
 import main.src.entity.Comment;
 import main.src.entity.Music;
-import main.src.entity.Opus;
-import main.src.entity.User;
-import main.src.service.UserService;
+import main.src.service.CategoryService;
 @Component("essay")
 @Entity
-@Table(name = "e")
+@Table(name = "essay")
 public class Essay {
 @Id @Column(name="essay_id")
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Integer id;
 private String title;
+private String cover;
 private String subtitle;
 private String author;
 private String author_link;
@@ -43,7 +41,6 @@ private String label;
 private List<Comment> comments = new LinkedList<Comment>();
 @ManyToOne(targetEntity = Category.class)
 @JoinColumn(name="category_id" , referencedColumnName="category_id",nullable=false)
-@Cascade(CascadeType.SAVE_UPDATE)
 private Category category;
 private String content;
 private Integer read_cnt = 0;
@@ -52,13 +49,15 @@ private boolean original_flag = true;
 private String original_link;
 @ManyToOne(targetEntity = Music.class)
 @JoinColumn(name="music_id")
-@Cascade(CascadeType.ALL)
 private Music music;
 private String portrait;
 private String create_date;
 private String create_time;
 private int authority = 10;
 public boolean del_flag = false;;
+@Resource(name = "categoryService")
+@Transient
+private CategoryService categoryService;
 @Transient
 private final String splitTag =",";
 public Essay(){
@@ -81,12 +80,12 @@ public String[] getLabels(){
 	}
 }
 public void setWebmasterDetail() {
-	if(original_flag){
-		User user = UserService.getUser(2);
-		author = user.getNick_name();
-		author_desc = user.getMotto();
-		author_link = "user/2";
-		}
+//	if(original_flag){
+//		User user = userService.get(2);
+//		author = user.getNick_name();
+//		author_desc = user.getMotto();
+//		author_link = "user/2";
+//		}
 }
 
 public List<Comment> getComments() {
@@ -97,12 +96,6 @@ public void setComments(List<Comment> comments) {
 }
 public void setId(Integer id) {
 	this.id = id;
-}
-public void setRead_cnt(Integer read_cnt) {
-	this.read_cnt = read_cnt;
-}
-public void setFavor_cnt(Integer favor_cnt) {
-	this.favor_cnt = favor_cnt;
 }
 public String getSubtitle() {
 	return subtitle;
@@ -143,9 +136,7 @@ public void setAuthority(int authority) {
 public int getFavor_cnt() {
 	return favor_cnt;
 }
-public void setFavor_cnt(int favor_cnt) {
-	this.favor_cnt = favor_cnt;
-}
+
 public int getId() {
 	return id;
 }
@@ -180,9 +171,19 @@ public String getContent() {
 public Category getCategory() {
 	return category;
 }
+
+public CategoryService getCategoryService() {
+	return categoryService;
+}
+public void setCategoryService(CategoryService categoryService) {
+	this.categoryService = categoryService;
+}
 public void setCategory(Category category) {
 	this.category = category;
 }
+//public void setCategory(String category_id) {
+//	this.category = categoryService.get(Integer.parseInt(category_id));
+//}
 public void setContent(String content) {
 	this.content = content;
 }
@@ -212,6 +213,13 @@ public String getCreate_date() {
 public void setCreate_date(String create_date) {
 	this.create_date = create_date;
 }
+
+public String getCover() {
+	return cover;
+}
+public void setCover(String cover) {
+	this.cover = cover;
+}
 public boolean isDel_flag() {
 	return del_flag;
 }
@@ -221,9 +229,28 @@ public void setDel_flag(boolean del_flag) {
 public int getRead_cnt() {
 	return read_cnt;
 }
-public void setRead_cnt(int read_cnt) {
+public void setRead_cnt(Integer read_cnt) {
+	System.out.println("read_cnt Integer");
 	this.read_cnt = read_cnt;
 }
-
-
+public void setRead_cnt(int read_cnt) {
+	System.out.println("read_cnt int");
+	this.read_cnt = read_cnt;
+}
+public void setRead_cnt(String[] read_cnt) {
+	System.out.println("read_cnt String[]");
+	this.read_cnt = Integer.parseInt(read_cnt[0]);
+}
+public void setFavor_cnt(Integer favor_cnt) {
+	System.out.println("favor_cnt Integer");
+	this.favor_cnt = favor_cnt;
+}
+public void setFavor_cnt(int favor_cnt) {
+	System.out.println("favor_cnt Integer");
+	this.favor_cnt = favor_cnt;
+}
+public void setFavor_cnt(String[] favor_cnt) {
+	System.out.println("favor_cnt String[]");
+	this.favor_cnt = Integer.parseInt(favor_cnt[0]);
+}
 }

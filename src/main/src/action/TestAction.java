@@ -35,6 +35,8 @@ public class TestAction {
 	String msg;
 	@javax.annotation.Resource(name = "testService")
 	TestServiceImpl testService;
+	@javax.annotation.Resource(name = "userService")
+	UserService userService;
 	public String h2(){
 		AbstractApplicationContext ctx = new FileSystemXmlApplicationContext(
 				new String[]{"C:/Users/Administrator/git/iBlog/WebContent/WEB-INF/applicationContext.xml"
@@ -56,7 +58,7 @@ public class TestAction {
 			c.setMaxAge(3600);
 			res.addCookie(c);
 		}else{
-			UserService.logout();
+			userService.logout();
 		}
 		if(user!=null)
 			System.out.println(user.getNick_name());

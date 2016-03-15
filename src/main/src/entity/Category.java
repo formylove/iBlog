@@ -19,13 +19,15 @@ import org.springframework.stereotype.Component;
 
 @Component("category")
 @Entity
-@Table(name = "cat")
+@Table(name = "category")
 public class Category {
 	@Id @Column(name="category_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	@Column(name = "[DESC]", nullable = true)
 	private String desc;
+	private String profile;
 	@ElementCollection(targetClass=String.class)
 	@CollectionTable(name="moto_Category",
 	joinColumns=@JoinColumn(name="category_id", nullable=false))
@@ -35,6 +37,12 @@ public class Category {
 	private Map<String,String> motos = new HashMap<String,String>();
 	private boolean del_flag = false;
 
+public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 public int getId() {
 	return id;
 }
@@ -51,7 +59,16 @@ public void setDel_flag(boolean del_flag) {
 	this.del_flag = del_flag;
 }
 public void setId(Integer id) {
+	System.out.println("setId Integer");
 	this.id = id;
+}
+public void setId(int id) {
+	System.out.println("setId int");
+	this.id = id;
+}
+public void setId(String[] id) {
+	System.out.println("setId String[]");
+	this.id = Integer.parseInt(id[0]);
 }
 public String getDesc() {
 	return desc;

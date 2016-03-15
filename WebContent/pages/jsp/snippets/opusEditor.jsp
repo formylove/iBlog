@@ -7,9 +7,9 @@
 <div id="works_info" class="clearfix" style="width: 100%">
 				<div class="margin-b-16">
 					<label>札记类型</label> 
-					<select id="category" name='note.category' onchange="enableCouple('category','book_info','5012');enableCouple('category','movie_info','5013');">
-						<option value="5012">书评</option>
-						<option value="5013">影评</option>
+					<select id="type" name='opus.type' onchange="enableCouple('type','book_info','book');enableCouple('type','movie_info','movie');">
+						<option value="book">书籍</option>
+						<option value="movie">电影</option>
 					</select>
 					<label class="margin-l-30">推荐：<s:checkbox id="rec_flag" name='rec_flag' value="false" onclick="showCoupleForCheckbox('rec_flag','remark','true');"
 					></s:checkbox></label>

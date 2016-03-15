@@ -75,6 +75,10 @@ public class ImageUtils {
 		}
 		 return FileUtils.saveFile(image, localName,realPath);
 	 }
+	static public String saveImage4Editor(File image,String org_name) throws IOException{
+		 String realPath = baseRealPath + depotPath;
+		 return ImageUtils.saveImage(image, org_name,realPath);
+	}
 	static public String saveTemp(File image,String org_name) throws IOException{
 		String realPath = baseRealPath + tempPath;
 		return ImageUtils.saveImage(image, org_name,realPath);

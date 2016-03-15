@@ -70,3 +70,8 @@ schemaLocation引入顺序会导致错误
 不生成class文件，将eclipse设为build automaticly
 jar报最好来自同一版本的Struts包里
 classpath单机可访问,web context web容器下访问
+hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect要设置准确，不然无法自动生成表
+Caused by: org.hibernate.AnnotationException: mappedBy reference an unknown target entity property: main.src.entity.gallery.item.Scenery.nation in main.src.entity.gallery.Nation.sceneries
+@OneToMany(targetEntity=Scenery.class,mappedBy="nationality")，mapped by 用的是主表字段名称，而非表名称(就是你来的意思)
+<s:updownselect name="nations" list="@main.src.common.MsgConstants@AUTHORITY" listKey="key" listValue="value"/>
+key值必须为非中文

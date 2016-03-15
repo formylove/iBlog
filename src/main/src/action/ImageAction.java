@@ -57,6 +57,17 @@ public class ImageAction {
 		imgName = ImageUtils.saveTemp(file, fileFileName);
 		return MsgConstants.DONE;
 	}
+	public String upLoadImg4Editor() throws IOException {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setCharacterEncoding("utf-8");
+		imgName = ImageUtils.saveImage4Editor(upload, uploadFileName);
+		PrintWriter out =response.getWriter();
+		String callback =ServletActionContext.getRequest().getParameter("CKEditorFuncNum");   
+		out.println("<script type=\"text/javascript\">");  
+		out.println("window.parent.CKEDITOR.tools.callFunction("+ callback + ",'" +"img/depot/"+ imgName + "','')");   
+		out.println("</script>");  
+		return null;
+	}
 
 
 	public String getFileFileName() {

@@ -9,6 +9,7 @@ import java.net.NetworkInterface;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.StrutsStatics;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -55,10 +56,9 @@ static public boolean neededRecord(HttpServletRequest request){
 	if(ip.equals("127.0.0.1") || ip.equals("192.168.1.110")){
 		ip = "122.95.231.214";
 	}
-	String mac = "mac_xxx";
     String addr = i.getCountry().trim();
     for(String condition:conditions){
-    	if(addr.indexOf(condition)>=0 || ip.indexOf(condition)>=0 || mac.indexOf(condition)>=0)
+    	if(StringUtils.contains(addr, condition) ||StringUtils.contains(ip, condition))
     	{
     		return true;
     	}

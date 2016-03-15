@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 		<div class="comment-wrapper">
 		<jsp:include page="./PlainEditor.jsp"/>
 		<span id="commentSortText">最新评论</span>

@@ -25,8 +25,7 @@ height:23px;
 	<div class="container index-ct round-container" style="min-height: 221px;">
 	<form id="form" action="<s:url action='noteAction.action?method:saveNote'/>" method="post">
 			<input type="hidden" name="id" id="id"  value="<c:choose><c:when test="${empty essay}">0</c:when><c:otherwise>${essay.id}</c:otherwise></c:choose>">
-			<input type="hidden" name="essay.read_cnt" id="read_cnt" value="<c:choose><c:when test="${empty essay}">0</c:when><c:otherwise>${essay.read_cnt}</c:otherwise></c:choose>">
-			<input type="hidden" name="essay.favor_cnt" id="favor_cnt" value="<c:choose><c:when test="${empty essay}">0</c:when><c:otherwise>${essay.favor_cnt}</c:otherwise></c:choose>">
+			<input type="hidden" name="note.id" id="id"  value="<c:choose><c:when test="${empty essay}">0</c:when><c:otherwise>${note.id}</c:otherwise></c:choose>">
 			<!-- 作品编辑区域 -->
 			<jsp:include page="../snippets/opusEditor.jsp"/>
 			<!-- 作品编辑区域 end -->
