@@ -5,13 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${essay.title} - 札记</title>
+<title>${note.title} - 札记</title>
 <%request.setAttribute("importParams", "jquery|note.css|end"); %>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>
 <%@ include file="../snippets/navigator.jsp" %>
-<div class="container ct-sm essay-detail-wrapper" style="min-height: 221px;">	
+<div class="container ct-sm note-detail-wrapper" style="min-height: 221px;">	
 		<nav class="article-nav">
 			<a href="notes/" class="nav-back">
 				<i class="icon-back"></i>
@@ -23,11 +23,11 @@
 			
 			</script>
 		<div class="event-head clearfix">
-			<img src="img/depot/${opus.cover}" alt="${essay.title}" class="poster rounded">
+			<img src="img/depot/${opus.cover}" alt="${note.title}" class="poster rounded">
 			<div class="event-meta">
-				<h1 style="font-size: 24px;">${essay.title}</h1>
-				<!-- essay meta -->
-				<jsp:include page="../snippets/essayMeta.jsp"/>
+				<h1 style="font-size: 24px;">${note.title}</h1>
+				<!-- note meta -->
+<%-- 				<jsp:include page="../snippets/noteMeta.jsp"/> --%>
 				<s:iterator value="opus.getMeta()" id="entry">
 				<p class="meta"><s:property value="key"/>:
 				<s:property value="value"/></p>
@@ -38,37 +38,37 @@
 		
 		<div class="event-intro">
 			<h3 class="title">札记</h3>
-			<div class="ct">${essay.content}</div>
+			<div class="ct">${note.content}</div>
 		</div>
 			<!-- 点赞区 -->		 
-		<div class="essay-share">
+		<div class="note-share">
 				<a href="javascript:;" >
-					<span id="like" class="icon-essay-fav"  onclick="like('${id}');" style="margin-right:5px;" ></span>
-					<span id="liked" class="icon-essay-faved hidden"  onclick="undoLike('${id}');" style="margin-right:5px;" ></span>
-					<span id="favorcnt"><s:property value="essay.favor_cnt"/></span>
+					<span id="like" class="icon-note-fav"  onclick="like('${id}');" style="margin-right:5px;" ></span>
+					<span id="liked" class="icon-note-faved hidden"  onclick="undoLike('${id}');" style="margin-right:5px;" ></span>
+					<span id="favorcnt"><s:property value="note.favor_cnt"/></span>
 				</a>
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="javascript:;" class="btn-share btn-action-share" data-app="essay" data-id="520'" data-text="这篇文章值得一读【惘闻：艺术与声音的即兴合作——奇迹寻踪】（分享自@落网）" data-img="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/essays/201508/55d5b1119b303.jpg" title="分享">
-					<span class="icon-essay-share"></span>
+				<a href="javascript:;" class="btn-share btn-action-share" data-app="note" data-id="520'" data-text="这篇文章值得一读【惘闻：艺术与声音的即兴合作——奇迹寻踪】（分享自@落网）" data-img="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/notes/201508/55d5b1119b303.jpg" title="分享">
+					<span class="icon-note-share"></span>
 				</a>
 			</div>	
 <!-- 作者信息 -->
-					<s:if test="essay.author != null && essay.author != '' ">
-					 <div class="essay-author-wrapper clearfix">
-				<div class="essay-author">
+					<s:if test="note.author != null && note.author != '' ">
+					 <div class="note-author-wrapper clearfix">
+				<div class="note-author">
 					<p class="title">
 						文章作者
 					</p>
 						<div class="clearfix">
-							<a href="<s:property value='essay.author_link'/>" class="avatar-wrapper">
-								<img src="<s:property value='essay.portrait'/>" alt="<s:property value='essay.author'/>" class="avatar rounded"/>
+							<a href="<s:property value='note.author_link'/>" class="avatar-wrapper">
+								<img src="<s:property value='note.portrait'/>" alt="<s:property value='note.author'/>" class="avatar rounded"/>
 							</a>
-							<div class="essay-author-info">
+							<div class="note-author-info">
 								<div class="cell">
-									<a href="<s:property value='essay.author_link'/>" class="essay-author-name">
-										<s:property value="essay.author"/>
+									<a href="<s:property value='note.author_link'/>" class="note-author-name">
+										<s:property value="note.author"/>
 									</a>
-									<p class="essay-author-sign"><s:property value='essay.author_desc'/></p>
+									<p class="note-author-sign"><s:property value='note.author_desc'/></p>
 								</div>
 							</div>
 						</div>

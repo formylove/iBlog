@@ -24,4 +24,6 @@ public interface BaseDao<T>
 	List<T> findAll(Class<T> entityClazz);
 	// 获取实体总数
 	long findCount(Class<T> entityClazz);
+	public List<T> list(String name,int maxSize,int pageNum,String order,String conditions);
+	public Integer getCnt(String name,String order,String conditions);
 }

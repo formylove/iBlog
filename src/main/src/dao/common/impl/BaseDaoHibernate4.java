@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import main.src.dao.common.BaseDao;
+import main.src.entity.Music;
 import main.src.entity.Note;
 
 import java.util.List;
@@ -72,11 +73,17 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	// 获取所有实体
 	public List<T> findAll(Class<T> entityClazz)
 	{
-		return find("select en from "
-			+ entityClazz.getSimpleName() + " en");
+		return find("from "+ entityClazz.getSimpleName() + " en");
+	}
+	// 根据HQL语句查询实体
+	@SuppressWarnings("unchecked")
+	protected List<T> find(String hql)
+	{
+		return (List<T>)getSession()
+			.createQuery(hql)
+			.list();
 	}
 	// 获取实体总数
-
 	public long findCount(Class<T> entityClazz)
 	{
 		List<?> l = find("select count(*) from "
@@ -89,14 +96,7 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		return 0;
 	}
 
-	// 根据HQL语句查询实体
-	@SuppressWarnings("unchecked")
-	protected List<T> find(String hql)
-	{
-		return (List<T>)getSessionFactory().getCurrentSession()
-			.createQuery(hql)
-			.list();
-	}
+
 	// 根据带占位符参数HQL语句查询实体
 	@SuppressWarnings("unchecked")
 	protected List<T> find(String hql , Object... params)
@@ -111,6 +111,19 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		}
 		return (List<T>)query.list();
 	}
+		// 创建查询
+		public List<T> list(String name,int maxSize,int pageNum,String order,String conditions){
+			String hql = "from " + name + (conditions!=null?" where "+conditions:" ") + (order!=null?" order by ":"") + order;
+			Session s = getSession();
+			List<T> objs = s.createQuery(hql).setMaxResults(maxSize).setFirstResult((pageNum-1)*maxSize).list();
+			return objs;
+			}
+		public Integer getCnt(String name,String order,String conditions){
+			String hql = "select count(*) from " + name + (conditions!=null?" where "+conditions:" ") + (order!=null?" order by ":"") + order;
+			Session s = getSession();
+			Integer cnt = Integer.parseInt(((Long)s.createQuery(hql).uniqueResult()).toString());
+			return cnt;
+		}
 	/**
 	 * 使用hql 语句进行分页查询操作
 	 * @param hql 需要查询的hql语句

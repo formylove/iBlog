@@ -34,20 +34,17 @@ String title;
 //edit essay
 int id;
 Properties authorities = (new MsgConstants()).AUTHORITY;
-List<Category> categories;
 boolean hasExisted;
 //essay list
 List<Essay> essays;
 List<Essay> recommendations;
 int page;
 int pages;
-String category;
 User user;
 boolean loginStatus;
 public String list(){
 	HttpServletRequest request=ServletActionContext.getRequest();
 	String[] categories =  request.getParameterValues("category");
-	System.out.println("cat  "+category);
 //	essays = EssayService.getOnePage(page, categories, null, false);
 //	recommendations = EssayService.getRecommendation(categories);
 //	pages = EssayService.getPageCnt(false,categories);
@@ -87,7 +84,6 @@ public String edit(){
 	if(id!=0){
 		essay=essayService.get(id);
 	}
-	categories = categoryService.getAll();
 	
 	return MsgConstants.SUCCESS;
 }
@@ -144,13 +140,6 @@ public void setAuthorities(Properties authorities) {
 public void setRecommendations(List<Essay> recommendations) {
 	this.recommendations = recommendations;
 }
-@JSON(serialize=false)
-public String getCategory() {
-	return category;
-}
-public void setCategory(String category) {
-	this.category = category;
-}
 public int getPage() {
 	return page;
 }
@@ -194,14 +183,6 @@ public String getCover() {
 }
 public void setCover(String cover) {
 	this.cover = cover;
-}
-@JSON(serialize=false)
-public List<Category> getCategories() {
-	return categories;
-}
-
-public void setCategories(List<Category> categories) {
-	this.categories = categories;
 }
 @JSON(serialize=false)
 public Essay getEssay() {

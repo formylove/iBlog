@@ -37,7 +37,7 @@ width:100px;
 				<div class="fleft">
 				<div id="preview-pane" class="fleft margin-r-55">
 					<div id ="preview-container" class="preview-container-essay" >
-						<img src="<s:if test="essay.profile != null">img/depot/${essay.profile}</s:if><s:else>img/essay/essay_default.jpg</s:else>" id="prevImg" class="cover-essay jcrop-preview" alt="Preview" />
+						<img src="<s:if test="essay.profile != null  && essay.profile != ''">img/depot/${essay.profile}</s:if><s:else>img/essay/essay_default.jpg</s:else>" id="prevImg" class="cover-essay jcrop-preview" alt="Preview" />
 					</div>
 				</div>
 				</div>
@@ -100,7 +100,7 @@ width:100px;
 				<span id="reduce" class="hidden cursor-pointer" onclick="redLabel($(this));">&nbsp;<font size="4px">—</font>&nbsp;</span>
 			</div>
 			<div style="text-align: center; margin-top: 15px;">
-				<input id="btnPublish" type="button" onclick="duplicateCheck()" class="btn rounded btn-positive"
+				<input id="btnPublish" type="button" onclick="submitForm()" class="btn rounded btn-positive"
 					class="input_btn_1" value="发表文章" title="保存并跳转"  style="margin-right:40px"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input id="btnCancel" type="button" onclick="window.location.href='http://127.0.0.1:8080/iBlog/essayAction.action?method:editEssay'; " class="btn rounded btn-negative btn-reload" value="舍弃" />
 			</div>

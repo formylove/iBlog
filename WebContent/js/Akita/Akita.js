@@ -1,19 +1,24 @@
-var clipboard = function(id){
-  	clip = new ZeroClipboard.Client();
-		ZeroClipboard.setMoviePath("js/zeroclipboard/ZeroClipboard.swf");
-  	clip.setHandCursor(true);  	
-  	clip.addEventListener('mouseOver', function (client){    
-    	clip.setText( $("#stacktrace").text());
-  	});
-  	clip.addEventListener('complete', function (client, text) {   
-    	confirm("复制成功");
-  	});
-	clip.glue(id); // 和上一句位置不可调换 
-	}
-var duplicateCheck = function(type,item,formName) {
+function extend(des, src, override){
+   if(src instanceof Array){
+       for(var i = 0, len = src.length; i < len; i++)
+            extend(des, src[i], override);
+   }
+   for( var i in src){
+       if(override || !(i in des)){
+           des[i] = src[i];
+       }
+   } 
+   return des;
+}
+function clearForm(){
+			$('form').form('clear');
+		}
+
+var submitForm = function(item,formName) {
 	var reiterationFlag = false;
 	var prefix;
 	var label;
+	var unchecked = $('#' + formName + ' #' + item);
 	var controllers = $("input[name^='controller']");
 	controllers.map(function(k,c){
 		prefix = $(c).attr("name").split("_")[1];
@@ -27,33 +32,21 @@ var duplicateCheck = function(type,item,formName) {
 			}
 		}
 	}
-	
 	);
+ 	$(".combo input:hidden").map(function(index,combo){
+		if($(combo).val() == null || $(combo).val() == ''){
+			$(combo).remove();
+		}
+	});
 	if(reiterationFlag == true){
 			confirm4easyui("'" + label + "' 选项重复！");
-	}else if($('#' + item).val() == null){
+	}else if(unchecked.val() == null || unchecked.val() == ''){
 			confirm4easyui('标题为空！');
-	}else if(type == 'title' && editor.document.getBody().getText().replace(/\s/g, '') == ''){
+	}else if(item == 'title' && editor.document.getBody().getText().replace(/\s/g, '') == ''){
 			confirm4easyui('内容为空！');
-	}else if(document.getElementById('id').value == '0'){
-	$.ajax({
-		url : 'ajax/manager/' + type + '/hasExisted',
-		type : 'post',
-		contentType : 'application/x-www-form-urlencoded;charset=UTF-8',
-		data : item + '=' + $('#' + item).val(),
-		success : function(data) {
-			if (data.hasExisted) {
-				confirm4easyui('不要重复发布！');
-			}else {
-				document.getElementById(formName).submit();
-			}},
-			
-			error:function(e) {
-				confirm4easyui(e);
-			}});
 	}else{document.getElementById(formName).submit();}
 }
-			function confirm4easyui(message){
+function confirm4easyui(message){
 				$.messager.show({
 					title:'信息',
 					msg:message,
@@ -62,16 +55,39 @@ var duplicateCheck = function(type,item,formName) {
 				});
 			}
 var disableSelect = function(name,cnt){
-	var selects =$("select[id^='genre']");
+	var selects =$("select[id^='"+name+"']");
 	selects.map(function(k,s){//map 取出的是document元素，非jquery(document：select#genre0;jquery:z = [select#genre0)
 		for(var i=1;i<selects.size();i++){
 			$(s).combobox('disable');
 		}
 	});
 	for(var i=0;i<cnt;i++){
-		$("#genre"+i+"").combobox('enable');
+		$("#"+name+i+"").combobox('enable');
 	}
 }
+var disableComboTree = function(name,cnt){
+	var selects =$("input[id^='"+name+"']");
+	selects.map(function(k,s){//map 取出的是document元素，非jquery(document：select#genre0;jquery:z = [select#genre0)
+		for(var i=1;i<selects.size();i++){
+			$(s).combotree('disable');
+		}
+	});
+	for(var i=0;i<cnt;i++){
+		$("#"+name+i+"").combotree('enable');
+	}
+}
+var clipboard = function(id){
+  	clip = new ZeroClipboard.Client();
+		ZeroClipboard.setMoviePath("js/zeroclipboard/ZeroClipboard.swf");
+  	clip.setHandCursor(true);  	
+  	clip.addEventListener('mouseOver', function (client){    
+    	clip.setText( $("#stacktrace").text());
+  	});
+  	clip.addEventListener('complete', function (client, text) {   
+    	confirm("复制成功");
+  	});
+	clip.glue(id); // 和上一句位置不可调换 
+	}
 function detectAreaVal(me,she,emptyClass,availClass){
 	var sub = $("#"+she);
 	if($("#"+me).val()==''){//textarea用val取值

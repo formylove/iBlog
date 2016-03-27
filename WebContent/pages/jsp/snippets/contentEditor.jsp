@@ -13,7 +13,7 @@
 			    codeSnippet_theme: 'zenburn';
 				}
 				var editortext = CKEDITOR.replace('essay.content');
-				var duplicateCheck = function() {
+				var submitForm = function() {
 					$.ajax({
 								url : 'essayAction.action?method:hasExisted',
 								type : 'post',

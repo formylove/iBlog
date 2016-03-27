@@ -1,3 +1,4 @@
+\u009f\u009f 这个字符很像树
 html等页面资源文件需要放在根目录或者webcontent根目录下,
 浏览器访问无需加webcontent路径
 web.xml中配置无需加webcontent路径,如pages/jsp/login.jsp("/"可加可不加)
@@ -75,3 +76,18 @@ Caused by: org.hibernate.AnnotationException: mappedBy reference an unknown targ
 @OneToMany(targetEntity=Scenery.class,mappedBy="nationality")，mapped by 用的是主表字段名称，而非表名称(就是你来的意思)
 <s:updownselect name="nations" list="@main.src.common.MsgConstants@AUTHORITY" listKey="key" listValue="value"/>
 key值必须为非中文
+	@Column(name = "[from]")
+	private Date from;
+	@Temporal(TemporalType.DATE )
+	@Column(name = "[to]")
+	private Date to;
+	from mysql 接受不了！ to，over struts 接受不了！！！
+<property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+把这行换成：
+<property name="hibernate.dialect">org.hibernate.dialect.MySQDialect</property>
+C:\ProgramData\MySQL\MySQL Server 5.5\data\iblog 删除底层文件强制删除表
+直接删掉不可以，因为注册表中信息没有删除
+java.lang.reflect.InvocationTargetException  json传回的json格式错误
+trantion 解决方案是重启
+ WARN MultiPartRequest:60 - Unable to parse request，超时，设置server.xml在里边加入了disableUploadTimeout="false"一句，超时或者过大。
+<form id="movie-editor" action="manager/music/save/"  enctype="multipart/form-data" method="post"> 设置enctype才可以上传文件

@@ -1,47 +1,25 @@
+
 package main.src.action;
 
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
-
-import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
-import main.src.entity.Genre;
 import main.src.entity.Note;
 import main.src.entity.Opus;
 import main.src.entity.essay.Essay;
-import main.src.service.EssayService;
-import main.src.service.GenreService;
 import main.src.service.NoteService;
-import main.src.service.OpusService;
 public class NoteAction {
 @Resource(name="noteService")
 private NoteService noteService;
-@Resource(name="opusService")
-private OpusService opusService;
-@Resource(name="genreService")
-private GenreService genreService;
 Note note;
-Essay notes;
 Opus opus;
 int id;
-List<Genre> genres;
-String genre[];
-private float w;
-private float h;
-private float x;
-private float y;
 private Properties authority = MsgConstants.AUTHORITY;
-private Properties rate = MsgConstants.RATE;
 private String title;
-private String cover;
-private String music;
 private boolean hasExisted;
 //essay list
 private List<Essay> essays;
@@ -49,58 +27,47 @@ private List<Essay> recommendations;
 private int page;
 private int pages;
 private String[] category;
+Properties authorities = (new MsgConstants()).AUTHORITY;
 public String listNote(){
 //	notes = (Essay) EssayService.getOnePage(page, category, null, false);
 //	recommendations = EssayService.getRecommendation(category);
 //	pages = EssayService.getPageCnt(false,category);
 	return MsgConstants.LIST;
 }
-public String saveNote() throws NumberFormatException, UnsupportedEncodingException{
-	    if(id==0){
-	    	if(StringUtils.isNotEmpty(cover)){
-	    		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
-	    	}
-	    	note.setOpus(opus);
-	    	opusService.save(opus);
-	    	id = noteService.save(note);
-	    	genreService.injectGenres(opus, genre);
-	    }else{
-	    	if(!opus.getCover().equals(cover)){
-	    		ImageUtils.deleteImg(opus.getCover());
-	    		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
-	    	}
-	    	genreService.injectGenres(opus, genre);
-	    	noteService.change(note,opus);
-	    }
-		return MsgConstants.DISPLAY;
+public String save(){
+    if(id==0){
+    		id = noteService.save(note);
+    		note.setId(id);
+    }else{
+    	noteService.update(note);
+    }
+	return MsgConstants.DISPLAY;
 }
-
-public String readNote(){
+public String read(){
 		noteService.read(id);
 	    return null;
 }
-public String loadNote(){
+public String load(){
 	note = noteService.get(id);
 	opus = note.getOpus();
 	return MsgConstants.DISPLAY;
 }
 
-public String editNote(){
+public String edit(){
+	authorities = MsgConstants.AUTHORITY;
+	note = null;
 	if(id!=0){
 		note = noteService.get(id);
-		opus = note.getOpus();
 	}
-	genres = (List<Genre>) genreService.getAll(false);
-	return "editnote";
+	return MsgConstants.SUCCESS;
 }
 
-public String deleteNote(){
+public String delet(){
 	note = noteService.remove(id);
-	opus = note.getOpus();
 	return null;
 }
 
-public String recoverNote(){
+public String recover(){
 	noteService.recover(id);
 	return MsgConstants.DONE;
 }
@@ -118,50 +85,17 @@ public String undoLike(){
 	noteService.undoLike(id);
 	return MsgConstants.DONE;
 }
-public String getCover() {
-	return cover;
+public NoteService getNoteService() {
+	return noteService;
 }
-public void setCover(String cover) {
-	this.cover = cover;
+public void setNoteService(NoteService noteService) {
+	this.noteService = noteService;
 }
-public String getTitle() {
-	return title;
+public Note getNote() {
+	return note;
 }
-public void setTitle(String title) {
-	this.title = title;
-}
-public String[] getCategory() {
-	return category;
-}
-public float getW() {
-	return w;
-}
-public void setW(float w) {
-	this.w = w;
-}
-public float getH() {
-	return h;
-}
-public void setH(float h) {
-	this.h = h;
-}
-public float getX() {
-	return x;
-}
-public void setX(float x) {
-	this.x = x;
-}
-public float getY() {
-	return y;
-}
-public void setY(float y) {
-	this.y = y;
-}
-public Essay getNotes() {
-	return notes;
-}
-public void setNotes(Essay notes) {
-	this.notes = notes;
+public void setNote(Note note) {
+	this.note = note;
 }
 public Opus getOpus() {
 	return opus;
@@ -169,7 +103,36 @@ public Opus getOpus() {
 public void setOpus(Opus opus) {
 	this.opus = opus;
 }
-//////////
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
+public Properties getAuthority() {
+	return authority;
+}
+public void setAuthority(Properties authority) {
+	this.authority = authority;
+}
+public String getTitle() {
+	return title;
+}
+public void setTitle(String title) {
+	this.title = title;
+}
+public boolean isHasExisted() {
+	return hasExisted;
+}
+public void setHasExisted(boolean hasExisted) {
+	this.hasExisted = hasExisted;
+}
+public List<Essay> getEssays() {
+	return essays;
+}
+public void setEssays(List<Essay> essays) {
+	this.essays = essays;
+}
 public List<Essay> getRecommendations() {
 	return recommendations;
 }
@@ -188,27 +151,17 @@ public int getPages() {
 public void setPages(int pages) {
 	this.pages = pages;
 }
-public List<Essay> getEssays() {
-	return essays;
+public String[] getCategory() {
+	return category;
 }
-public void setEssays(List<Essay> essays) {
-	this.essays = essays;
+public void setCategory(String[] category) {
+	this.category = category;
 }
-
-public void setHasExisted(boolean hasExisted) {
-	this.hasExisted = hasExisted;
+public Properties getAuthorities() {
+	return authorities;
 }
-
-public boolean isHasExisted() {
-	return hasExisted;
-}
-
-public int getId() {
-	return id;
-}
-
-public void setId(int id) {
-	this.id = id;
+public void setAuthorities(Properties authorities) {
+	this.authorities = authorities;
 }
 
 }

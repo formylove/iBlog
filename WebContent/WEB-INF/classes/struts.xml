@@ -10,6 +10,7 @@
     <constant name="struts.multipart.maxSize" value="10000000" />
     <constant name="struts.objectFactory.spring.autoWire" value="type" />
     <constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+    <constant name="struts.multipart.maxSize" value="100000000"/> 
 	<constant name="struts.ui.theme" value="simple"/>
 		<package name="default" extends="json-default">  
 		<global-results>
@@ -32,6 +33,17 @@
 		</action>
 		
 		<action name="categoryAction" class="main.src.action.CategoryAction">
+		<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=ecategory</param>
+		</result>
+		<result name="display">/pages/jsp/item/item.jsp</result>
+		</action>
+		
+		<action name="genreAction" class="main.src.action.GenreAction">
+		<result name="success">
+		<param name="location">/pages/jsp/manager/backEnd.jsp?type=egenre</param>
+		</result>
+		<result name="display">/pages/jsp/item/item.jsp</result>
 		</action>
 		
 		<action name="commentAction" class="main.src.action.CommentAction">
@@ -50,6 +62,14 @@
 			</result>
 			<result name="list">/pages/jsp/essay/essays.jsp</result>
 		</action>
+		
+		<action name="noteAction" class="main.src.action.NoteAction" >
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=enote</param>
+			</result>
+			<result name="display">/pages/jsp/note/note.jsp</result>
+			<result name="list">/pages/jsp/note/notes.jsp</result>
+		</action>
 
 		<action name="opusAction" class="main.src.action.OpusAction" >
 			<result name="display">/pages/jsp/opus/opus.jsp</result>
@@ -59,15 +79,122 @@
 			<result name="ebook">
 			<param name="location">/pages/jsp/manager/backEnd.jsp?type=ebook</param>
 			</result>
+			<result name="eseries">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=eseries</param>
+			</result>
 			<result name="list">/pages/jsp/opuses/opuses.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
 		</action>
 		
-		<action name="noteAction" class="main.src.action.NoteAction" >
-			<result name="display">/pages/jsp/note/note.jsp</result>
-			<result name="edit">/pages/jsp/edit/editNote.jsp</result>
-			<result name="success">/pages/jsp/note/saved.jsp</result>
-			<result name="list">/pages/jsp/note/notes.jsp</result>
+		<action name="shareAction" class="main.src.action.ShareAction" >
+			<result name="retrieve">/pages/jsp/manager/backEnd.jsp?type=retrieve</result>
+			<result name="list">/pages/jsp/list/musics.jsp</result>
+			<result name="datagrid" type="json"><param name="root">datagrid</param></result>
 		</action>
+		<action name="musicAction" class="main.src.action.MusicAction" >
+			<result name="display">/pages/jsp/music/music.jsp</result>
+			<result name="retrieve">//pages/jsp/manager/backEnd.jsp?type=retrieve</result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=emusic</param>
+			</result>
+			<result name="list">/pages/jsp/list/musics.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
+			<result name="datalist" type="json"><param name="root">datalist</param></result>
+			<interceptor-ref name="fileUpload">
+			<param name="allowedTypes">audio/mpeg,audio/x-wav,audio/ogg</param>
+			<param name="maximumSize">20000000000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"/>
+		</action>
+		<action name="downloadAction" class="main.src.action.DownloadAction" >
+			<result type="stream">
+			<param name="contentType">${mime}</param>
+			<param name="inputName">target</param>
+			<param name="contentDisposition">attachment;filename="${targetName}"</param>
+			<param name="bufferSize">4096</param>
+			</result>
+		</action>
+		
+		<action name="nationAction" class="main.src.action.NationAction" >
+			<result name="display">/pages/jsp/item/item.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=enation</param>
+			</result>
+		</action>
+		<action name="stateAction" class="main.src.action.StateAction" >
+			<result name="display">/pages/jsp/item/item.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=estate</param>
+			</result>
+		</action>
+		<action name="cityAction" class="main.src.action.CityAction" >
+			<result name="display">/pages/jsp/item/item.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=ecity</param>
+			</result>
+		</action>
+		
+		<action name="religionAction" class="main.src.action.ReligionAction" >
+			<result name="display">/pages/jsp/item/item.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=ereligion</param>
+			</result>
+		</action>
+		<action name="peopleAction" class="main.src.action.PeopleAction" >
+			<result name="display">/pages/jsp/item/item.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=epeople</param>
+			</result>
+		</action>
+		<action name="dynastyAction" class="main.src.action.DynastyAction" >
+			<result name="display">/pages/jsp/item/item.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=edynasty</param>
+			</result>
+		</action>
+		
+		<action name="figureAction" class="main.src.action.FigureAction" >
+			<result name="display">/pages/jsp/item/item.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=efigure</param>
+			</result>
+		</action>
+		<action name="corporationAction" class="main.src.action.CorporationAction" >
+			<result name="display">/pages/jsp/item/item.jsp</result>
+			<result name="done" type="json"><param name="root">tree</param></result>
+			<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=ecorporation</param>
+			</result>
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		<action name="hpAction" class="main.src.action.HPAction">
 			<result name="homepage">/pages/jsp/homepage/homepage.jsp</result>

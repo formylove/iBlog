@@ -1,5 +1,6 @@
 package test.TESTCASE;
 
+import main.src.entity.gallery.Continent;
 import main.src.service.NoteService;
 import main.src.service.impl.NoteServiceImpl;
 
@@ -10,8 +11,7 @@ public class Test1 {
 	}
 
 	public static void main(String[] args) {
-NoteService ns = new NoteServiceImpl();
-ns.getNote(0);
+		System.out.println(Continent[1].name());;
 	}
 
 }

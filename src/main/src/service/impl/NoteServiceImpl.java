@@ -2,6 +2,7 @@ package main.src.service.impl;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +10,7 @@ import main.src.dao.NoteDao;
 import main.src.dao.OpusDao;
 import main.src.entity.Note;
 import main.src.entity.Opus;
+import main.src.entity.essay.Essay;
 import main.src.service.NoteService;
 @Service("noteService")
 @Transactional
@@ -21,11 +23,23 @@ public class NoteServiceImpl implements NoteService {
 	
 	public NoteServiceImpl() {
 	}
-
 	public int save(Note note) {
-		return noteDao.save(note);
+		Note e = get(note.getTitle());
+		if(e == null){
+			return noteDao.save(note);
+		}else{
+			return e.getId();
+		}
 	}
-
+	@Override
+	public Note get(String title) {
+		String hql ="from Note where title=:title";
+		Session s = noteDao.getSession();
+		@SuppressWarnings("unchecked")
+		Note note = (Note)s.createQuery(hql).setParameter("title", title).
+		setFirstResult(0).setMaxResults(1).uniqueResult();
+		return note;
+	}
 	@Override
 	public void persist(Note note) {
 		noteDao.persist(note);

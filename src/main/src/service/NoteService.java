@@ -14,6 +14,8 @@ public interface NoteService extends BaseService<Note>{
 	boolean hasExisted(String title);
 
 	void like(int id);
+	
+	Note get(String title);
 
 	void undoLike(int id);
 

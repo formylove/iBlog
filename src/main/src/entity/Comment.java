@@ -27,10 +27,10 @@ public class Comment {
 	@Id	 @Column(name="comment_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@ManyToOne(targetEntity = User.class)
+	@OneToOne(targetEntity = User.class)
 	@JoinColumn(name="publisher_id" , nullable=false)
 	private User publisher;
-	@ManyToOne(targetEntity = User.class)
+	@OneToOne(targetEntity = User.class)
 	@JoinColumn(name="target_id")
 	private User target;
 	private String content;
@@ -38,13 +38,13 @@ public class Comment {
 	private int unit;
 	private String dev_name;
 	private int favour_cnt = 0;
-	@ManyToOne(targetEntity=Note.class)
+	@OneToOne(targetEntity=Note.class)
 	@JoinColumn(name="note_id",referencedColumnName="note_id",nullable=true)
 	private Note note;
-	@ManyToOne(targetEntity=Essay.class)
+	@OneToOne(targetEntity=Essay.class)
 	@JoinColumn(name="essay_id",referencedColumnName="essay_id",nullable=true)
 	private Essay essay;
-	@ManyToOne(targetEntity=Music.class)
+	@OneToOne(targetEntity=Music.class)
 	@JoinColumn(name="music_id",referencedColumnName="music_id",nullable=true)
 	private Music music;
 	@Column(updatable=false)

@@ -1,3 +1,13 @@
+.slider-tip{
+	    margin-top: 4px;
+}
+.easyui-effect-input{
+	line-height: 14px !important;
+	height: 14px !important;
+	border: 1px solid #95B8E7 !important;
+	width:157px !important;
+	padding-left:4px !important;
+}
 .ui-dialog-title {
     position: absolute;
     top: 0;
@@ -138,6 +148,9 @@
 .margin-l-30{
 	margin-left:30px;
 }
+.margin-l-10{
+	margin-left:10px;
+}
 .margin-r-8{
 	margin-right:8px;
 }
@@ -240,7 +253,8 @@
   box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
 }
 
-.preview-container-note {
+.preview-container-vertical {
+  cursor:pointer;
   width: 155px;
   height: 170px;
   border-radius:10px;
@@ -249,7 +263,8 @@
   position:relative;
   z-index:6;
 }
-.preview-container-essay {
+.preview-container-horizontal {
+  cursor:pointer;
   width: 220px;
   height: 158px;
   overflow: hidden;
@@ -276,21 +291,15 @@
   -moz-box-shadow: 1px 1px 10px rgba(155, 0, 0, 0.33);
   box-shadow: 1px 1px 10px rgba(155, 0, 0, 0.33);
 }
-.cover-note {
+.cover-vertical {
   width: 155px;
   height: 170px;
   overflow: hidden;
 }
-.cover-essay
+.cover-horizontal
  {
   width: 220px;
   height: 156px;
-  overflow: hidden;
-}
-
-.cover-essay {
-  width: 220px;
-  height: 158px;
   overflow: hidden;
 }
 /**********************************************************************************/

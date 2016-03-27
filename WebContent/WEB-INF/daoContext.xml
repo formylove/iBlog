@@ -19,7 +19,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close"
 		p:driverClass="com.mysql.jdbc.Driver"
-		p:jdbcUrl="jdbc:mysql://hachi.space:3306/iBlog"
+		p:jdbcUrl="jdbc:mysql://hachi.space:3306/iBlog2"
 		p:user="root"
 		p:password="222000"
 		p:maxPoolSize="200"
@@ -49,8 +49,8 @@
 				<value>main.src.entity.gallery.City</value>
 				<value>main.src.entity.gallery.Dynasty</value>
 				<value>main.src.entity.gallery.Religion</value>
-				<value>main.src.entity.gallery.Corporation</value>
 				<value>main.src.entity.gallery.People</value>
+				<value>main.src.entity.gallery.Corporation</value>
 				<value>main.src.entity.gallery.item.Scenery</value>
 				<value>main.src.entity.gallery.item.Figure</value>
 			</list>

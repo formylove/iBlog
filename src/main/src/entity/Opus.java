@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -46,25 +47,20 @@ public class Opus{
 	private String rating;
 	private boolean rec_flag = false;
 	private String remark;
-	@ManyToOne(targetEntity = Nation.class)
+	@OneToOne(targetEntity = Nation.class)
 	@JoinColumn(name="nation_id")
-	@Cascade(CascadeType.SAVE_UPDATE)
-	private Nation nationality;
-	@ManyToOne(targetEntity = Corporation.class)
+	private Nation nation;
+	@OneToOne(targetEntity = Corporation.class)
 	@JoinColumn(name="corporation_id")
-	@Cascade(CascadeType.SAVE_UPDATE)
 	private Corporation pictures;
-	@ManyToOne(targetEntity = Dynasty.class)
+	@OneToOne(targetEntity = Dynasty.class)
 	@JoinColumn(name="dynasty_id")
-	@Cascade(CascadeType.SAVE_UPDATE)
 	private Dynasty dynasty;
-	@ManyToOne(targetEntity = Figure.class)
+	@OneToOne(targetEntity = Figure.class)
 	@JoinColumn(name="author_directior_id")
-	@Cascade(CascadeType.SAVE_UPDATE)
 	private Figure author_directior;
-	@OneToMany(targetEntity = Figure.class)
+	@OneToMany(targetEntity = Figure.class,fetch=FetchType.EAGER)
 	@JoinColumn(name="protagonists_id")
-	@Cascade(CascadeType.SAVE_UPDATE)
 	private List<Figure> protagonists =new ArrayList<Figure>();
 	@ManyToMany(targetEntity=Genre.class, fetch = FetchType.EAGER)
 	@JoinTable(name="Opus_Genre",
@@ -102,8 +98,8 @@ public class Opus{
 	@Override
 	public String toString() {
 		return "Opus [id=" + id + ", name=" + name + ", original_name=" + name_en 
-				+ ", rating=" + rating + ", rec_flag=" + rec_flag + ", remark=" + remark + ", nationality="
-				+ nationality + ", dynasty=" + dynasty + ", author_directior=" + author_directior + ", protagonists="
+				+ ", rating=" + rating + ", rec_flag=" + rec_flag + ", remark=" + remark + ", nation="
+				+ nation + ", dynasty=" + dynasty + ", author_directior=" + author_directior + ", protagonists="
 				+ protagonists + ", genre=" + genres.size() + ", type=" + type + ", publish_date=" + publish_date
 				+ ", view_time=" + view_time + ", create_date=" + create_date + ", create_time=" + create_time
 				+ ", del_flag=" + del_flag + ", isSingle=" + (notes.size() == 0) + ", splitTag=" + splitTag + ", meta="
@@ -120,7 +116,7 @@ public class Opus{
 		if(isBook()){
 			meta.put("书名", name);
 			
-			if("中国".equals(nationality)){
+			if("中国".equals(nation)){
 				if(!"nope".equals(dynasty)){
 					meta.put("作家", author_directior+"("+dynasty+")");
 				}else{
@@ -129,8 +125,8 @@ public class Opus{
 					}
 				}
 				
-			}else if(!"nope".equals(nationality)){
-				meta.put("作家", author_directior+"("+nationality+")");
+			}else if(!"nope".equals(nation)){
+				meta.put("作家", author_directior+"("+nation+")");
 				if(!StrUtils.isEmpty(name_en)){
 					meta.put("译名", name_en);
 				}
@@ -151,8 +147,8 @@ public class Opus{
 //				meta.put("类型", NoteService.getGenreName(genre));
 			}
 		}else{
-				if(!"中国".equals(nationality) && !"nope".equals(nationality)){
-						meta.put("电影名", name+"("+nationality+")");
+				if(!"中国".equals(nation) && !"nope".equals(nation)){
+						meta.put("电影名", name+"("+nation+")");
 						if(!StrUtils.isEmpty(name_en)){
 							meta.put("原名", name_en);
 						}
@@ -324,12 +320,12 @@ public class Opus{
 	public void setRec_flag(boolean rec_flag) {
 		this.rec_flag = rec_flag;
 	}
-	public Nation getNationality() {
-		return nationality;
+	public Nation getNation() {
+		return nation;
 	}
 
-	public void setNationality(Nation nationality) {
-		this.nationality = nationality;
+	public void setNation(Nation nation) {
+		this.nation = nation;
 	}
 
 	public Figure getAuthor_directior() {

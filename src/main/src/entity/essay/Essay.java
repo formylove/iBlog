@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -39,7 +40,7 @@ private String author_desc;
 private String label;
 @OneToMany(targetEntity=Comment.class,mappedBy="essay")
 private List<Comment> comments = new LinkedList<Comment>();
-@ManyToOne(targetEntity = Category.class)
+@OneToOne(targetEntity = Category.class)
 @JoinColumn(name="category_id" , referencedColumnName="category_id",nullable=false)
 private Category category;
 private String content;
@@ -47,7 +48,7 @@ private Integer read_cnt = 0;
 private Integer favor_cnt = 0;
 private boolean original_flag = true;
 private String original_link;
-@ManyToOne(targetEntity = Music.class)
+@OneToOne(targetEntity = Music.class)
 @JoinColumn(name="music_id")
 private Music music;
 private String portrait;

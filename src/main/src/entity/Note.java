@@ -12,16 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.stereotype.Component;
 
-import main.src.common.StrUtils;
 import main.src.common.TimeManager;
-import main.src.service.UserService;
 @Component("note")
 @Entity
 @Table(name = "note")
@@ -34,29 +30,23 @@ private String subtitle;
 private String author;
 private String author_link;
 private String author_desc;
-private String label;
 private String content;
 private int read_cnt=0;
 private int favor_cnt=0;
 private boolean original_flag = true;
 private String original_link;
-@ManyToOne(targetEntity = Music.class)
+@OneToOne(targetEntity = Music.class)
 @JoinColumn(name="music_id")
-@Cascade(CascadeType.SAVE_UPDATE)
 private Music music;
-@ManyToOne(targetEntity = Opus.class)
+@OneToOne(targetEntity = Opus.class)
 @JoinColumn(name="opus_id" , referencedColumnName="opus_id",nullable=false)
-@Cascade(CascadeType.ALL)
 private Opus opus;
 @OneToMany(targetEntity=Comment.class,mappedBy="note" ,fetch=FetchType.EAGER)
-@Cascade(CascadeType.ALL)
 private List<Comment> comments = new LinkedList<Comment>();
 private String create_date;
 private String create_time;
 private int authority;
 private boolean del_flag = false;
-@Transient
-private final String splitTag =",";
 public Note(){
 	setCreate_date(TimeManager.getDate());
 	setCreate_time(TimeManager.getTime());
@@ -74,13 +64,6 @@ public Note(boolean original_flag){
 	
 	
 	setWebmasterDetail();
-}
-public String[] getLabels(){
-	if(!StrUtils.isEmpty(label)){
-		return label.split(splitTag);
-	}else{
-		return null;
-	}
 }
 public void setWebmasterDetail() {
 //	if(original_flag){
@@ -165,16 +148,6 @@ public String getAuthor() {
 }
 public void setAuthor(String author) {
 	this.author = author;
-}
-public String getLabel() {
-	return label;
-}
-public void setLabel(String label) {
-	if(StrUtils.notEmpty(label)){
-		this.label = label.replaceAll(" ","").replaceAll(splitTag+"+$", "");
-	}else{
-		this.label = label;
-	}
 }
 public String getContent() {
 	return content;

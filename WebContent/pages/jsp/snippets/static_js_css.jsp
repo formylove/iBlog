@@ -96,20 +96,20 @@ if(importParams.indexOf("ZeroClipboard.js")>=0){ %>
 <%}
 }
 if(session.getAttribute("hasDeviceDetail") == null){%>
-<script src="js/agent/ua-parser.min.js"></script>
-<script>
-$(function(){
-	var parser = new UAParser();//atool网方法
-		if(parser != null){
-		r = parser.getResult();
-		$.ajax({
-			url:$("base").attr("href") + 'ajax/ua/',
-			type:'post',
-			data:{"browser":r.browser.name + ' ' + r.browser.major,"device":r.device.model + ' ' + r.device.type + ' ' + r.device.vendor,"os":r.os.name + ' ' + r.os.version,}
-		});
-	}
-});
-</script>
+<!-- <script src="js/agent/ua-parser.min.js"></script> -->
+<!-- <script> -->
+<!--  $(function(){ -->
+<!--  	var parser = new UAParser();//atool网方法 -->
+<!--  		if(parser != null){ -->
+<!--  		r = parser.getResult(); -->
+<!--  		$.ajax({ -->
+<!--  			url:$("base").attr("href") + 'ajax/ua/', -->
+<!--  			type:'post', -->
+<!--  			data:{"browser":r.browser.name + ' ' + r.browser.major,"device":r.device.model + ' ' + r.device.type + ' ' + r.device.vendor,"os":r.os.name + ' ' + r.os.version,} -->
+<!--  		}); -->
+<!--  	} -->
+<!--  }); -->
+<!-- </script> -->
 
 <%
 }

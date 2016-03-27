@@ -72,7 +72,7 @@ height:23px;
 			</div>
 			
 			<div style="text-align: center; margin-top: 15px;">
-				<input id="btnPublish" type="button" onclick="duplicateCheck()" class="btn rounded btn-positive"
+				<input id="btnPublish" type="button" onclick="submitForm()" class="btn rounded btn-positive"
 					class="input_btn_1" value="发表文章" title="保存并跳转"  style="margin-right:40px"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input id="btnCancel" type="button" onclick="window.location.href='http://127.0.0.1:8080/iBlog/noteAction.action?method:editNote'; " class="btn rounded btn-negative btn-reload" value="舍弃" />
 			</div>

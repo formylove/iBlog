@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
         "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
-
-<!--
-
-    Configuration file for UrlRewriteFilter
-    http://www.tuckey.org/urlrewrite/
-
--->
 <urlrewrite>
     
 <!-- single page -->
@@ -52,10 +45,6 @@
    <to type="forward">/essayAction!listEssay.action</to>
  </rule>
  
-<rule>
-   <from>/essay/([0-9]*)/?$</from> 
-   <to  type="forward">/essayAction!load.action?id=$1</to>
- </rule>
  
 <rule>
    <from>/activate/([^/]+)/?$</from> 
@@ -76,6 +65,11 @@
    <from>user/setting/?$</from> 
    <to>/loginAction!userSetting.action</to>
 </rule>
+
+<rule>
+   <from>download/([a-zA-Z]+)/([0-9]+)/?$</from> 
+   <to>/downloadAction.action?type=$1&amp;id=$2</to>
+</rule>
  
 <rule>
    <from>manager/?$</from> 
@@ -86,12 +80,20 @@
    <from>manager/([a-zA-Z]+)/([a-zA-Z]+)/([0-9]+$)</from> 
    <to>$1Action!$2.action?id=$3</to>
 </rule>
+<rule>
+   <from>manager/retrieve/?$</from> 
+   <to>shareAction!retrieve.action</to>
+</rule>
 
 <rule>
    <from>manager/([a-zA-Z]+)/([a-zA-Z]+)/?$</from> 
    <to>$1Action!$2.action</to>
 </rule>
 
+<rule>
+   <from>/([a-zA-Z]+)/([0-9]+)/?$</from> 
+   <to  type="forward">/$1Action!load.action?id=$2</to>
+ </rule>
 <!--  ajax request -->
 <rule>
    <from>/ajax/logout/?$</from> 
@@ -119,7 +121,7 @@
  </rule>
  
 <rule>
-   <from>/ajax/manager/[a-z]*/?$</from> 
+   <from>/ajax/manager/load/[a-z]*/?$</from> 
    <to>/managerAction!load.action?type=$1</to>
  </rule>
  
@@ -136,6 +138,22 @@
 <rule>
    <from>/ajax/manager/([a-zA-Z]+)/([a-zA-Z]+)/?$</from> 
    <to>/$1Action!$2.action</to>
+ </rule>
+<rule>
+   <from>/ajax/manager/figure/tree/domain/(.+)/?$</from> 
+   <to>/figureAction!tree.action?domain=$1</to>
+ </rule>
+<rule>
+   <from>/ajax/manager/corporation/tree/industry/(.+)/?$</from> 
+   <to>/corporationAction!tree.action?industry=$1</to>
+ </rule>
+<rule>
+   <from>/ajax/manager/corporation/tree/industry/(.+)/?$</from> 
+   <to>/corporationAction!tree.action?industry=$1</to>
+ </rule>
+<rule>
+   <from>/ajax/datagrid/?$</from> 
+   <to>/shareAction!datagrid.action</to>
  </rule>
  
 
