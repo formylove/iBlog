@@ -1,0 +1,49 @@
+/*
+Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+
+.cke_editable{
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    line-height: 1.7;
+    word-wrap: break-word;
+    color: #222;
+    background-color: #fff
+}
+.cke_editable blockquote {
+    margin: .8em 0;
+    padding: 0 0 0 10px;
+    font-style: normal;
+    font-size: 100%;
+    line-height: 22px;
+    border-left: 3px solid #D0E5F2
+}
+.cke_editable  .highlight{
+    width: auto;
+    overflow: auto;
+    word-wrap: normal
+    margin: .5em 0;
+    padding: .4em .6em;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 2px;
+    background: #f8f8f8;
+    background: #fff
+}
+.cke_editable  ul,.cke_editable ol {
+    margin: .8em 0;
+    padding: 0
+}
+.cke_editable img{
+    margin: 6px 0;
+    display: block;
+    overflow: hidden;
+    max-width: 100%;
+    height: auto;
+    width: auto\9;
+    -ms-interpolation-mode: bicubic
+    cursor: -webkit-zoom-in;
+    cursor: zoom-in;
+    cursor: url(/static/img/zoom-in.cur)
+}

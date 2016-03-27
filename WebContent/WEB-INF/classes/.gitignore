@@ -1,2 +1,10 @@
+/I18N/
+/ehcache.xml
+/hibernate.cfg.xml
+/log4j.properties
 /main/
+/rebel.xml
+/struts.xml
+/task/
 /test/
+/xwork-conversion.properties

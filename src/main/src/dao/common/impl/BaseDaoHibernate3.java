@@ -140,4 +140,9 @@ public class BaseDaoHibernate3<T> extends HibernateDaoSupport
 	public Session getSession() {
 		return null;
 	}
+
+	@Override
+	public List<T> list(String name, int maxSize, int pageNum, String order, String conditions) {
+		return null;
+	}
 }
