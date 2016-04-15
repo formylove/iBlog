@@ -7,8 +7,8 @@
 <title></title>
 </head>
 <body>
-<jsp:include page="../snippets/hidden_box.jsp"/>
 <%@ include file="../snippets/navigator.jsp" %>
+<jsp:include page="../snippets/hidden_box.jsp"/>
 <div class="container index-ct" style="min-height: 221px;">	
 
 

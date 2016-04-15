@@ -7,15 +7,15 @@
 <title>树</title>
 </head>
 <body>
-<jsp:include page="../snippets/hidden_box.jsp"/>
 <%@ include file="../snippets/navigator.jsp" %>
+<jsp:include page="../snippets/hidden_box.jsp"/>
 
 <div class="container index-ct" style="min-height: 221px;">	
 <jsp:include page="../homepage/poster.jsp" />
+<%@ include file="../homepage/musicColumn.jsp" %>
 <jsp:include page="../homepage/articleColumn.jsp" />
-<jsp:include page="../homepage/somniloquismColumn.jsp" />
-<jsp:include page="../homepage/criticismColumn.jsp" />
-<jsp:include page="../homepage/musicColumn.jsp" />
+<%-- <jsp:include page="../homepage/somniloquismColumn.jsp" /> --%>
+<%-- <jsp:include page="../homepage/criticismColumn.jsp" /> --%>
 </div>
 <%@ include file="../snippets/footer.jsp" %>
 </body>

@@ -246,22 +246,22 @@
 	</div>
 </div>
 <script>
-// 		$(function(){
-// 			<s:if test="#parameters['type'][0] == 'enation'">
-// 			$('#admin').tabs("select",0);
-// 			$('#nation-editor #capital').combotree('setValue', ${nation == null?'':nation.capital.id});
-// 			$('#nation-editor #founder').combotree('setValue', ${nation == null?'':nation.founder.id});
-// 			$('#nation-editor #president').combotree('setValue', ${nation == null?'':nation.president.id});
-// 			</s:if>
-// 			<s:if test="#parameters['type'][0] == 'estate'">
-// 			$('#admin').tabs("select",1);
-// 			$('#state-editor #nation').combotree('setValue', ${state == null?'':state.nation.id});
-// 			$('#state-editor #capital').combotree('setValue', ${state == null?'':state.capital.id});
-// 			</s:if>
-// 			<s:if test="#parameters['type'][0] == 'ecity'">
-// 			$('#admin').tabs("select",2);
-// 			$('#city-editor #nation').combotree('setValue', ${city == null?'':city.nation.id});
-// 			$('#city-editor #state').combotree('setValue', ${city == null?'':city.state.id});
-// 			</s:if>
-// 		})
+window.onload = function(){
+			<s:if test="#parameters['type'][0] == 'enation'">
+			$('#admin').tabs("select",0);
+			$('#nation-editor #capital').combotree('setValue', ${nation == null?'':nation.capital.id});
+			$('#nation-editor #founder').combotree('setValue', ${nation == null?'':nation.founder.id});
+			$('#nation-editor #president').combotree('setValue', ${nation == null?'':nation.president.id});
+			</s:if>
+			<s:if test="#parameters['type'][0] == 'estate'">
+			$('#admin').tabs("select",1);
+			$('#state-editor #nation').combotree('setValue', ${state == null?'':state.nation.id});
+			$('#state-editor #capital').combotree('setValue', ${state == null?'':state.capital.id});
+			</s:if>
+			<s:if test="#parameters['type'][0] == 'ecity'">
+			$('#admin').tabs("select",2);
+			$('#city-editor #nation').combotree('setValue', ${city == null?'':city.nation.id});
+			$('#city-editor #state').combotree('setValue', ${city == null?'':city.state.id});
+			</s:if>
+		};
 	</script>

@@ -7,8 +7,10 @@ import java.util.Properties;
 public class MsgConstants {
 public static final String SUCCESS="success"; 
 public static final String DONE="done"; 
+public static final String OK="OK"; 
 public static final String EDIT="edit"; 
 public static final String DISPLAY="display"; 
+public static final String HOMEPAGE="homepage"; 
 public static final String LIST="list"; 
 public static final String DATAGRID="datagrid"; 
 public static final String RETRIEVE="retrieve"; 
@@ -80,7 +82,6 @@ static {
 	AUTHORITY.put("5", "登录可见");
 	AUTHORITY.put("1", "珠海ip可见");
 	AUTHORITY.put("2", "珠海ip不可见");
-	System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"+AUTHORITY.getProperty("10"));
 	
 	GENDER.put('f', "女");
 	GENDER.put('m', "男");

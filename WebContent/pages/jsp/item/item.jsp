@@ -8,8 +8,8 @@
 <title>元素展示</title>
 </head>
 <body> 
-<jsp:include page="../snippets/hidden_box.jsp"/>
 <%@ include file="../snippets/navigator.jsp" %>
+<jsp:include page="../snippets/hidden_box.jsp"/>
 <div class="container index-ct" style="min-height: 1000px;">	
 <<<<<<<<<<<<<<<a onClick="history.go(-1);">back</a><<<<<<<<<<<<<<<<
 ${nation!=null?"item :  NATION":""}

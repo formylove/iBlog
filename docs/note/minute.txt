@@ -1,3 +1,4 @@
+
 \u009f\u009f 这个字符很像树
 html等页面资源文件需要放在根目录或者webcontent根目录下,
 浏览器访问无需加webcontent路径
@@ -91,3 +92,31 @@ java.lang.reflect.InvocationTargetException  json传回的json格式错误
 trantion 解决方案是重启
  WARN MultiPartRequest:60 - Unable to parse request，超时，设置server.xml在里边加入了disableUploadTimeout="false"一句，超时或者过大。
 <form id="movie-editor" action="manager/music/save/"  enctype="multipart/form-data" method="post"> 设置enctype才可以上传文件
+<s:set value="essay.comments" var="comments"/> 默认范围为request
+<s:set value="essay.comments" var="comments"/>
+ <s:property value="#comments[0].content"/> 默认action
+ <s:property value="#ttt"/>按道理说可以显示了啊。其实暗藏玄机，就是这时候他把abc当成变量来取值，而不是看成字符串。所以要想看成字符串必须加单引号。<s:set name="ttt" value="’abc‘" />
+ scope 可选属性，指定新变量被放置的范围，可以接受application,session,request,page,action 这5个值 没有指定默认是Stack Context中.在JSP中：使用#开头的Ognl表达式，比如<s:property value="#name"/>会调用ActionContext.get("name")方法。注意：如果某标签的属性默认不作为Ognl表达式解析，则需要使用%{}把表达式括起来，于是就会出现类似“%{#name}的表达式”。
+ <s:property value="@main.src.common.TimeManager@getTimeDif(#comment.create_date,#comment.create_time)"/>
+ 加#号才能识别为变量
+ .feedback.item-wrapper:hover .helper a{
+	visibility:visible;
+}
+hover 修饰hover响应事件的范围,后面用来定位,hover只对可见元素有用
+值栈对象不加#
+public JSONObject getJComments() //get 函数命名一定要讲究啊啊啊 啊,getjComments是错的Cookie c = new Cookie("night_user_id","");
+			c.setMaxAge(0);
+			c.setPath("/");//不设置路径无法保存设置的cookie
+	essay 包含	<%@ include file="../snippets/comments.jsp"%> 包含<jsp:include page="./PlainEditor.jsp"/>,相对位置以essay为准
+	<%@ include file以当前为准,<jsp:include page以当顶层
+	<jsp:include page="../snippets/hidden_box.jsp"/>
+<%@ include file="../snippets/navigator.jsp" %> 不要弄反,变量定义有顺序
+<c:if test="${not empty str}"> 判断字符串为空
+((Long)essayDao.getSession().createQuery(hql).uniqueResult()).intValue();
+if($("#demo").length) 判断是否存在
+$(this).data("id");}).get().join() get()获得js对象
+<s:iterator value="musics" id="m" status="st">
+${st.index}
+</s:iterater> 这样使用可以的
+audio#music_0 是dom对象  jQuery.fn.jQuery.init[1] jquery对象
+($('#classes').length 判断获得dom是否为空

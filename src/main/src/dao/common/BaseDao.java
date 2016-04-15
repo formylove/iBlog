@@ -22,6 +22,7 @@ public interface BaseDao<T>
 	void delete(Class<T> entityClazz , int id);
 	// 获取所有实体
 	List<T> findAll(Class<T> entityClazz);
+	List<T> findByPage(String hql,int pageNo, int pageSize);
 	// 获取实体总数
 	long findCount(Class<T> entityClazz);
 	public List<T> list(String name,int maxSize,int pageNum,String order,String conditions);

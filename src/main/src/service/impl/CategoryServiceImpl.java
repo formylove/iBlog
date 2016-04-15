@@ -71,6 +71,17 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category remove(int id) {
 		return null;
 	}
+	@Override
+	public List<Category> list() {
+		return categoryDao.getSession().createQuery("from Category c Order by order").list();
+	}
+	@Override
+	public void updateOrder(int before,int after) {
+		 categoryDao.getSession().createQuery("update Category c set c.order =:after where c.id =:before")
+		 .setParameter("after", after)
+		 .setParameter("before", before)
+		 .executeUpdate();
+	}
 
 	@Override
 	public Category get(int id) {
@@ -93,8 +104,6 @@ public class CategoryServiceImpl implements CategoryService {
 		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context); 
 		CategoryDao categoryDao = (CategoryDao) ctx.getBean("categoryDaoHibernate4");
 		List<Category> cats = categoryDao.findAll(Category.class);
-		int i = 0;
-		System.out.println(i);
 		return cats;
 	}
 

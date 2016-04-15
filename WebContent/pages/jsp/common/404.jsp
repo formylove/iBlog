@@ -11,8 +11,8 @@
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body style="background-color:#daecee">
-<jsp:include page="../snippets/hidden_box.jsp"/>
 <%@ include file="../snippets/navigator.jsp" %>
+<jsp:include page="../snippets/hidden_box.jsp"/>
 <div style="text-align:center;">
 <img src="img/404/404_1.png" alt="404 page not found"/>
 </div>

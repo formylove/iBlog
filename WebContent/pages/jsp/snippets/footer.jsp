@@ -2,7 +2,7 @@
 	<div class="foot-ct clearfix">
 		<div class="about-wrapper">
 			<h4 class="foot-item-head">关于</h4>
-			<p><a class="ln-about" href="about/">关于树</a></p>
+			<p><a class="ln-about" target="_blank" href="about/">关于树</a></p>
 				<p><a class="ln-about" href="javascript:;" id="feedback">反馈建议</a></p>
 		</div>
 
@@ -21,7 +21,7 @@
 				<a href="http://weibo.com/myazurelove" target="_blank" class="icon-sns-weibo"></a>
 				<a href="http://www.zhihu.com/people/Tyrioni" target="_blank" class="icon-sns-zhihu"></a>
 			</div>
-			<p class="icp">© 2015树</p>
+			<p class="icp">© 2016树</p>
 			<p class="slogan">
 				<span class="icon-slogan"></span>
 			</p>

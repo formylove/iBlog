@@ -17,8 +17,8 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class MailUtils {
 	static private String MyMail = "ansyx@163.com"; 
-	static private String PASSWORD="a54417521";
-	static private final String SUBJECT="¬‰Õ¯’ ∫≈º§ªÓ";
+	static private String PASSWORD="a54417522";
+	static private final String SUBJECT="“πÕ¯’ ∫≈º§ªÓ";
 	static private final String Salutation_Reg="(?<=id=\"salutation\">)[^<]+(?=</p>)";
 	static private final String Href_Reg = "(?<=href=\")[^\"]*(?=\")";
 	static public String baseRealPath = ((HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST)).getRealPath("/");

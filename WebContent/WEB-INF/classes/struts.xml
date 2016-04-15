@@ -16,9 +16,11 @@
 		<global-results>
 			<result name="exception">/pages/jsp/common/runtimeExceptionPage.jsp</result>
 			<result name="login">/pages/jsp/login.jsp</result>
+			<result name="noAuthority">/pages/jsp/login.jsp</result>
 			<result name="done" type="json">
 			<param name="excludeNullProperties">true</param>
 			</result>	
+			<result name="OK" type="json"><param name="root">id</param></result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping result="exception" exception="java.lang.Throwable" />
@@ -28,6 +30,7 @@
 		<action name="loginAction" class="main.src.action.LoginAction">
 			<result name="activated" type="redirect">homepage/</result>
 			<result name="profile">pages/jsp/user/profile.jsp</result>
+			<result name="people">pages/jsp/user/people.jsp</result>
 			<result name="setting">pages/jsp/user/setting.jsp</result>
 			<result name="expired">/pages/jsp/single/generalPrompt.jsp?message=${message}</result>
 		</action>
@@ -35,6 +38,19 @@
 		<action name="categoryAction" class="main.src.action.CategoryAction">
 		<result name="success">
 			<param name="location">/pages/jsp/manager/backEnd.jsp?type=ecategory</param>
+		</result>
+		<result name="list">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=ecatorder</param>
+		</result>
+		<result name="display">/pages/jsp/item/item.jsp</result>
+		</action>
+		
+		<action name="posterAction" class="main.src.action.PosterAction">
+		<result name="success">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=eposter</param>
+		</result>
+		<result name="list">
+			<param name="location">/pages/jsp/manager/backEnd.jsp?type=eposterorder</param>
 		</result>
 		<result name="display">/pages/jsp/item/item.jsp</result>
 		</action>
@@ -47,6 +63,8 @@
 		</action>
 		
 		<action name="commentAction" class="main.src.action.CommentAction">
+		<result name="success">template/comment/commentItem.jsp</result>
+		<result name="done" type="json"><param name="root">jComments</param></result>
 		</action>
 		
 		<action name="forwardAction" class="main.src.action.ForwardAction">
@@ -68,6 +86,7 @@
 			<param name="location">/pages/jsp/manager/backEnd.jsp?type=enote</param>
 			</result>
 			<result name="display">/pages/jsp/note/note.jsp</result>
+
 			<result name="list">/pages/jsp/note/notes.jsp</result>
 		</action>
 
@@ -97,7 +116,7 @@
 			<result name="success">
 			<param name="location">/pages/jsp/manager/backEnd.jsp?type=emusic</param>
 			</result>
-			<result name="list">/pages/jsp/list/musics.jsp</result>
+			<result name="list">/pages/jsp/music/musics.jsp</result>
 			<result name="done" type="json"><param name="root">tree</param></result>
 			<result name="datalist" type="json"><param name="root">datalist</param></result>
 			<interceptor-ref name="fileUpload">
@@ -200,7 +219,7 @@
 			<result name="homepage">/pages/jsp/homepage/homepage.jsp</result>
 		</action>
 		<action name="managerAction" class="main.src.action.ManagerAction">
-			<result name="success">/pages/jsp/manager/backEnd.jsp</result>
+			<result name="success">/pages/jsp/manager/backEnd.jsp?type=retrieve</result>
 			<result name="done" type="json"><param name="root">ja</param></result>
 		</action>		
 		<action name="testAction" class="main.src.action.TestAction">

@@ -27,7 +27,7 @@ public class PeopleAction {
 	    }else{
 	    	peopleService.update(people);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){

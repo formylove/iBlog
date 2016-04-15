@@ -30,14 +30,13 @@ public class Comment {
 	@OneToOne(targetEntity = User.class)
 	@JoinColumn(name="publisher_id" , nullable=false)
 	private User publisher;
-	@OneToOne(targetEntity = User.class)
+	@OneToOne(targetEntity = Comment.class)
 	@JoinColumn(name="target_id")
-	private User target;
+	private Comment target;
 	private String content;
 	private int floor;
 	private int unit;
 	private String dev_name;
-	private int favour_cnt = 0;
 	@OneToOne(targetEntity=Note.class)
 	@JoinColumn(name="note_id",referencedColumnName="note_id",nullable=true)
 	private Note note;
@@ -59,9 +58,6 @@ public class Comment {
 	public Comment(String target_id,int floor){
 		setCreate_date(TimeManager.getDate());
 		setCreate_time(TimeManager.getTime());
-//		setId(CommentService.getCurId(target_id, floor));
-//		User user = UserService.getcurLoginUser(null);
-//		setPublisher(user);
 	}
 	
 public int getFloor() {
@@ -88,15 +84,15 @@ public User getPublisher() {
 	public void setPublisher(User publisher) {
 		this.publisher = publisher;
 	}
-	public User getTarget() {
-		return target;
-	}
-	public void setTarget(User target) {
-		this.target = target;
-	}
 public Note getNote() {
 		return note;
 	}
+	public Comment getTarget() {
+	return target;
+}
+public void setTarget(Comment target) {
+	this.target = target;
+}
 	public void setNote(Note note) {
 		this.note = note;
 	}
@@ -124,12 +120,6 @@ public String getContent() {
 }
 public void setContent(String content) {
 	this.content = content;
-}
-public int getFavour_cnt() {
-	return favour_cnt;
-}
-public void setFavour_cnt(int favour_cnt) {
-	this.favour_cnt = favour_cnt;
 }
 public String getCreate_date() {
 	return create_date;

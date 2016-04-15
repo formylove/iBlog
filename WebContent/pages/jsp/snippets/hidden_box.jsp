@@ -1,7 +1,7 @@
 <!-- back to top -->
-<div id="backTop">&nbsp;</div>
 <!-- back to top End-->
 <!-- login-->
+<a id='hopCast' class="hidden" onClick="" target="_blank"></a>
 <div class="total hidden">
 <div id="login-box" >
 <div class="dialog-passport" >
@@ -9,7 +9,7 @@
 		<span class="title">
 			登录
 		</span>
-		<a href="javascript:;" rel="nofollow" class="ln-reg btn-dialog-register" id="registerDialog" data-tipid="registerDialog" data-remote="http://www.luoo.net/register/dialog" data-width="235" onclick="showSiblings($(this));">
+		<a href="javascript:;" rel="nofollow" class="ln-reg btn-dialog-register" id="registerDialog" onclick="showSiblings($(this));">
 			注册
 		</a>
 		<span class="fright">没有账号？</span>
@@ -36,10 +36,10 @@
 </div>
 <div class="dialog-login-oauth">
 	<div class="platforms">
-		<a href="http://www.luoo.net/login/oauth/site/weibo" class="icon-open-weibo" rel="nofollow"></a>
-		<a href="http://www.luoo.net/login/oauth/site/douban" class="icon-open-douban" rel="nofollow">
+		<a href="login/oauth/site/weibo" class="icon-open-weibo" rel="nofollow"></a>
+		<a href="login/oauth/site/douban" class="icon-open-douban" rel="nofollow">
 		</a>
-		<a href="http://www.luoo.net/login/oauth/site/qq" class="icon-open-qq" rel="nofollow"></a>
+		<a href="login/oauth/site/qq" class="icon-open-qq" rel="nofollow"></a>
 	</div>
 </div>
 
@@ -50,9 +50,8 @@
 	<div class="dialog-head">
 		<span class="title">
 			注册
-            <img style="display: none;" width="1" height="1" src="http://www.luoo.net/register/vild_shit">
 		</span>
-		<a href="javascript:;" class="ln-login btn-dialog-login"  id="loginDialog" data-tipid="loginDialog" data-remote="http://www.luoo.net/login/dialog" data-width="235" onclick="showSiblings($(this));">
+		<a href="javascript:;" class="ln-login btn-dialog-login"  id="loginDialog" onclick="showSiblings($(this));">
 			返回登录
 		</a>
 	</div>
@@ -75,12 +74,6 @@
 			<input type="password" class="input-passport" name="psw_conf" autocomplete="off" required="" placeholder="8-16个字符">
 		</div>
 
-		<div class="inline-input" style="display:none;">
-			<span class="label">验证码</span>
-			<input type="text" name="auth_code" class="input-sort" autocomplete="off" required="">
-			<img src="http://www.luoo.net/data/captcha" data-src="http://www.luoo.net/data/captcha" alt="验证码" class="verify">
-		</div>
-
 		<div class="rule-wrapper">
 			<input type="checkbox" name="rule" checked="" required="">
 			 同意夜网的
@@ -97,11 +90,11 @@
 <!-- account detail-->
 <div class="account hidden">
 <div class="account-links rounded" id="accountLinks">
-			<a class="account-link link-uc" href="user/profile/${requestScope.logined_user.id}" target="_blank" rel="nofollow">
+			<a class="account-link link-uc" href="user/profile/${requestScope.loginedUser.id}" target="_blank" rel="nofollow">
 				<span class="icon-account"></span>我的落网
 			</a>
-			<a class="account-link link-setting" href="user/setting/" target="_blank" rel="nofollow">
-				<span class="icon-setting"></span>账号设置
+			<a class="account-link link-setting hidden" href="manager/" target="_blank" rel="nofollow">
+				<span class="icon-setting"></span>后台管理
 			</a>
 			<a class="account-link link-logout" href="javaScript:void(0);" rel="nofollow">
 				<span class="icon-logout"></span>退出
@@ -109,3 +102,68 @@
 		</div>
 		</div>
 <!-- account detail end-->
+<!-- comment details start-->
+<div id ="base" class="item hide" data-floor="1" data-unit="">
+            <a class="avatar-wrapper" target="_blank">
+                <img class="avatar rounded">
+            </a>
+<div class="item-wrapper">
+                <div class="helper">
+                    <a class="username" target="_blank"></a>
+                </div>
+                <div class="comment-ct">
+                    <p class="the-comment" ></p>
+                </div>
+                <div class="helper clearfix">
+                    <a class="ln-comment-from" href="javascript:void(0);" target="_blank"></a>
+                    <a href="javascript:void(0);" class="btn-reply btn-action-reply">
+                        <span class="icon-reply"></span> 回复
+                    </a>
+                </div>
+                <div class="sub-comment clearfix hide">
+                    <span class="arrows"></span>
+                    <div class="editor-wrapper hide form-comment-at">
+                        <div class="editor">
+                            <textarea name="content" class="editor-comment-at" spellcheck="false" autocomplete="off"></textarea>
+                        </div>
+
+                        <div class="toolbar clearfix">
+                            <div class="btn-group">
+                                <button name="commentSubmit" data-target="" class="btn btn-positive btn-not-ready rounded btn-at-comment-submit">评论</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix items">
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+   <div id ="upper" class="item hide"  data-floor="1" data-unit="">
+            <a class="avatar-wrapper" target="_blank">
+                <img class="avatar rounded">
+            </a>
+            <div class="item-wrapper feedback">
+                <a class="username" target="_blank"></a>
+                <div class="comment-ct">
+                    <p class="the-comment"></p>
+                </div>
+                <div class="helper clearfix">
+                    <a href="javascript:void(0);" class="btn-reply btn-action-reply">
+                        <span class="icon-reply"></span> 回复
+                    </a>
+                </div>
+            </div>
+                    <div class="editor-wrapper hide form-comment-at">
+                        <div class="editor">
+                            <textarea name="content" class="editor-comment-at" spellcheck="false" autocomplete="off"></textarea>
+                        </div>
+                        <div class="toolbar clearfix">
+                            <div class="btn-group">
+                                <button name="commentSubmit" data-target="" class="btn btn-positive btn-not-ready rounded btn-at-comment-submit">评论</button>
+                            </div>
+                        </div>
+                    </div>
+        </div>      
+            
+            

@@ -1,3 +1,33 @@
+.avatar-wrapper:hover .ln-edit-avatar{
+	display:inline;
+}
+.icon-sns-zhihu {
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    line-height: 1;
+    vertical-align: middle;
+    background-image: url(../img/icon/icon-common.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-position: 0 -240px
+}
+.uc-head .ln-edit-avatar {
+    color: #FFF;
+    display: none;
+    height: 24px;
+    line-height: 24px;
+    background: #000;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 102px;
+    opacity: .85;
+    filter: alpha(opacity=85)
+}
+.hide {
+    display: none
+}
 .common-icons {
     display: inline-block;
     width: 20px;
@@ -881,6 +911,7 @@ input::-moz-selection,textarea::-moz-selection,.btn-positive::-moz-selection {
 
 .logged-in-wrapper .avatar {
     width: 16px;
+   	height: 16px;
     border-radius: 3px;
     margin-bottom: -3px;
     margin-right: 2px
@@ -2927,19 +2958,7 @@ table.aui_border,table.aui_dialog {
     max-width: 102px
 }
 
-.uc-head .ln-edit-avatar {
-    color: #FFF;
-    display: none;
-    height: 24px;
-    line-height: 24px;
-    background: #000;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    width: 102px;
-    opacity: .85;
-    filter: alpha(opacity=85)
-}
+
 
 .uc-head .uinfo {
     float: left;
@@ -3194,6 +3213,10 @@ table.aui_border,table.aui_dialog {
     padding: 0 25px
 }
 
+.exhibit-row {
+    *zoom:1;margin: 20px 0;
+}
+
 .setting-row:before,.setting-row:after {
     clear: both;
     display: table;
@@ -3204,6 +3227,7 @@ table.aui_border,table.aui_dialog {
 .setting-row .label {
     margin-right: 20px
 }
+
 
 .setting-row label {
     margin-right: 17px
@@ -3216,7 +3240,6 @@ table.aui_border,table.aui_dialog {
 .setting-row .valid-msg {
     margin-left: 15px;
     color: #dd5862;
-    display: none
 }
 
 .valid-error input[type=text],.valid-error input[type=password] {

@@ -27,7 +27,7 @@ public class StateAction {
 	    }else{
 	    	stateService.update(state);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){

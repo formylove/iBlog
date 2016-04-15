@@ -19,10 +19,10 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close"
 		p:driverClass="com.mysql.jdbc.Driver"
-		p:jdbcUrl="jdbc:mysql://hachi.space:3306/iBlog2"
+		p:jdbcUrl="jdbc:mysql://hachi.space:3306/iBlog3"
 		p:user="root"
 		p:password="222000"
-		p:maxPoolSize="200"
+		p:maxPoolSize="2000"
 		p:minPoolSize="2"
 		p:initialPoolSize="2"
 		p:maxIdleTime="20"/>
@@ -43,6 +43,7 @@
 				<value>main.src.entity.Category</value>
 				<value>main.src.entity.Music</value>
 				<value>main.src.entity.Record</value>
+				<value>main.src.entity.Poster</value>
 				<value>main.src.entity.Notification</value>
 				<value>main.src.entity.gallery.Nation</value>
 				<value>main.src.entity.gallery.State</value>
@@ -70,7 +71,7 @@
 			hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory
 			#Disabling contextual LOB creation as createClob() method threw error 
 			hibernate.temp.use_jdbc_metadata_defaults=false
-			hhibernate.query.substitutions=true 1, false 0
+			hibernate.query.substitutions=true 1, false 0
 			</value>
 		</property>
 	</bean>

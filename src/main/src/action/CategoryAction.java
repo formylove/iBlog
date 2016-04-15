@@ -1,11 +1,13 @@
 package main.src.action;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.json.annotations.JSON;
+import org.omg.CORBA.INTERNAL;
 
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
@@ -16,33 +18,41 @@ public class CategoryAction {
 	@Resource(name="categoryService")
 	private CategoryService categoryService;
 	Category category = null;
+	List<Category> categories = null;
 	int id;
 	private float w;
 	private float h;
 	private float x;
 	private float y;
 	private String cover;
+	private String ids;
 	public String list(){
-//		notes = (Essay) EssayService.getOnePage(page, category, null, false);
-//		recommendations = EssayService.getRecommendation(category);
-//		pages = EssayService.getPageCnt(false,category);
+		categories = categoryService.list();
 		return MsgConstants.LIST;
+	}
+	public String update(){
+		int after = 1;
+		for(String before : ids.split(",")){
+			categoryService.updateOrder(Integer.valueOf(before), after);
+			after++;
+		}
+		return MsgConstants.DONE;
 	}
 	public String save() throws NumberFormatException, UnsupportedEncodingException{
 	    if(id==0){
 	    		if(StringUtils.isNotEmpty(cover)){
-	    			category.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    			category.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.CATEGORY));
 	    		}
 	    		id = categoryService.save(category);
 	    		category.setId(id);
 	    }else{
 	    	if(!category.getCover().equals(cover)){
 	    		ImageUtils.deleteImg(category.getCover());
-	    		category.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    		category.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.CATEGORY));
 	    	}
 	    	categoryService.update(category);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){
@@ -51,6 +61,7 @@ public String load(){
 }
 public String edit(){
 	category = null;
+	categories = categoryService.list();
 	if(id!=0){
 		category = categoryService.get(id);
 	}
@@ -100,6 +111,12 @@ public float getX() {
 public void setX(float x) {
 	this.x = x;
 }
+public String getIds() {
+	return ids;
+}
+public void setIds(String ids) {
+	this.ids = ids;
+}
 public float getY() {
 	return y;
 }
@@ -111,6 +128,13 @@ public String getCover() {
 }
 public void setCover(String cover) {
 	this.cover = cover;
+}
+@JSON(serialize=false)
+public List<Category> getCategories() {
+	return categories;
+}
+public void setCategories(List<Category> categories) {
+	this.categories = categories;
 }
 	
 }

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 
 import main.src.common.IPParser;
+import main.src.common.ImageUtils;
 import main.src.common.TimeManager;
 @Component("user")
 @Entity
@@ -27,7 +28,7 @@ public class User {
 	@Column(nullable=false)
 	private String nick_name;
 	@Column(nullable=false)
-	private String portrait;
+	private String portrait = "avatar.gif";
 	@Column(nullable=false)
 	private String password;
 	private String md5;
@@ -39,7 +40,7 @@ public class User {
 	private String qq;
 	private String phone;
 	private String weibo;
-	private String weixin;
+	private String wechat;
 	private String job;
 	private String device;
 	private String city;
@@ -79,14 +80,14 @@ public String getWeibo() {
 public void setWeibo(String weibo) {
 	this.weibo = weibo;
 }
-public String getWeixin() {
-	return weixin;
-}
-public void setWeixin(String weixin) {
-	this.weixin = weixin;
-}
 public String getJob() {
 	return job;
+}
+public String getWechat() {
+	return wechat;
+}
+public void setWechat(String wechat) {
+	this.wechat = wechat;
 }
 public void setJob(String job) {
 	this.job = job;
@@ -153,6 +154,9 @@ public void setPassword(String password) {
 }
 public String getPortrait() {
 	return portrait;
+}
+public String getTportrait() {
+	return ImageUtils.generateIsoName(portrait,ImageUtils.THUMBNAIL);
 }
 public void setPortrait(String portrait) {
 	this.portrait = portrait;

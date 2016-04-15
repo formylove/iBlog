@@ -1,66 +1,63 @@
-<%@ page import="main.src.entity.essay.Essay,main.src.common.StrUtils,main.src.common.Log""%>
+<%@ page import="main.src.entity.essay.Essay,main.src.common.StrUtils,main.src.common.Log"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>   
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>那些文字</title>
-<%request.setAttribute("importParams", "jquery|sticky.js|essay.css|Akita.js|end"); %>
+<s:set name="importParams" value="'general|essay.css|end'" scope="request"/>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body style="position:relative;">
 <%@ include file="../snippets/navigator.jsp" %>
-					<!-- aside-left start-->
-<jsp:include page="../snippets/aside_left.jsp" />
-			<!--/// aside-right end-->
+<jsp:include page="../snippets/hidden_box.jsp"/>
 <div class="container" style="min-height: 221px;">	
 		
 				<div class="essay-banner clearfix">
-					<img src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/essays/201508/55dd7ef0375a3.jpg" alt="秋天，邀你来喝一碗叫做“布衣”的酒" class="cover">
+					<img src="img/depot/${cat.cover }" alt="${cat.desc }" class="cover">
 					<div class="meta">
-						<a href="http://www.luoo.net/essay/521" class="title">秋天，邀你来喝一碗叫做“布衣”的酒</a>
-						<p class="content">20年，对于一个人来说，是从少年到中年，从懵懂到成熟；20年，对于一支乐队来说实属不易，而布衣的脚步却从未停止，秉着那股西北硬汉不服输的劲头子，一路走一路唱。布衣就像一瓶陈年佳酿，随着时间的沉淀，布衣的音乐愈加韵味深长。布衣这瓶酒，怎么喝都不嫌多呢！</p>
-<!-- 						<p class="date">2015-08-26</p> -->
-<!-- 						<p class="more"> -->
-<!-- 							<a href="http://www.luoo.net/essay/521" class="ln-more">全文</a> -->
-						</p>
+						<a href="javascript:void(0);" class="title">${cat.desc }</a>
+						<span class="quote-before"></span>&nbsp;<span class="content">${cat.profile }</span>&nbsp;<span class="quote-after"></span>
 					</div>
 				</div>
 
-					<div class="clearfix">
+		<div class="clearfix">
 			<!-- article start-->
 			<div class="article article-sm">
 				<!-- essay-list -->
 				<div class="essay-list">
-				<s:iterator value="essays" id="essay" status="st">
+				<s:iterator value="essays" id="ess" status="st">
 							<div class="item">
-								<a href=<s:if test="#essay.category == 5003">"<s:property value='#essay.original_link'/>" onclick="readEssay(<s:property value='#essay.id'/>);" </s:if><s:else>"essay/<s:property value='#essay.id'/>/"</s:else>  target="_blank" class="cover-wrapper">
-									<img class="cover rounded" src="http://7xkszy.com2.z0.glb.qiniucdn.com/pics/essays/201506/55892e49abcf3.jpg" alt="<s:property value="#essay.title"/>">
+								<a href="essay/${ess.id}/" target="_blank" class="cover-wrapper">
+									<img class="cover rounded" src="img/depot/${ess.cover}" alt="${ess.title }"/>
 								</a>
 								<div class="essay-wrapper">									
-									<a href=<s:if test="#essay.category == 5003">"<s:property value='#essay.original_link'/>" onclick="readEssay(<s:property value='#essay.id'/>);" </s:if><s:else>"essay/<s:property value='#essay.id'/>/"</s:else> title="<s:property value="#essay.title"/>" class="title"  target="_blank" style="margin-top:0;">
-										<s:property value='#essay.title'/>
+									<a href="essay/${ess.id}/" title="<s:property value="#ess.title"/>" class="title"  target="_blank" style="margin-top:0;">
+										<s:property value='#ess.title'/>
 									</a>
 									<div class="meta">
-									<s:if test="#essay.original_flag">
+									<s:if test="#ess.original_flag">
 									<span class="category">首发</span>
 									</s:if>
-									<s:else>
-										<span class="category">转发自</span>
-									</s:else>
-									<span class="separator">・</span><a class="entry-author" href="<s:property value='#essay.author_link'/>"  target="_blank"><s:property value="#essay.author"/></a><span class="separator">・</span><span class="time"><s:property value='#essay.create_date'/></span>
-									<s:if test="!#essay.original_flag and #essay.category!=5003">
+									<s:elseif test="#ess.author != null && #ess.author != ''">
+									<span class="category">转发自</span>
+									<span class="separator">・</span>
+									<a class="entry-author" href="<s:property value='#ess.author_link'/>"  target="_blank">
+									<s:property value="#ess.author"/></a>
+									</s:elseif>
+									<span class="separator">・</span><span class="time"><s:property value='#ess.create_date'/></span>
+									<s:if test="!#ess.original_flag">
 									<span class="separator">・</span><a href="<s:property value='origninal_link'/>"  target="_blank">[原文链接]</a>
 									</s:if>
 									</div>
 									<div class="subscribe">
 									<%
-									Essay e = (Essay) request.getAttribute("essay");
+									Essay e = (Essay) request.getAttribute("ess");
 									String subtitle = e.getSubtitle();
 									if(!StrUtils.isEmpty(subtitle))
 									{
 									subtitle = StrUtils.removeTag(subtitle);
-										if(e.getTitle().length()>19){
+										if(e.getTitle() != null && e.getTitle().length()>19){
 											subtitle = StrUtils.truncate(subtitle, 70);
 										}else{
 											subtitle = StrUtils.truncate(subtitle, 100);
@@ -69,7 +66,7 @@
 									}else{
 										String content = e.getContent();
 										content = StrUtils.removeTag(content);
-										if(e.getTitle().length()>19){
+										if(e.getTitle() != null && e.getTitle().length()>19){
 										content = StrUtils.truncate(content, 70);
 										}else{
 										content = StrUtils.truncate(content, 100);
@@ -87,7 +84,7 @@
 			<!--/// article end-->
 
 			<!-- aside-right start-->
-<jsp:include page="../snippets/aside_right.jsp" />
+			<jsp:include page="../snippets/aside_right.jsp" />
 			<!--/// aside-right end-->
 
 		</div>

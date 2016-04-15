@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.StrutsStatics;
@@ -23,6 +24,7 @@ import main.src.service.UserService;
 @Transactional
 public class UserServiceImpl implements UserService {
 	private final int Max_Age = 7*24*60*60;
+	private final int Max_Length = 10;
 	@Resource(name = "userDaoHibernate4")
 	private UserDao userDao;
 	
@@ -99,6 +101,19 @@ public class UserServiceImpl implements UserService {
 		
 		return (user != null);
 	}
+	public String valiName(String nick_name){
+		String message = null;
+		if(!StrUtils.valiName(nick_name)){
+			message = "昵称必须只包含英文中文数字以及下划线";
+		}else if(hasUsed(nick_name)){
+			message = "昵称已占用";
+		}else if(nick_name.length()>Max_Length){
+			message = "昵称不要太长啊喂";
+		}
+		return message;
+		
+		
+	}
 	@Override
 	 public String loginDetect(String email,String password){
 		email = email.trim();
@@ -124,8 +139,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	 public String registerDetect(String nick_name,String email,String password,String psw_conf,String rule){
 		email = email.trim();
-		if(!StrUtils.valiName(nick_name)){
-			return "昵称必须只包含英文中文数字以及下划线";
+		if(!StringUtils.isNotEmpty(valiName(nick_name))){
+			return  valiName(nick_name);
 		}
 		if(!StrUtils.valiEmail(email)){
 			return "邮箱格式错误";
@@ -164,11 +179,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	 public boolean login(User user,String remember){
 		if(remember == null){
-			ActionContext.getContext().getSession().put("logined_user", user);
+			ActionContext.getContext().getSession().put("logined_user", user.getId());
 		}else{
 			HttpServletResponse res = (HttpServletResponse) ActionContext.getContext().get(StrutsStatics.HTTP_RESPONSE);
 			Cookie c = new Cookie("night_user_id",String.valueOf(user.getId()));
 			c.setMaxAge(Max_Age);
+			c.setPath("/");//不设置路径无法保存设置的cookie
 			res.addCookie(c);
 		}
 		return true;
@@ -181,7 +197,7 @@ public class UserServiceImpl implements UserService {
 	 @Override
 	 public User getUserByMail(String email){
 		 email = email.trim();
-		 String hql = "from User where token = :email and del_flag <> 1";
+		 String hql = "from User where email = :email and del_flag <> 1";
 		 User user = (User)userDao.getSession().createQuery(hql)
 			.setString("email", email)
 			.setMaxResults(1)
@@ -224,19 +240,22 @@ public class UserServiceImpl implements UserService {
 			HttpServletResponse res = (HttpServletResponse) ActionContext.getContext().get(StrutsStatics.HTTP_RESPONSE);
 			Cookie c = new Cookie("night_user_id","");
 			c.setMaxAge(0);
+			c.setPath("/");
 			res.addCookie(c);
 		return true;
 	}
 	@Override
 	 public User getcurLoginUser(HttpServletRequest request){
 		User user = null;
+		Integer id = 0;
 		if(request!=null){
-			user = (User)request.getSession().getAttribute("logined_user");
+			HttpSession s = request.getSession();
+			id = (Integer)s.getAttribute("logined_user");
 		}else{
-			user = (User)ActionContext.getContext().getSession().get("logined_user");
+			id = (Integer)ActionContext.getContext().getSession().get("logined_user");
 		}
-		if(user !=null){
-			return user;
+		if(id != null && id != 0 ){
+			return get(id);
 		}
 		String user_id = WebUtils.getCookie("night_user_id",request);
 		if(user_id != null){

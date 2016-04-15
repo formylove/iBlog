@@ -87,9 +87,11 @@ var movieSetting = {
 		          title:'电影'
 };
 
-var settings = {music:musicSetting,movie:movieSetting};
+var settings = {music:musicSetting,movie:movieSetting,essay:essaySetting};
 $(function(){
-	getDatagrid($('#classes').combobox('getValue'));
+	if($('#classes').length){
+		getDatagrid($('#classes').combobox('getValue'));
+	}
 	
 
 	

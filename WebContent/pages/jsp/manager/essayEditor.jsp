@@ -47,8 +47,12 @@
 	    		</tr>
 	    		<tr>
 	    			<td>头像:</td>
-	    			<td><input class="easyui-textbox" type="text" id="portrait" name="essay.portrait"
-							value="${essay.portrait}"></input></td>
+	    			<td><input class="easyui-textbox" type="text" id="portrait" name="essay.portrait"></input></td>
+	    		</tr>
+	    		<tr>
+	    		<tr>
+	    			<td>Motto:</td>
+	    			<td><input class="easyui-textbox" type="text" id="author_desc" value="${essay.author_desc}" name="essay.author_desc"></input></td>
 	    		</tr>
 	    		<tr>
 	    			<td>主页:</td>
@@ -96,7 +100,7 @@
 				<div class="margin-t-20 float">
 		<textarea id="editor" name="essay.content" placeholder="文章内容">${essay.content}</textarea>
 		<script type="text/javascript">
-			CKEDITOR.replace('editor', {uiColor:'#E0ECFF', height: '550px', width: '730px' });
+		var editor = CKEDITOR.replace('editor', {uiColor:'#E0ECFF', height: '550px', width: '730px' });
 		</script>
 				</div>
 		<div  class="margin-t-10" style="text-align:center;padding:5px">

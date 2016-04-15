@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="easyui-panel" title="音乐"  style="width: 760px; height: 1085px">
 	<div style="padding-top: 10px;padding-left: 10px">
-	<form id="movie-editor" action="manager/music/save/"  enctype="multipart/form-data" method="post">
+	<form id="music-editor" action="manager/music/save/"  enctype="multipart/form-data" method="post">
 			<input type="hidden" name="id" id="id"  value="<s:if test='music==null'>0</s:if><s:else>${music.id}</s:else>">
 			<input type="hidden" name="music.id" id="id"  value="<s:if test='music==null'>0</s:if><s:else>${music.id}</s:else>">
 			<input type="hidden" name=cover id="cover" value="${music.cover}">
@@ -57,6 +57,10 @@
                     <td><input class="easyui-textbox" name="music.motto" id='motto' data-options="multiline:true" style="height:80px" value='${music.motto}'/></td>
                 </tr>
 	    		<tr>
+                    <td>歌词:</td>
+                    <td><input class="easyui-textbox" name="music.lyric" id='lyric' data-options="multiline:true" style="height:120px;width:400px" value='${music.lyric}'/></td>
+                </tr>
+	    		<tr>
                     <td>上传:</td>
                     <td>
                     <s:fielderror></s:fielderror>
@@ -85,14 +89,10 @@
 				</div>
 				</div>
 		<div  class="margin-t-10" style="text-align:center;padding:5px">
-	    	<a href="javascript:void(0)" class="easyui-linkbutton l-btn l-btn-small" onclick="submitForm('name','movie-editor')"><span class="l-btn-left"><span class="l-btn-text">提交</span></span></a>
+	    	<a href="javascript:void(0)" class="easyui-linkbutton l-btn l-btn-small" onclick="submitForm('name','music-editor')"><span class="l-btn-left"><span class="l-btn-text">提交</span></span></a>
 	    	<a href="javascript:void(0)" class="easyui-linkbutton l-btn l-btn-small" onclick="clearForm()"><span class="l-btn-left"><span class="l-btn-text">清除</span></span></a>
 		</div>
 <jsp:include page="../snippets/cropIMG.jsp"/>
 	    </form>
 	</div>
 </div>
-<script>
-		$(function(){
-		})
-	</script>

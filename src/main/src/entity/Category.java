@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import main.src.common.ImageUtils;
+
 @Component("category")
 @Entity
 @Table(name = "category")
@@ -21,11 +23,21 @@ public class Category {
 	private String desc;
 	private String profile;
 	private String cover;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "[order]")
+	private int order;
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public int getOrder() {
+		return order;
+	}
+	public void setOrder(int order) {
+		this.order = order;
 	}
 	public String getProfile() {
 		return profile;
@@ -47,6 +59,9 @@ public class Category {
 	}
 	public String getCover() {
 		return cover;
+	}
+	public String getTcover() {
+		return ImageUtils.generateIsoName(cover,ImageUtils.THUMBNAIL);
 	}
 	public void setCover(String cover) {
 		this.cover = cover;

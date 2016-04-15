@@ -28,7 +28,7 @@ public interface UserService extends BaseService<User>{
 	int getDurationForRegister(String token);
 
 	boolean logout();
-
+	
 	User getUserByMail(String email);
 
 	User getUserByToken(String token);
@@ -36,4 +36,6 @@ public interface UserService extends BaseService<User>{
 	void activate(String token);
 
 	boolean isExpired(String token);
+	
+	public String valiName(String nick_name);
 }

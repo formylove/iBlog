@@ -4,15 +4,36 @@ $myFather.hide();
 $myFather.siblings().show();
 }
 function setNav(data){
-	$(".logged-in-wrapper .ln-account").html("<img src='"+data.portrait+"' alt='"+data.nick_name+"' class='avatar'>&nbsp;" + data.nick_name);
-	$(".link-uc").attr("href","user/profile/" + data.id);
+	$(".logged-in-wrapper .ln-account").html("<img src='img/depot/"+data.portrait+"' alt='"+data.nick_name+"' class='avatar'>&nbsp;<span>" + data.nick_name+"</span>");
+	$(".link-uc").attr("href",defaultProfilePath+data.id);
+	if(data.level == 0){
+		$(".link-setting").removeClass("hidden");
+	}
+	if($("#commentAvatarHolder")){
+		$("#commentAvatarHolder").find("img").attr("src",defaultImgPath + data.portrait);
+	}
 }
 function clearNav(){
 	$(".logged-in-wrapper .ln-account").html("");
 	$(".link-uc").attr("href","profile/");
+	$(".link-setting").addClass("hidden");
+	if($("#commentAvatarHolder")){
+		$("#commentAvatarHolder").find("img").attr("src",defaultAvatar);
+	}
+	//$(".logged-in-wrapper").removeData("level");//仅能删除缓存内值
+	$(".logged-in-wrapper").removeAttr("data-level");//仅能删除缓存内值
 }
 //         绑定
 $(function(){
+	if($("input[name='document_details']")){
+		var type =$("input[name='document_details']").data("type");
+		var id = $("input[name='document_details']").val();
+		if($.cookie(type+"like") != undefined  && $.cookie(type+"like").indexOf("|"+id+"|")>=0){
+			 document.getElementById("like").className="icon-essay-fav hidden";
+			 document.getElementById("liked").className="icon-essay-faved";
+		}
+		
+	}
 	var hasBinded = false;
 	  jQuery.validator.addMethod("normalName",function(value,element){  
           return /^[a-zA-Z0-9\u4E00-\u9FA5_]*$/.test(value);  
@@ -137,11 +158,10 @@ $(function(){
                 	    	    			type:"post",
                 	    	    			dataType:'json',
                 	    	    		    success: function(data) {
-                	    	    		      console.info("register1");
                 	    	                  $(".qtip #login_submit").hide();
                 	    	                  $(".qtip span[name=error_placement]").text(data.message);
                 	    	                  $(".qtip span[name=error_placement]").show();
-                	    	    		      if(data.isGood=="true"){
+                	    	    		      if(data.isGood){
                 	    	    		      $(".logged-out-wrapper").hide();
                 	    	    		      setNav(data);
                 	    	    		      $(".logged-in-wrapper").qtip('api').set('content.text',$(".account").html());
@@ -161,11 +181,13 @@ $(function(){
                 	    	                  	$(".qtip #register_submit").hide();
                 	    	                	$(".qtip span[name=error_placement2]").text(data.message);
                 	    	                	$(".qtip span[name=error_placement2]").show();
-                	    	    		      if(data.isGood=="true"){
-                	    	    		    	  window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nick_name+"/",'_blank')
-                	    	    		    	  $("#loggedOutWrapper .ln-top-login").qtip('hide');
+                	    	          	      if(data.isGood){
+                	    	    		    	 $("#loggedOutWrapper .ln-top-login").qtip('hide');
                 	    	                  	$(".qtip span[name=error_placement2]").hide();
                 	    	                  	$(".qtip #register_submit").show();
+                	    	                  	$('form[name=register_form] input:not(:submit)').val("");
+                	    	                  	confirm("注册成功,登录邮箱激活");
+                	    	                  	window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nick_name+"/",'_blank')
                 	    	    		      }
                 	    	    		    } });
                 	    		    return false;
@@ -183,7 +205,7 @@ $(function(){
 
           };
     	var options7 = {
-    			  content:$(".account").html() ,
+    			    content:$(".account").html() ,
     				show:{
     				solo:true,
     				effect:{type:'slide'},
@@ -206,6 +228,9 @@ $(function(){
     		   events: {  
     		       render: null,  
     		       visible:function(){
+    		    	   if("dataset" in $(".logged-in-wrapper")[0] && "level" in $(".logged-in-wrapper")[0].dataset  && $(".logged-in-wrapper").data("level") == 0){
+    		    		   $(".link-setting").removeClass("hidden");
+    		    	   }
     		    		$(".link-logout").click(function(){
     		    	   		theUrl = 'ajax/logout/';
     		    	   		xmlHttp = new XMLHttpRequest();
@@ -243,6 +268,32 @@ $(function(){
 //        }
 //
 //      });
-
-
+ if($.cookie('device') == null){//设置userAgent,放入cookie
+	 $.getScript("js/agent/agent.js",function(){
+		 $.getScript(getAgentJS(),function(){
+			 Browsers = new WhichBrowser(navigator.userAgent);
+			 $.cookie('device', Browsers.toString(), { expires: 30, path: '/'}); 
+		 });
+	 });
+ }
+ if ( $(".foot-ct").is($("div"))) {
+     var b2t_left = $(".foot-ct").offset().left - 0 + 980;
+     $(window).scroll(function() {
+         var a = $(document).scrollTop();
+         a > 900 ? $("#backTop").css({left: b2t_left,bottom: 10}).fadeIn(300) : 300 > a && $("#backTop").fadeOut(300)
+     })
+ }
+ $("#backTop").css("left", b2t_left), $("#backTop").click(function(a) {
+     a.preventDefault(), $("html, body").animate({scrollTop: 0}, 300)
+ })
+ var qqint;
+ $("#QqAccount").hover(function() {
+     $(this).find(".qq-group").show()
+ }, function(a) {
+     qqint = setTimeout(function() {
+         $("#QqAccount").find(".qq-group").hide()
+     }, 100)
+ }), $(".qq-group").mouseenter(function() {
+     clearTimeout(qqint), $(this).show()
+ });
 	  });

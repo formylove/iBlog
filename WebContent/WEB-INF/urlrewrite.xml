@@ -42,8 +42,17 @@
  
 <rule>
    <from>/essays/?$</from> 
-   <to type="forward">/essayAction!listEssay.action</to>
- </rule>
+   <to type="forward">/essayAction!list.action</to>
+</rule>
+<rule>
+   <from>/musics/?$</from> 
+   <to type="forward">/musicAction!list.action</to>
+</rule>
+ 
+<rule>
+   <from>/essays/([0-9]+)/([0-9]*)/?$</from> 
+   <to type="forward">/essayAction!list.action?page=$1&amp;category=$2</to>
+</rule>
  
  
 <rule>
@@ -52,8 +61,8 @@
  </rule>
  
 <rule>
-   <from>user/profile/([0-9]*)/?$</from> 
-   <to>/loginAction!loadProfile.action?id=$1</to>
+   <from>user/profile/([0-9]+)/?$</from> 
+   <to>/loginAction!load.action?id=$1</to>
  </rule>
  
 <rule>
@@ -154,6 +163,10 @@
 <rule>
    <from>/ajax/datagrid/?$</from> 
    <to>/shareAction!datagrid.action</to>
+ </rule>
+<rule>
+   <from>/ajax/([a-zA-Z]+)/([a-zA-Z]+)/?$</from> 
+   <to>/$1Action!$2.action</to>
  </rule>
  
 

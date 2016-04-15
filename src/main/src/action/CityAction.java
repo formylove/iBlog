@@ -30,7 +30,7 @@ public class CityAction {
 	    }else{
 	    	cityService.update(city);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){

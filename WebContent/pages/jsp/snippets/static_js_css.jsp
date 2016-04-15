@@ -12,6 +12,7 @@ if(importParams.indexOf("general")>=0){ %>
 <script type="text/javascript" src="js/validate/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js/autocomplete/jquery.mailAutoComplete-4.0.js"></script>
 <script type="text/javascript" src="js/Akita/nav.js"></script>
+<script type="text/javascript" src="js/cookie/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/artDialog/dialog-min.js"></script>
 <link href="js/artDialog/ui-dialog.css" type="text/css" rel="stylesheet">
 <%}else{
@@ -34,10 +35,17 @@ if(importParams.indexOf("form")>=0){ %>
 <script type="text/javascript" src="js/form/jquery.form.js"></script>
 <%}
 }
+if(importParams.indexOf("vol")>=0){ %>
+<link href="css/vol.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="js/Akita/vol.js"></script>
+<%}
 //另
-if(importParams.indexOf("user")>=0){ %>
-<link href="css/user.css" type="text/css" rel="stylesheet">
+if(importParams.indexOf("user.js")>=0){ %>
 <script type="text/javascript" src="js/Akita/user.js"></script>
+<%}
+//另
+if(importParams.indexOf("user.css")>=0){ %>
+<link href="css/user.css" type="text/css" rel="stylesheet">
 <%}
 if(importParams.indexOf("utils")>=0){ %>
 <script type="text/javascript" src="js/Akita/utils.js"></script>
@@ -45,6 +53,10 @@ if(importParams.indexOf("utils")>=0){ %>
 if(importParams.indexOf("Jcrop")>=0){ %>
 <script type="text/javascript" src="js/Jcrop/jquery.Jcrop.js"></script>
 <link href="js/Jcrop/jquery.Jcrop.css" type="text/css" rel="stylesheet">
+<%}
+if(importParams.indexOf("datapicker")>=0){ %>
+<script type="text/javascript" src="js/datapicker/glDatePicker.js"></script>
+<link href="js/datapicker/glDatePicker.flatwhite.css" type="text/css" rel="stylesheet">
 <%}
 if(importParams.indexOf("flexSlider.js")>=0){ %>
 <script type="text/javascript" src="js/flexSlider/jquery.flexslider-min.js"></script>
@@ -54,6 +66,9 @@ if(importParams.indexOf("sticky.js")>=0){ %>
 <%}
 if(importParams.indexOf("index.js")>=0){ %>
 <script src="js/Akita/index.js"></script>
+<%}
+if(importParams.indexOf("musicPlayer.js")>=0){ %>
+<script src="js/Akita/musicPlayer.js"></script>
 <%}
 if(importParams.indexOf("easyui")>=0){ %>
 <link href="js/easyUI/icon.css" type="text/css" rel="stylesheet">
@@ -94,22 +109,25 @@ if(importParams.indexOf("manager")>=0){ %>
 if(importParams.indexOf("ZeroClipboard.js")>=0){ %>
 <script src="js/zeroclipboard/ZeroClipboard.js"></script>
 <%}
+if(importParams.indexOf("agent.js")>=0){ %>
+<script src="js/agent/agent.js"></script>
+<%}
 }
 if(session.getAttribute("hasDeviceDetail") == null){%>
-<!-- <script src="js/agent/ua-parser.min.js"></script> -->
-<!-- <script> -->
-<!--  $(function(){ -->
-<!--  	var parser = new UAParser();//atool网方法 -->
-<!--  		if(parser != null){ -->
-<!--  		r = parser.getResult(); -->
-<!--  		$.ajax({ -->
-<!--  			url:$("base").attr("href") + 'ajax/ua/', -->
-<!--  			type:'post', -->
-<!--  			data:{"browser":r.browser.name + ' ' + r.browser.major,"device":r.device.model + ' ' + r.device.type + ' ' + r.device.vendor,"os":r.os.name + ' ' + r.os.version,} -->
-<!--  		}); -->
-<!--  	} -->
-<!--  }); -->
-<!-- </script> -->
+<script src="js/agent/ua-parser.min.js"></script>
+<script>
+  $(function(){ 
+  	var parser = new UAParser();//atool网方法 
+  		if(parser != null){ 
+  		r = parser.getResult(); 
+  		$.ajax({ 
+  			url:$("base").attr("href") + 'ajax/ua/', 
+  			type:'post', 
+  			data:{"browser":r.browser.name + ' ' + r.browser.major,"device":r.device.model + ' ' + r.device.type + ' ' + r.device.vendor,"os":r.os.name + ' ' + r.os.version,} 
+  		}); 
+  	} 
+  }); 
+ </script> 
 
 <%
 }

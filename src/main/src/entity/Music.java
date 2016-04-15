@@ -10,17 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Type;
 import org.springframework.stereotype.Component;
 
+import main.src.common.ImageUtils;
 import main.src.common.TimeManager;
 import main.src.entity.gallery.Nation;
 import main.src.entity.gallery.item.Figure;
@@ -41,6 +39,8 @@ private String composer;
 private String cover;
 private String url;
 private String style;
+@Type(type="text") 
+private String lyric;
 private String motto;
 @OneToOne(targetEntity = Nation.class)
 @JoinColumn(name="nation_id")
@@ -48,7 +48,6 @@ private Nation nation;
 private Integer favor_cnt = 0;
 private String create_date;
 private String create_time;
-private boolean del_flag = false;
 @OneToMany(targetEntity=Comment.class,mappedBy="music")
 private List<Comment> comments = new LinkedList<Comment>();
 @Transient
@@ -79,6 +78,15 @@ public String getCover() {
 public void setCover(String cover) {
 	this.cover = cover;
 }
+public String getLyric() {
+	return lyric;
+}
+public void setLyric(String lyric) {
+	if(lyric != null){
+		lyric = lyric.replaceAll("[£¬¡£,.]", "");
+	}
+	this.lyric = lyric;
+}
 public Integer getPrecedence() {
 	return precedence;
 }
@@ -87,8 +95,14 @@ public void setPrecedence(Integer precedence) {
 	this.precedence = precedence;
 }
 public void setName(String name) {
-		name = StringUtils.trimToNull(name);
+//		name = StringUtils.trimToNull(name);
 	this.name = name;
+}
+public String getBcover() {
+	return ImageUtils.generateIsoName(cover, ImageUtils.BIG);
+}
+public String getTcover() {
+	return ImageUtils.generateIsoName(cover, ImageUtils.THUMBNAIL);
 }
 public String getComposer() {
 	return composer;
@@ -137,12 +151,6 @@ public String getCreate_time() {
 }
 public void setCreate_time(String create_time) {
 	this.create_time = create_time;
-}
-public boolean isDel_flag() {
-	return del_flag;
-}
-public void setDel_flag(boolean del_flag) {
-	this.del_flag = del_flag;
 }
 public List<Comment> getComments() {
 	return comments;

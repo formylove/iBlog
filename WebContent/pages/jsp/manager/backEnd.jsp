@@ -8,8 +8,8 @@
 <title>夜网后台管理系统</title>
 </head>
 <body> 
-<jsp:include page="../snippets/hidden_box.jsp"/>
 <%@ include file="../snippets/navigator.jsp" %>
+<jsp:include page="../snippets/hidden_box.jsp"/>
 <div class="container index-ct" style="min-height: 1000px;">	
 <div style='float:left'>
 <%@ include file="../manager/nav.jsp" %>
@@ -17,68 +17,64 @@
 <div style='float:right'>
 <c:choose> 
   <c:when test="${param.type =='retrieve'}">   
-<jsp:include page="../manager/retrieve/retrieve.jsp" />
+<%@ include file="../manager/retrieve/retrieve.jsp" %>
   </c:when> 
   <c:when test="${param.type =='eessay'}">   
-<jsp:include page="../manager/essayEditor.jsp" />
+<%@ include file="../manager/essayEditor.jsp" %>
   </c:when> 
   <c:when test="${param.type =='enote'}">   
-<jsp:include page="../manager/noteEditor.jsp" />
+<%@include file="../manager/noteEditor.jsp" %>
   </c:when> 
   <c:when test="${param.type =='emovie'}">  
-<jsp:include page="../manager/movieEditor.jsp" />
+<%@include file="../manager/movieEditor.jsp" %>>
   </c:when> 
-  <c:when test="${param.type =='ebook'}">   
-<jsp:include page="../manager/bookEditor.jsp" />
+  <c:when test="${param.type =='ebook'}">  
+<%@include file="../manager/bookEditor.jsp" %>
   </c:when> 
   <c:when test="${param.type =='eseries'}">   
-<jsp:include page="../manager/seriesEditor.jsp" />
+<%@include file="../manager/seriesEditor.jsp" %>
   </c:when> 
   <c:when test="${param.type =='enation' || param.type =='estate' || param.type =='ecity'}">   
-<jsp:include page="../manager/administrationEditor.jsp" />
+<%@include file="../manager/administrationEditor.jsp" %>
   </c:when> 
   <c:when test="${param.type =='edynasty' || param.type =='epeople' || param.type =='ereligion'}">   
-<jsp:include page="../manager/groupEditor.jsp" />
+<%@include file="../manager/groupEditor.jsp" %>
   </c:when> 
-  <c:when test="${param.type =='ecategory' || param.type =='egenre'}">   
-<jsp:include page="../manager/collectionEditor.jsp" />
+  <c:when test="${param.type =='ecategory' || param.type =='ecatorder' || param.type =='egenre'}">   
+<%@include file="../manager/collectionEditor.jsp" %>
   </c:when> 
   <c:when test="${param.type =='ecorporation'}">   
-<jsp:include page="../manager/corporationEditor.jsp" />
+<%@include file="../manager/corporationEditor.jsp" %>
   </c:when> 
   <c:when test="${param.type =='efigure'}">   
-<jsp:include page="../manager/figureEditor.jsp" />
+<%@include file="../manager/figureEditor.jsp" %>
   </c:when> 
   <c:when test="${param.type =='emusic'}">   
-<jsp:include page="../manager/musicEditor.jsp" />
+<%@include file="../manager/musicEditor.jsp" %>
+  </c:when> 
+  <c:when test="${param.type =='eposter' || param.type =='eposterorder'}">   
+<%@include file="../manager/posterEditor.jsp" %>
   </c:when> 
   <c:otherwise>   
 <%@include file="../manager/essayEditor.jsp"  %>
   </c:otherwise> 
 </c:choose> 
 
-
-
-
+</div>
 
 </div>
-<c:choose> 
-  <c:when test="${param.type =='eessay' || param.type =='enote' || param.type =='emovie' || param.type =='ebook' || param.type =='eseries' || param.type =='enation' || param.type =='estate' || param.type =='ecity' || param.type =='edynasty' || param.type =='epeople' || param.type =='ereligion' || param.type =='ecorporation' || param.type =='efigure' || param.type =='emusic' || param.type =='ecategory' || param.type =='egenre'}"> 
+	<c:choose> 
+  <c:when test="${param.type =='eessay' || param.type =='enote' || param.type =='emovie' || param.type =='ebook' || param.type =='eseries' || param.type =='enation' || param.type =='estate' || param.type =='ecity' || param.type =='edynasty' || param.type =='epeople' || param.type =='ereligion' || param.type =='ecorporation' || param.type =='efigure' || param.type =='emusic' || param.type =='ecategory' || param.type =='egenre' || param.type =='eposter' || param.type =='ecatorder' || param.type =='eposterorder'}"> 
   <script type="text/javascript">
-  $(function(){
-  $('#rightside-nav').accordion('select','创作');//必须加载完全再执行
-  })
+  window.onload = function(){
+	  $('#rightside-nav').accordion('select','创作');
+  };
   </script> 
   </c:when> 
 </c:choose> 
-
-
-
-
-
-</div>
-	
 <%@ include file="../snippets/footer.jsp" %>
+
 </body>
+
 </html>
 		`

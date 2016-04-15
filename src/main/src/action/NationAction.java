@@ -34,18 +34,18 @@ public class NationAction {
 	public String save() throws NumberFormatException, UnsupportedEncodingException{
 	    if(id==0){
 	    		if(StringUtils.isNotEmpty(cover)){
-	    			nation.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    			nation.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NHORIZONTAL));
 	    		}
 	    		id = nationService.save(nation);
 	    		nation.setId(id);
 	    }else{
 	    	if(!nation.getCover().equals(cover)){
 	    		ImageUtils.deleteImg(nation.getCover());
-	    		nation.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    		nation.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NHORIZONTAL));
 	    	}
 	    	nationService.update(nation);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){

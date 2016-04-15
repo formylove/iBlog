@@ -58,8 +58,9 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	}
 	@Override
 	public Session getSession()
-	{
-		return sessionFactory.openSession();
+	{  
+		Session s = sessionFactory.openSession();
+		return s;
 	}
 	// 根据ID删除实体
 	public void delete(Class<T> entityClazz , int id)
@@ -79,7 +80,8 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	@SuppressWarnings("unchecked")
 	protected List<T> find(String hql)
 	{
-		return (List<T>)getSession()
+		Session s = getSession();
+		return (List<T>)s
 			.createQuery(hql)
 			.list();
 	}
@@ -113,7 +115,7 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	}
 		// 创建查询
 		public List<T> list(String name,int maxSize,int pageNum,String order,String conditions){
-			String hql = "from " + name + (conditions!=null?" where "+conditions:" ") + (order!=null?" order by ":"") + order;
+			String hql = "from " + name + (conditions!=null?" where "+conditions:" ") + (order!=null?" order by " + order:"");
 			Session s = getSession();
 			List<T> objs = s.createQuery(hql).setMaxResults(maxSize).setFirstResult((pageNum-1)*maxSize).list();
 			return objs;
@@ -132,8 +134,7 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	 * @return 当前页的所有记录
 	 */
 	@SuppressWarnings("unchecked")
-	protected List<T> findByPage(String hql,
-		 int pageNo, int pageSize)
+	public List<T> findByPage(String hql,int pageNo, int pageSize)
 	{
 		// 创建查询
 		return getSessionFactory().getCurrentSession()

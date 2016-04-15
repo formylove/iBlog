@@ -4,15 +4,15 @@
 						文章作者
 					</p>
 						<div class="clearfix">
-							<a href="" class="avatar-wrapper">
-								<img src="${essay.portrait}" alt="${essay.author}" class="avatar rounded"/>
+							<a href="${essay.author_link}" target="_blank" class="avatar-wrapper">
+								<img src="img/depot/${essay.portrait}" alt="${essay.author}" class="avatar rounded"/>
 							</a>
 							<div class="essay-author-info">
 								<div class="cell">
-									<a href="${essay.author_link}" class="essay-author-name">
+									<a href="${essay.author_link}" target="_blank" class="essay-author-name">
 										${essay.author}
 									</a>
-									<p class="essay-author-sign">${essay.author_desc}</p>
+									<p class="essay-author-sign" title="${essay.author_desc}">${essay.author_desc}</p>
 								</div>
 							</div>
 						</div>

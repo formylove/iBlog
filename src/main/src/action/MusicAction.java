@@ -2,17 +2,13 @@ package main.src.action;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.json.annotations.JSON;
 
-import main.src.common.EntityUtils;
 import main.src.common.FileUtils;
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
@@ -20,24 +16,27 @@ import main.src.common.MusicUtils;
 import main.src.entity.Music;
 import main.src.service.MusicService;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 public class MusicAction {
 	@Resource(name="musicService")
 	private MusicService musicService;
 	Music music = null;
+	List<Music> musics = null;
 	int id;
 	private float w;
 	private float h;
 	private float x;
 	private float y;
 	private String cover;
+	private List<String> styles;
 	private String deletedMusic;
 	private File musicFile;
 	private String musicFileContentType;
 	private String musicFileFileName;
 	private JSONArray tree;
 	public String list() {
+		musics = musicService.list(100, 1, "precedence desc", null);
+		styles = musicService.getAllStyles();
 		return MsgConstants.LIST;
 	}
 	public String save() throws NumberFormatException, IOException{
@@ -47,7 +46,7 @@ public class MusicAction {
 	    		music.setUrl(UUIDName + FileUtils.getFileSuffix(musicFileFileName));
 	    	}
 	    		if(StringUtils.isNotEmpty(cover)){
-	    			music.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    			music.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.MUSIC));
 	    		}
 	    		id = musicService.save(music);
 	    		music.setId(id);
@@ -59,14 +58,14 @@ public class MusicAction {
 	    	}
 	    	if(!music.getCover().equals(cover)){
 	    		ImageUtils.deleteImg(music.getCover());
-	    		music.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    		music.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.MUSIC));
 	    	}
 	    	musicService.update(music);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
-public String load(){
+public String musics(){
 	music = musicService.get(id);
 	return MsgConstants.DISPLAY;
 }
@@ -175,6 +174,19 @@ public void setMusicFileFileName(String musicFileFileName) {
 }
 public void setMusicFileFileName(String[] musicFileFileName) {
 	this.musicFileFileName = musicFileFileName[0];
+}
+@JSON(serialize=false)
+public List<Music> getMusics() {
+	return musics;
+}
+public void setMusics(List<Music> musics) {
+	this.musics = musics;
+}
+public List<String> getStyles() {
+	return styles;
+}
+public void setStyles(List<String> styles) {
+	this.styles = styles;
 }
 	
 }

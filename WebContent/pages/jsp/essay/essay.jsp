@@ -3,13 +3,13 @@
 <html>
 <head>
 <title><s:property value="essay.title"/></title>
-<s:set name="importParams" value="'general|essay.css|content.css|comment|end'" scope="request"/>
+<s:set name="importParams" value="'general|essay.css|content.css|agent.js|musicPlayer.js|comment|end'" scope="request"/>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>
-<jsp:include page="../snippets/hidden_box.jsp"/>
 <%@ include file="../snippets/navigator.jsp" %>
-<input type="hidden" id="target_id" value="${essay.id}">
+<jsp:include page="../snippets/hidden_box.jsp"/>
+<input type="hidden" id="append_id" name="document_details" data-type="essay" value="${essay.id}">
 <div class="container ct-sm" style="min-height: 221px;">	
 		<nav class="article-nav">
 			<a href="essays/" class="nav-back">
@@ -22,13 +22,9 @@
 			<!-- essay meta -->
 			<jsp:include page="../snippets/essayMeta.jsp"/>
 				<!-- 音乐 -->
-		<s:if test="essay.music != 0">
+		<s:if test="essay.music != null">
 		<jsp:include page="../snippets/musicColumn.jsp"></jsp:include>
 			</s:if>
-					<s:else>
-<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=#987cb9 SIZE=1>	
-	<br>
-					</s:else>
 
 				<!-- 文章内容 -->
 					<div class="essay-content">
@@ -45,7 +41,6 @@
 			<jsp:include page="../snippets/userColumn.jsp"/>
 			</s:if>
 	</div>	
-
 <jsp:include page="../snippets/comments.jsp"/>
 		
 		</div>

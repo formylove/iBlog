@@ -47,7 +47,19 @@
 	    	<a href="javascript:void(0)" class="easyui-linkbutton l-btn l-btn-small" onclick="submitForm('name','category-editor')" group="" id=""><span class="l-btn-left"><span class="l-btn-text">提交</span></span></a>
 	    	<a href="javascript:void(0)" class="easyui-linkbutton l-btn l-btn-small" onclick="clearForm()" group="" id=""><span class="l-btn-left"><span class="l-btn-text">清除</span></span></a>
 		</div>
+		<jsp:include page="../snippets/cropIMG.jsp"/>
 	    </form>
+	</div>
+	<div title="文章顺序" style="padding-top: 10px;padding-left: 10px">
+		<ol id="cats" class="cats">
+		<s:iterator value="categories" id="cat" status="st">
+		<li class="drag-item" data-id="${cat.id }">${cat.name }
+		</li>
+		</s:iterator>
+		</ol>
+		<div  class="margin-t-10" style="text-align:center;padding:5px">
+	    	<a href="javascript:void(0)" class="easyui-linkbutton l-btn l-btn-small submitOrder"><span class="l-btn-left"><span class="l-btn-text">提交</span></span></a>
+		</div>
 	</div>
 	<div title="作品类型" style="padding-top: 10px;padding-left: 10px">
 	<form id="genre-editor" action="manager/genre/save/" method="post">
@@ -78,12 +90,34 @@
 
 </div>
 <script>
-		$(function(){
+$(function(){
 			<s:if test="#parameters['type'][0] == 'ecategory'">
-			$('#group').tabs("select",0);
+			$('#collection').tabs("select",0);
+			</s:if>
+			<s:if test="#parameters['type'][0] == 'ecatorder'">
+			$('#collection').tabs("select",1);
 			</s:if>
 			<s:if test="#parameters['type'][0] == 'egenre'">
-			$('#group').tabs("select",1);
+			$('#collection').tabs("select",2);
 			</s:if>
-		})
+				$('.drag-item').draggable({
+					cursor:"options",
+					revert:true,
+					deltaX:0,
+					deltaY:0
+				}).droppable({
+					onDrop:function(e,source){
+						$(source).insertAfter(this);
+					}
+					});
+		$(".submitOrder").click(function(){
+			$.ajax({
+				url:"manager/category/update",
+				data:{"ids":$(".drag-item").map(function(){return $(this).data("id");}).get().join()},
+				success:function(){
+					confirm("顺序修改成功");
+				}
+				});
+		});
+		});
 	</script>

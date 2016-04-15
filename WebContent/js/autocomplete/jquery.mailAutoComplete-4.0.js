@@ -52,10 +52,10 @@
 			this.indexSelected = -1;
 			// 列表容器创建
 			var element = this;
-			var eleUl = $('<ul></ul>').css({
+			var eleUl = $('<ul></ul>').css({//offsetWidth 可见宽度
 				position: "absolute",
 				marginTop: element.offsetHeight,
-				width: element.offsetWidth + 7,
+				width: $(element).width() + 7,
 				marginLeft: "36px",
 				visibility: "hidden",
 				border: "1px solid #e5e5e5",

@@ -11,7 +11,9 @@ public class Test1 {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(Continent[1].name());;
+		Integer f =null;
+		int i = f;
+		System.out.println(i);;
 	}
 
 }

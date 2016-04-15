@@ -1,7 +1,3 @@
-<div id="dlg">
-  <img src="" id="target" name="target" class="text-align:center"/>
-</div>
-
 <div id="cutArgs" class="hidden">
 <input type="text" id="x" name="x" >
 <input type="text" id="y" name="y" >
@@ -21,16 +17,17 @@ originalImg = $('#prevImg').attr('src');
 originalImgUUID = $('#cover').attr('value');
 clears();
 var bounds;
-$('#target').Jcrop({
-	  onChange: updatePreview,
-	  onSelect: updatePreview,
-	  minSize: [0,0],//选框大小
-	  maxSize:[0,0],
-	  boxWidth:600,
-	  aspectRatio: xsize / ysize
-	},function(){
-	  jcrop_api = this;
-	});
+var option1 = {
+		title: '截取头像',
+	    okValue: '确定',
+	    ok: function () {
+	        recover();
+	    },
+	    cancelValue: '取消',
+	    cancel: function () {
+	    	clears();
+	    	recover();
+	    }};
 function updatePreview(c)
 {  
   if (parseInt(c.w) > 0)
@@ -51,14 +48,14 @@ function updatePreview(c)
 }
 function ajaxUpload(she){
 	$.ajaxFileUpload(
-	{url:'imageAction.action?method:upLoadImg',
+	{url:'ajax/image/upLoadImg',
 	dataType:'json',
 	fileElementId:she,
 	type:'post',
 	secureuri: false,
 	success:function(data,status){
 		console.info(data.imgName)
-		$('#cutArgs input[type=text]').val(0);
+		$('#cutArgs :text').val(0);
 		$('#cover').val(data.imgName);
 		$('#'+she).prop('outerHTML', $('#'+she).prop('outerHTML'));//清空file input
 		setImg('temp/'+data.imgName);
@@ -70,49 +67,38 @@ function ajaxUpload(she){
 	);
 }
 function setImg(url){
+	
 	$('#prevImg').attr('src',url);//预览
-	$('#target').attr('src',url);//截图
-	jcrop_api.setImage(url);
-	$('img[name=target]').eq(1).load(function(){//等待图片加载完毕
-	$('#preview-container').addClass('border-frame-light');
-	
-	$('#prevImg').removeClass(classType);
-		 bounds = jcrop_api.getBounds();
-		 boundx = bounds[0];
-		 boundy = bounds[1];
-	 $('#dlg').dialog({
-         title: '截取框',
-         iconCls:'icon-save',
-         resizable: true,
-         width: 0,
-         height:0,
-         modal: true,
-         buttons: [{
-				text:'确定',
-				iconCls:'icon-ok',
-				handler:function(){
-					recover();
-				}
-			},{
-				text:'丢弃',
-				iconCls:'icon-reload',
-				handler:function(){
-					$('#prevImg').attr('src',originalImg);clears();recover();
-				}
-			}]
-         
-     });
-	
-	
-	
+	var dg = dialog(option1);
+	dg.content('<img src="'+url+'" id="target" name="target" class="text-align:center" style="max-width:700px;max-height:700px"/>');
+	$('img[name=target]').first().load(function(){//等待图片加载完毕
+		dg.show();
+		$('#target').Jcrop({
+			  onChange: updatePreview,
+			  onSelect: updatePreview,
+			  minSize: [0,0],//选框大小
+			  maxSize:[0,0],
+			  boxWidth:600,
+			  aspectRatio: xsize / ysize
+			},function(){
+			  jcrop_api = this;
+			  bounds = jcrop_api.getBounds();
+			  boundx = bounds[0];
+			  boundy = bounds[1];
 			});
+	$('#preview-container').addClass('border-frame-light');
+	$('#prevImg').removeClass(classType);
+	
+
+			});
+	
 	};
 	function recover(){
 		$('#prevImg').addClass(classType);
 		$('#preview-container').removeClass('border-frame-light');
-		$('#dlg').dialog('close');
 	}
 	function clears(){
+		$('#prevImg').attr('src',originalImg);
 		$('#cover').val(originalImgUUID);
 		$('#imgUrl').val("");
 		$('#cutArgs input[type=text]').val(0);
@@ -122,10 +108,10 @@ function setImg(url){
 	function startCrop(){
 		reg = /\.jpg$|\.png$|\.gif$|\.jpeg$/i;//空格也算入正则表达式了
 		if($('#imgUrl').val()==''){
-			alert('请先输入图片网址');
+			confirm4easyui('请先输入图片网址');
 			$('#imgUrl').focus();
 		}else if(!reg.exec($('#imgUrl').val())){
-			alert('图片格式错误');
+			confirm4easyui('图片格式错误');
 			$('#imgUrl').focus();
 			$('#imgUrl').val("");
 		}else{

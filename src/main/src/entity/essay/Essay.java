@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +17,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Type;
 import org.springframework.stereotype.Component;
 
+import main.src.common.ImageUtils;
 import main.src.common.StrUtils;
 import main.src.common.TimeManager;
 import main.src.entity.Category;
@@ -38,11 +42,12 @@ private String author;
 private String author_link;
 private String author_desc;
 private String label;
-@OneToMany(targetEntity=Comment.class,mappedBy="essay")
+@OneToMany(targetEntity=Comment.class,mappedBy="essay",fetch=FetchType.EAGER)
 private List<Comment> comments = new LinkedList<Comment>();
 @OneToOne(targetEntity = Category.class)
 @JoinColumn(name="category_id" , referencedColumnName="category_id",nullable=false)
 private Category category;
+@Type(type="text") 
 private String content;
 private Integer read_cnt = 0;
 private Integer favor_cnt = 0;
@@ -51,8 +56,8 @@ private String original_link;
 @OneToOne(targetEntity = Music.class)
 @JoinColumn(name="music_id")
 private Music music;
-private String portrait;
 private String create_date;
+private String portrait;
 private String create_time;
 private int authority = 10;
 public boolean del_flag = false;;
@@ -89,6 +94,12 @@ public void setWebmasterDetail() {
 //		}
 }
 
+public String getPortrait() {
+	return portrait;
+}
+public void setPortrait(String portrait) {
+	this.portrait = portrait;
+}
 public List<Comment> getComments() {
 	return comments;
 }
@@ -116,17 +127,14 @@ public String getAuthor_desc() {
 public void setAuthor_desc(String author_desc) {
 	this.author_desc = author_desc;
 }
-public String getPortrait() {
-	return portrait;
+public String getBcover() {
+	return ImageUtils.generateIsoName(cover, ImageUtils.BIG);
 }
 public Music getMusic() {
 	return music;
 }
 public void setMusic(Music music) {
 	this.music = music;
-}
-public void setPortrait(String portrait) {
-	this.portrait = portrait;
 }
 public int getAuthority() {
 	return authority;
@@ -219,6 +227,10 @@ public String getCover() {
 	return cover;
 }
 public void setCover(String cover) {
+	cover = StringUtils.stripToNull(cover);
+	if(StringUtils.isNotEmpty(cover)){
+		this.cover = ImageUtils.saveImageFromUrlToDepot(cover);
+	}
 	this.cover = cover;
 }
 public boolean isDel_flag() {

@@ -40,8 +40,7 @@
 	    			<td><input class="easyui-textbox" type="text" id="author" name="note.author"
 							value="${note.author}"></input></td>
 	    			<td>头像:</td>
-	    			<td><input class="easyui-textbox" type="text" id="portrait" name="note.portrait"
-							value="${note.portrait}"></input></td>
+	    			<td><input class="easyui-textbox" type="text" id="portrait" name="note.portrait"></input></td>
 	    		</tr>
 	    		<tr>
 	    			<td>主页:</td>
@@ -51,13 +50,18 @@
 	    			<td><input class="easyui-textbox" type="text"id="original_link" name="note.original_link"
 							value="${note.original_link}" ></input></td>
 	    		</tr>
+	    		<tr>
+	    			<td>Motto:</td>
+	    			<td><input class="easyui-textbox" type="text" id="author_desc" name="note.author_desc"
+							value="${note.author_desc}"></input></td>
+	    		</tr>
 	    	</table>
 	    	</div>
 				</div>
 				<div class="margin-t-20 float">
 		<textarea id="editor" name="note.content" placeholder="文章内容">${note.content}</textarea>
 		<script type="text/javascript">
-			CKEDITOR.replace('editor', {uiColor:'#E0ECFF', height: '550px', width: '730px' });
+		var editortext = CKEDITOR.replace('editor', {uiColor:'#E0ECFF', height: '550px', width: '730px' });
 		</script>
 				</div>
 		<div  class="margin-t-10" style="text-align:center;padding:5px">

@@ -7,15 +7,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
+
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -28,11 +27,22 @@ import com.opensymphony.xwork2.ActionContext;
 
 import main.src.common.gif.AnimatedGifEncoder;
 import main.src.common.gif.GifDecoder;
+import net.coobird.thumbnailator.Thumbnails;
 
 public class ImageUtils {
 	static public String baseRealPath = ((HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST)).getRealPath("/");
 	static public String tempPath = MessageUtils.getMessageFromUrl("img.temp");
 	static public String depotPath = MessageUtils.getMessageFromUrl("img.depot");
+	static public final String MIDDLE = "middle";
+	static public final String THUMBNAIL = "thumb";
+	static public final String BIG = "big";
+	static public final String PORTRAIT = "portrait";
+	static public final String NHORIZONTAL = "nHorizontal";
+	static public final String NVERTICAL = "nVertical";
+	static public final String ESSAY = "essay";
+	static public final String CATEGORY = "category";
+	static public final String POSTER = "poster";
+	static public final String MUSIC = "music";
 	static public String saveImageFromUrl(String imgUrl){
 		String localName = null;
 	        try {  
@@ -65,6 +75,38 @@ public class ImageUtils {
 
 		return localName;
 	}
+	static public String saveImageFromUrlToDepot(String imgUrl){
+		String localName = null;
+		try {  
+			//实例化url  
+			URL url = new URL(imgUrl);  
+			URLConnection connection = url.openConnection();
+			connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+			//载入图片到输入流  
+			java.io.BufferedInputStream bis = new BufferedInputStream(connection.getInputStream());  
+			//实例化存储字节数组  
+			byte[] bytes = new byte[100];  
+			//设置写入路径以及图片名称  
+			localName = UUID.randomUUID().toString();
+			localName = localName + "." + getSimpleType(imgUrl);
+			String realPath = baseRealPath + depotPath;
+			File folder = new File(realPath);
+			if(!folder.exists()){
+				folder.mkdir();//写文件操作不会自动生成目录
+			}
+			OutputStream bos = new FileOutputStream(new File(realPath+localName));
+			int len;  
+			while ((len = bis.read(bytes)) > 0) {  
+				bos.write(bytes, 0, len);  
+			}  
+			bis.close();  
+			bos.flush();  
+			bos.close();  
+		} catch (Exception e) { 
+		}  
+		
+		return localName;
+	}
 	
 	static public String saveImage(File image,String org_name,String realPath) throws IOException{
 		 String localName = UUID.randomUUID().toString();
@@ -86,24 +128,27 @@ public class ImageUtils {
 	
 		static public String cut(String cover,float width,float height,float x,float y) {
 			String simpleType = getSimpleType(cover);
+			String processedName = null;
 			try {
 			if("gif".equalsIgnoreCase(simpleType)){
 				if(cover.indexOf("http")>=0 || cover.indexOf("https")>=0 || cover.indexOf("www.")>=0){
 					cover = saveImageFromUrl(cover);
 				}	
 				String sourcePath = baseRealPath + tempPath + cover;
-				return cutGif(sourcePath, (int)x, (int)y,(int)width, (int)height);
+				processedName = cutGif(sourcePath, (int)x, (int)y,(int)width, (int)height);
 			}else{
 				if(cover.indexOf("http")>=0 || cover.indexOf("https")>=0 || cover.indexOf("www.")>=0){
 					URL url = new URL(cover);
 					URLConnection connection = url.openConnection();
 					connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-					return cut(new BufferedInputStream(connection.getInputStream()),simpleType,width,height,x,y);
+					processedName = cut(new BufferedInputStream(connection.getInputStream()),simpleType,width,height,x,y);
 				}else{
 		    	    FileInputStream fis = new FileInputStream(new File(baseRealPath + tempPath+cover));
-		    	    return cut(new BufferedInputStream(fis),simpleType,width,height,x,y);
+		    	    processedName = cut(new BufferedInputStream(fis),simpleType,width,height,x,y);
 				}	
 			}
+			
+			return processedName;
 		    } catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -111,6 +156,52 @@ public class ImageUtils {
 			//删除缓存中图片
 			deleteTemp(cover);
 		return null;
+		}
+
+		static public String cut(String cover,float width,float height,float x,float y,String type){
+			String processedName =  cut( cover, width, height, x, y);
+			try {
+			if(FileUtils.getFileSuffix(processedName).equalsIgnoreCase(".gif")){
+				
+			}else if(type.equals(POSTER)){
+				Thumbnails.of(baseRealPath+depotPath+processedName)  
+				.scale(1000/width)
+				.toFile(baseRealPath+depotPath+processedName);
+			}else if(type.equals(PORTRAIT)){//正方形
+			Thumbnails.of(baseRealPath+depotPath+processedName)  
+			.scale(110/width)
+			.toFile(baseRealPath+depotPath+processedName);
+			}else if(type.equals(NHORIZONTAL)){
+				Thumbnails.of(baseRealPath+depotPath+processedName)   
+				.scale(220/width)   
+				.toFile(baseRealPath+depotPath+processedName);  
+			}else if(type.equals(NVERTICAL)){
+				Thumbnails.of(baseRealPath+depotPath+processedName)   
+				.scale(120/width)   
+				.toFile(baseRealPath+depotPath+processedName);  
+			}else if(type.equals(MUSIC)){
+				Thumbnails.of(baseRealPath+depotPath+processedName)   
+				.scale(1f)   
+				.toFile(baseRealPath+depotPath+generateIsoName(processedName,BIG));  
+				Thumbnails.of(baseRealPath+depotPath+processedName)   
+				.scale(60/width)   
+				.toFile(baseRealPath+depotPath+generateIsoName(processedName,THUMBNAIL));  
+				Thumbnails.of(baseRealPath+depotPath+processedName)   
+				.scale(220/width)   
+				.toFile(baseRealPath+depotPath+processedName);  
+			}else if(type.equals(CATEGORY)){
+				Thumbnails.of(baseRealPath+depotPath+processedName)   
+				.scale(50/width)   
+				.toFile(baseRealPath+depotPath+generateIsoName(processedName,THUMBNAIL));  
+			}
+			
+			} catch (IOException e) {
+				e.printStackTrace();
+			}  
+			return processedName;
+		}
+		static public String generateIsoName(String processedName,String suffix){
+			return processedName.substring(0, processedName.lastIndexOf("."))+"-"+suffix+FileUtils.getFileSuffix(processedName);
 		}
 	static public String cut(BufferedInputStream image,String picType,float width,float height,float x,float y) throws IOException{
 	   String sourcePath = null;
@@ -258,6 +349,9 @@ public class ImageUtils {
 	}
 	static public void deleteImg(String name){
 		FileUtils.deleteFile(depotPath+name);
+		FileUtils.deleteFile(depotPath+ImageUtils.generateIsoName(name,ImageUtils.THUMBNAIL));
+		FileUtils.deleteFile(depotPath+ImageUtils.generateIsoName(name,ImageUtils.MIDDLE));
+		FileUtils.deleteFile(depotPath+ImageUtils.generateIsoName(name,ImageUtils.BIG));
 	}
 	static public void deleteTemp(String name){
 		FileUtils.deleteFile(tempPath+name);

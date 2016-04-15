@@ -1,6 +1,20 @@
 .cursor-pointer:hover{
 	cursor:pointer;
 }
+.feedback.item-wrapper:hover .helper a{
+	visibility:visible;
+}
+.feedback.item-wrapper .helper a{
+	cursor:pointer;
+	visibility:hidden
+}
+.essay-music {
+    border-bottom: 1px solid #e5e5e5;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(229, 229, 229);
+    margin-bottom: 40px;
+}
 .aside-left {
     float: left;
     width: 150px;
@@ -8,6 +22,32 @@
     position:absolute;
     margin-top:40px
     0px;
+}
+.essay-banner .quote-before {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    background-image: url(../img/icon/icon-musician.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    height: 15px;
+    width: 13px
+}
+
+.essay-banner .quote-after {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    background-image: url(../img/icon/icon-musician.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    background-position: -100px 0;
+    height: 15px;
+    width: 13px
 }
 .overlay{
 	position:absolute;
@@ -39,7 +79,7 @@
     background-position: top left;
     background-repeat: no-repeat
 }
-¡£essay-content img,.zg-content-img-source-link,.origin_image,.content_image,.video_image,.play_video {
+.essay-content img,.zg-content-img-source-link,.origin_image,.content_image,.video_image,.play_video {
     margin: 6px 0;
     display: block;
     max-width: 100%;
@@ -920,6 +960,7 @@ input::-moz-selection,textarea::-moz-selection,.btn-positive::-moz-selection {
 
 .logged-in-wrapper .avatar {
     width: 16px;
+    height: 16px;
     border-radius: 3px;
     margin-bottom: -3px;
     margin-right: 2px

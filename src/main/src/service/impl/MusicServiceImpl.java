@@ -18,13 +18,13 @@ import main.src.common.MusicUtils;
 import main.src.dao.FigureDao;
 import main.src.dao.MusicDao;
 import main.src.entity.Music;
+import main.src.entity.essay.Essay;
 import main.src.service.MusicService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 @Service("musicService")
 @Transactional
 public class MusicServiceImpl implements MusicService {
-	
 	@Resource(name = "musicDaoHibernate4")
 	private MusicDao musicDao;
 	
@@ -81,10 +81,6 @@ public class MusicServiceImpl implements MusicService {
 	@Override
 	public Music remove(int id) {
 		Music music = get(id);
-		if(null != music){
-			music.setDel_flag(true);
-			musicDao.update(music);
-		}
 		return music;
 	}
 
@@ -97,7 +93,6 @@ public class MusicServiceImpl implements MusicService {
 	public void recover(int id) {
 		Music music = get(id);
 		if(null != music){
-			music.setDel_flag(false);
 			musicDao.update(music);
 		}
 	}
@@ -166,6 +161,12 @@ public class MusicServiceImpl implements MusicService {
 		List<String> styles = s.createQuery(hql).list();
 		return styles;
 	}
+	public List<String> getAllStyles(){
+		String hql ="select m.style from Music m group by m.style having m.style is not null and m.style <> '' and count(*)>0 ORDER BY count(*) DESC";
+		Session s = musicDao.getSession();
+		List<String> styles = s.createQuery(hql).list();
+		return styles;
+	}
 	@Override
 	public void clear(Integer precedence) {
 		if(precedence != 0){
@@ -175,7 +176,13 @@ public class MusicServiceImpl implements MusicService {
 		}
 	}
 
-
+	@Override
+	public List<Music> getHomepageList() {
+		String hql ="from Music order by precedence desc";
+		Session s = musicDao.getSession();
+		List<Music> musics = (List<Music>)s.createQuery(hql).setMaxResults(3).list();
+		return musics;
+	}
 
 
 

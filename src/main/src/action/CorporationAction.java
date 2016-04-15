@@ -31,18 +31,18 @@ public class CorporationAction {
 	public String save() throws NumberFormatException, UnsupportedEncodingException{
 	    if(id==0){
 	    		if(StringUtils.isNotEmpty(cover)){
-	    			corporation.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    			corporation.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NHORIZONTAL));
 	    		}
 	    		id = corporationService.save(corporation);
 	    		corporation.setId(id);
 	    }else{
 	    	if(!corporation.getCover().equals(cover)){
 	    		ImageUtils.deleteImg(corporation.getCover());
-	    		corporation.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    		corporation.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NHORIZONTAL));
 	    	}
 	    	corporationService.update(corporation);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){

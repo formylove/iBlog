@@ -2,10 +2,12 @@
     pageEncoding="UTF-8"%>
     <%
     int index = (request.getAttribute("page") == null || (Integer)request.getAttribute("page") == 0)?1:(Integer)request.getAttribute("page");
-    System.out.print(index);
-    int pages = (Integer)request.getAttribute("pages"); 
-     String category = "c/" + ((String)request.getAttribute("category")).replace(",", "/")+"/";
-    %><div class="paginator" style="<%=request.getAttribute("category")%>"><a class="previous <%if(index == 1){%>disabled<%}%>" rel="nofollow" href="<%if(index != 1){%>essays/<%=index - 1 %>/<%}%>">上一页</a><%
+    Integer pages = ((request.getAttribute("pages"))==null?1:((Integer)request.getAttribute("pages"))); 
+    System.out.print("hhhhhhh"+request.getAttribute("pages"));
+    String category = ((Integer)request.getAttribute("category")) == 0?"":((Integer)request.getAttribute("category")).toString();
+   
+    if(pages != 0){%>
+    <div class="paginator" style="<%=request.getAttribute("category")%>"><a class="previous <%if(index == 1){%>disabled<%}%>" rel="nofollow" href="<%if(index != 1){%>essays/<%=index - 1 %>/<%}%>">上一页</a><%
     if(pages <= 12){
     	for(int i=1;i<pages+1;i++){
     		if(i == index){%>
@@ -40,3 +42,4 @@
 			 <%}%>
     <a class="next <%if(index == pages){%>disabled<%}%>" rel="nofollow" href="<%if(index != pages){%>essays/<%=index + 1 %>/<%=category%><%}%>">下一页</a>
 				</div>
+<%}%>

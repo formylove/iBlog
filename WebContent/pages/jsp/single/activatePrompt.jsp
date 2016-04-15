@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>邮箱激活</title>
-<%request.setAttribute("importParams", "jquery|Akita.js|qtip|form|validate|common.css|agent|end"); %>
+<%request.setAttribute("importParams", "general|common.css|end"); %>
 <jsp:include page="../snippets/static_js_css.jsp"/>
 </head>
 <body>

@@ -13,4 +13,6 @@ public interface MusicService extends BaseService<Music>{
 	public JSONArray getTree();
 	public List<Music> getZhonghua(boolean zhonghua);
 	List<Music> list(int maxSize,int pageNum,String order,String conditions);
+	public List<Music> getHomepageList();
+	public List<String> getAllStyles();
 }

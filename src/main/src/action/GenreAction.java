@@ -1,6 +1,7 @@
 package main.src.action;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -9,13 +10,18 @@ import org.apache.struts2.json.annotations.JSON;
 
 import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
+import main.src.entity.Category;
 import main.src.entity.Genre;
+import main.src.service.CategoryService;
 import main.src.service.GenreService;
 
 public class GenreAction {
+	@Resource(name="categoryService")
+	private CategoryService categoryService;
 	@Resource(name="genreService")
 	private GenreService genreService;
 	Genre genre = null;
+	List<Category> categories = null;
 	int id;
 	private float w;
 	private float h;
@@ -35,7 +41,7 @@ public class GenreAction {
 	    }else{
 	    	genreService.update(genre);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){
@@ -43,6 +49,7 @@ public String load(){
 	return MsgConstants.DISPLAY;
 }
 public String edit(){
+	categories = categoryService.list();
 	genre = null;
 	if(id!=0){
 		genre = genreService.get(id);
@@ -53,6 +60,17 @@ public String edit(){
 public String delete(){
 	genre = genreService.remove(id);
 	return MsgConstants.DONE;
+}
+
+public void setCategoryService(CategoryService categoryService) {
+	this.categoryService = categoryService;
+}
+@JSON(serialize=false)
+public List<Category> getCategories() {
+	return categories;
+}
+public void setCategories(List<Category> categories) {
+	this.categories = categories;
 }
 @JSON(serialize=false)
 public GenreService getGenreService() {

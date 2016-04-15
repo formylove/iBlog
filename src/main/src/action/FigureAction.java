@@ -34,18 +34,18 @@ public class FigureAction {
 	public String save() throws NumberFormatException, UnsupportedEncodingException{
 	    if(id==0){
 	    		if(StringUtils.isNotEmpty(cover)){
-	    			figure.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    			figure.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NVERTICAL));
 	    		}
 	    		id = figureService.save(figure);
 	    		figure.setId(id);
 	    }else{
 	    	if(!figure.getCover().equals(cover)){
 	    		ImageUtils.deleteImg(figure.getCover());
-	    		figure.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    		figure.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NVERTICAL));
 	    	}
 	    	figureService.update(figure);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){

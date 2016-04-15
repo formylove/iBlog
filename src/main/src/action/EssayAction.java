@@ -15,13 +15,17 @@ import main.src.common.ImageUtils;
 import main.src.common.MsgConstants;
 import main.src.common.StrUtils;
 import main.src.entity.Category;
+import main.src.entity.Comment;
 import main.src.entity.User;
 import main.src.entity.essay.Essay;
 import main.src.service.CategoryService;
+import main.src.service.CommentService;
 import main.src.service.EssayService;
 public class EssayAction {
 @Resource(name="essayService")
 private EssayService essayService;
+@Resource(name="commentService")
+private CommentService commentService;
 @Resource(name="categoryService")
 private CategoryService categoryService;
 private float w;
@@ -30,6 +34,7 @@ private float x;
 private float y;
 String cover;
 Essay essay;
+List<Comment> comments;
 String title;
 //edit essay
 int id;
@@ -38,29 +43,38 @@ boolean hasExisted;
 //essay list
 List<Essay> essays;
 List<Essay> recommendations;
-int page;
+int page = 1;
+int category;
+Category cat;
+List<Category> categories;
 int pages;
 User user;
 boolean loginStatus;
 public String list(){
 	HttpServletRequest request=ServletActionContext.getRequest();
-	String[] categories =  request.getParameterValues("category");
-//	essays = EssayService.getOnePage(page, categories, null, false);
-//	recommendations = EssayService.getRecommendation(categories);
-//	pages = EssayService.getPageCnt(false,categories);
-	return MsgConstants.SUCCESS;
+	categories = categoryService.list();
+	if(category == 0){
+		if(!categories.isEmpty()){
+			cat = categories.get(0);
+		}
+	}else{
+		cat = categoryService.get(category);
+	}
+	essays = essayService.getOnePage(page, category);
+	pages = essayService.getPageCnt(category);
+	return MsgConstants.LIST;
 }
 public String save() throws NumberFormatException, UnsupportedEncodingException{
     if(id==0){
     		if(!StrUtils.isEmpty(cover)){
-    			essay.setCover(ImageUtils.cut(cover, w, h, x, y));
+    			essay.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NHORIZONTAL));
     		}
     		id = essayService.save(essay);
     		essay.setId(id);
     }else{
     	if(!essay.getCover().equals(cover)){
     		ImageUtils.deleteImg(essay.getCover());
-    		essay.setCover(ImageUtils.cut(cover, w, h, x, y));
+    		essay.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NHORIZONTAL));
     	}
     	essayService.update(essay);
     }
@@ -75,6 +89,9 @@ public String load(){
 	essay=essayService.get(id);
 //	user = UserService.getcurLoginUser(null);
 	essayService.read(id);
+	int total = commentService.getLastUnit("essay",id);
+	pages = total/commentService.PAGESIZE + (total%commentService.PAGESIZE == 0?0:1);
+	comments = commentService.getOnePage(total,1,"essay",id);
 	return MsgConstants.DISPLAY;
 }
 
@@ -88,31 +105,58 @@ public String edit(){
 	return MsgConstants.SUCCESS;
 }
 
-public String delete(){
-	essayService.remove(id);
-	return MsgConstants.DONE;
-}
-
-public String recover(){
-    essayService.recover(id);
-	return MsgConstants.DONE;
-}
-
-public String hasExisted(){
-	hasExisted = essayService.hasExisted(title);
-	return MsgConstants.DONE;
-}
 public String like(){
 	essayService.like(id);
-	return MsgConstants.DONE;
+	return null;
 }
 
 public String undoLike(){
 	essayService.undoLike(id);
+	return null;
+}
+public String delete(){
+	essayService.remove(id);
+	return null;
+}
+
+public String recover(){
+    essayService.recover(id);
+	return null;
+}
+
+@JSON(serialize=false)
+public CommentService getCommentService() {
+	return commentService;
+}
+public void setCommentService(CommentService commentService) {
+	this.commentService = commentService;
+}
+public List<Comment> getComments() {
+	return comments;
+}
+public void setComments(List<Comment> comments) {
+	this.comments = comments;
+}
+@JSON(serialize=false)
+public EssayService getEssayService() {
+	return essayService;
+}
+@JSON(serialize=false)
+public CategoryService getCategoryService() {
+	return categoryService;
+}
+public String hasExisted(){
+	hasExisted = essayService.hasExisted(title);
 	return MsgConstants.DONE;
 }
 
 
+public int getCategory() {
+	return category;
+}
+public void setCategory(int category) {
+	this.category = category;
+}
 public boolean isLoginStatus() {
 	return loginStatus;
 }
@@ -142,6 +186,18 @@ public void setRecommendations(List<Essay> recommendations) {
 }
 public int getPage() {
 	return page;
+}
+public Category getCat() {
+	return cat;
+}
+public void setCat(Category cat) {
+	this.cat = cat;
+}
+public List<Category> getCategories() {
+	return categories;
+}
+public void setCategories(List<Category> categories) {
+	this.categories = categories;
 }
 public void setPage(int page) {
 	this.page = page;

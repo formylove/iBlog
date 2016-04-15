@@ -38,7 +38,7 @@ public class FileUtils {
 		return localName;
 	}
 	
-	static public String getFileSuffix(String org_name) throws IOException{
+	static public String getFileSuffix(String org_name){
 		 return org_name.substring(org_name.lastIndexOf("."), org_name.length());
 	 }
 	static public String getMime(String org_name) throws IOException{
@@ -62,7 +62,7 @@ public class FileUtils {
 	}
 	static public void delete(String path){
 		File file = new File(path);
-		file.deleteOnExit();
+		file.delete();
 	}
 	static public void deleteFile(String RelPath){
 		delete(baseRealPath+RelPath);

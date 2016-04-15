@@ -40,14 +40,14 @@ public class OpusAction {
 	public String save() throws NumberFormatException, UnsupportedEncodingException{
 	    if(id==0){
 	    		if(StringUtils.isNotEmpty(cover)){
-	    			opus.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    			opus.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NVERTICAL));
 	    		}
 	    		id = opusService.save(opus);
 	    		opus.setId(id);
 	    }else{
 	    	if(!opus.getCover().equals(cover)){
 	    		ImageUtils.deleteImg(opus.getCover());
-	    		opus.setCover(ImageUtils.cut(cover, w, h, x, y));
+	    		opus.setCover(ImageUtils.cut(cover, w, h, x, y,ImageUtils.NVERTICAL));
 	    	}
 	    	opusService.update(opus);
 	    }

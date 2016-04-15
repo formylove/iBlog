@@ -3,6 +3,7 @@ package main.src.common;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 public class StrUtils {
 	static final String MAIL_REG ="\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*"; 
 	static final String Name_REG ="^[0-9a-zA-Z\\u4E00-\\u9FA5_]+$"; 
-	static final String SIMPLE_REG ="^[0-9a-zA-Z]+$"; 
+	static final String SIMPLE_REG ="^[0-9a-zA-Z_]+$"; 
 static public String removeTag(String raw){
 	if(!isEmpty(raw)){
 		raw = raw.replaceAll("&lt;img.+?&gt;","").replaceAll("<img.+?>","").replaceAll("&lt;b&gt;","").replaceAll("<b>","").replaceAll("&lt;/b&gt;","").replaceAll("</b>","").replaceAll("&lt;br&gt;","").replaceAll("<\\s*br\\s*>","").replaceAll("<\\s*br\\s*/>","").replaceAll("<p>","").replaceAll("</p>","").replaceAll("&nbsp;","").replaceAll("<span[^>]*>","").replaceAll("</span>","").trim();
@@ -29,6 +30,10 @@ static public boolean contains(String raw,String[] params){
 		}
 	}
 	return false;
+}
+static public boolean valiPhone(String phone){
+	boolean p = Pattern.compile("^[1][3,4,5,8][0-9]{9}$").matcher(phone).matches();  
+	return p;
 }
 static public String fileToString(String filePath){
 	String line = "";

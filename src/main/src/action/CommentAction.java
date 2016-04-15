@@ -1,86 +1,78 @@
 package main.src.action;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.json.annotations.JSON;
 
-import main.src.common.NetStatusManager;
-import main.src.common.SqlUtils;
-import main.src.common.TimeManager;
+import main.src.common.MsgConstants;
 import main.src.entity.Comment;
 import main.src.entity.User;
 import main.src.service.CommentService;
 import main.src.service.UserService;
+import net.sf.json.JSONObject;
 
 public class CommentAction {
+	@Resource(name = "userService")
+	private UserService userService;
+	@Resource(name = "commentService")
+	private CommentService commentService;
 	List<Comment> comments;
 	Comment comment;
-	String target_id;
-	String device;
 	User user;
 	String content;
-	String article_id;
-	String append;
+	boolean good = true;
+	int page;
 	String message;
-	int comment_id;
-	String date;
-
-	public String saveComment() throws UnsupportedEncodingException{
-		int id=CommentService.generateId();
-		Map<String,Object> data=new HashMap<String,Object>();	
-		data.put("id", id);
-		data.put("target", article_id);
-		data.put("append", append);
-		data.put("content", message);
-		data.put("ip", NetStatusManager.getIP());
-		data.put("city", (new NetStatusManager()).getCountry());
-		data.put("create_date", TimeManager.getDate());
-		data.put("create_time", TimeManager.getTime());
-		SqlUtils.executeInsert(data, "comment");
-		comment = CommentService.getComment(id);
+	JSONObject jComments;
+	public String save() throws UnsupportedEncodingException{
+//		int id=CommentService.generateId();
+//		Map<String,Object> data=new HashMap<String,Object>();	
+//		data.put("id", id);
+//		data.put("target", article_id);
+//		data.put("append", append);
+//		data.put("content", message);
+//		data.put("ip", NetStatusManager.getIP());
+//		data.put("city", (new NetStatusManager()).getCountry());
+//		data.put("create_date", TimeManager.getDate());
+//		data.put("create_time", TimeManager.getTime());
+//		SqlUtils.executeInsert(data, "comment");
+//		comment = CommentService.getComment(id);
 		return "conveycomments";
 	}
-	public String addComment() throws UnsupportedEncodingException{
-		
-		Comment comment = new Comment(target_id,0);
-		comment.setContent(content);
-		comment.setDev_name(device);
-		System.out.println("content:"+content);
-		System.out.println("target_id:"+target_id);
-		System.out.println("device:"+device);
-		System.out.println("user:"+user.getNick_name());
-		date = comment.getCreate_date();
-		return "success";
+	public String add() throws UnsupportedEncodingException{
+		HttpServletRequest request=ServletActionContext.getRequest();
+		User user= userService.getcurLoginUser(request);
+		if(user != null){
+			comment.setPublisher(user);
+			good = commentService.add(comment);
+			message = (good?"":"回复的对象可能已被删除");
+		}else{
+			message="请先未登录";
+			good = false;
+		}
+		return MsgConstants.SUCCESS;
 	}
 
-public String loadComments(){
-	HttpServletRequest request=ServletActionContext.getRequest();
-	int diaryId=Integer.parseInt(request.getParameter("id"));
-	comments=CommentService.getCommentBundle(diaryId,true);
-	return "conveycomments";
+public String load(){
+	jComments = commentService.getPage(page,comment);
+	System.out.println(jComments);
+	return MsgConstants.DONE;
 }
 
 public String deleteComments(){
-CommentService.deleteComment(comment_id);
 	return "conveycomments";
 }
 
-public String getDate() {
-	return date;
+public JSONObject getJComments() {//get 函数命名一定要讲究啊啊啊 啊
+	return jComments;
 }
-public void setDate(String date) {
-	this.date = date;
-}
-public String getTarget_id() {
-	return target_id;
-}
-public void setTarget_id(String target_id) {
-	this.target_id = target_id;
+public void setJComments(JSONObject jComments) {
+	this.jComments = jComments;
 }
 public String getContent() {
 	return content;
@@ -104,34 +96,34 @@ public void setComment(Comment comment) {
 	this.comment = comment;
 }
 
-public String getDevice() {
-	return device;
-}
-public void setDevice(String device) {
-	this.device = device;
-}
 public User getUser() {
 	return user;
 }
 public void setUser(User user) {
 	this.user = user;
 }
-public String getArticle_id() {
-	return article_id;
+
+public boolean isGood() {
+	return good;
+}
+public void setGood(boolean good) {
+	this.good = good;
 }
 
-public void setArticle_id(String article_id) {
-	this.article_id = article_id;
+public int getPage() {
+	return page;
 }
-
-public String getAppend() {
-	return append;
+public void setPage(int page) {
+	this.page = page;
 }
-
-public void setAppend(String append) {
-	this.append = append;
+@JSON(serialize=false)
+public UserService getUserService() {
+	return userService;
 }
-
+@JSON(serialize=false)
+public CommentService getCommentService() {
+	return commentService;
+}
 public String getMessage() {
 	return message;
 }
@@ -140,12 +132,11 @@ public void setMessage(String message) {
 	this.message = message;
 }
 
-public int getComment_id() {
-	return comment_id;
+public void setUserService(UserService userService) {
+	this.userService = userService;
 }
-
-public void setComment_id(int comment_id) {
-	this.comment_id = comment_id;
+public void setCommentService(CommentService commentService) {
+	this.commentService = commentService;
 }
 
 

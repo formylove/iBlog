@@ -10,13 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Type;
 import org.springframework.stereotype.Component;
 
+import main.src.common.ImageUtils;
 import main.src.common.TimeManager;
 @Component("note")
 @Entity
@@ -30,6 +32,8 @@ private String subtitle;
 private String author;
 private String author_link;
 private String author_desc;
+private String portrait;
+@Type(type="text")  
 private String content;
 private int read_cnt=0;
 private int favor_cnt=0;
@@ -82,6 +86,17 @@ public List<Comment> getComments() {
 
 public void setComments(List<Comment> comments) {
 	this.comments = comments;
+}
+
+public String getPortrait() {
+	return portrait;
+}
+
+public void setPortrait(String portrait) {
+	portrait = StringUtils.stripToNull(portrait);
+	if(StringUtils.isNotEmpty(portrait)){
+		this.portrait = ImageUtils.saveImageFromUrlToDepot(portrait);
+	}
 }
 
 public Opus getOpus() {

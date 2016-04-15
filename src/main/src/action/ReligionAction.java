@@ -27,7 +27,7 @@ public class ReligionAction {
 	    }else{
 	    	religionService.update(religion);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){

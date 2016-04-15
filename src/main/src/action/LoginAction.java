@@ -7,11 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.json.annotations.JSON;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import main.src.common.ImageUtils;
 import main.src.common.MailUtils;
+import main.src.common.MsgConstants;
 import main.src.common.SqlUtils;
 import main.src.common.StrUtils;
 import main.src.entity.Record;
@@ -27,6 +31,7 @@ public class LoginAction {
 	private User user;
 	private String email;
 	private String password;
+	private String newpassword;
 	private String psw_conf;
 	private String rule;
 	private String remember;
@@ -36,21 +41,25 @@ public class LoginAction {
 	private String token;
 	private int id;
 	//返回参数
-	private String portrait;
 	private String nick_name;
 	private String motto;
 	private String message;
 	private String self = "true";
-	private String isGood = "false";
+	private boolean isGood = false;
 	//修改账户
 	private String update_type;
 	private String qq;
-	private String autoplay;
-	private String newpassword;
-	private String job;
+	private int level;
+	private boolean autoplay;
+	private String phone;
+	private String wechat;
 	private char gender;
 	private Date birthday;
-	
+	private float w;
+	private float h;
+	private float x;
+	private float y;
+	private String portrait;
 	public String login(){
 		message = userService.loginDetect(email, password);
 		if(message != null){
@@ -62,8 +71,8 @@ public class LoginAction {
 		setNick_name(user.getNick_name());
 		setMotto(user.getMotto());
 		setId(user.getId());
-		user = null;
-		isGood = "true";
+		setLevel(user.getAuthority());
+		isGood = true;
 		return "done";
 	}
 	public String register() {
@@ -80,8 +89,8 @@ public class LoginAction {
 		setNick_name(user.getNick_name());
 		setEmail(user.getEmail());
 		user = null;
-		isGood = "true";
-		return "done";
+		isGood = true;
+		return MsgConstants.DONE;
 	}
 	public String activate() {
 		user = userService.getUserByToken(token);
@@ -104,14 +113,15 @@ public class LoginAction {
 		userService.logout();
 		return null;
 	}
-	public String loadProfile() {
-		user = userService.get(id);
+	public String load() {
 		HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
 		User loginedUser = userService.getcurLoginUser(req);
-		if(loginedUser == null || loginedUser.getId() != id){
-			self = "false";
+		user = userService.get(id);
+		if(loginedUser == null || (loginedUser.getId() != id && loginedUser.getAuthority() != 0)){
+			return "people";
+		}else{
+			return "profile";
 		}
-		return "profile";
 	}
 	public String userSetting() {
 		HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
@@ -136,49 +146,68 @@ public class LoginAction {
 	}
 	public String update(){
 		HttpServletRequest request=ServletActionContext.getRequest();
-		user = userService.getcurLoginUser(request);
-		if(null == user){
-			if(!StrUtils.valiName(nick_name)){
+		User loginedUser = userService.getcurLoginUser(request);
+		user = userService.get(id);
+		if(null == loginedUser || (loginedUser.getId() != id && loginedUser.getAuthority() !=0)){
 				message = "请先登录账户";
-			}
 		}else if("nick_name".equalsIgnoreCase(update_type)){
-			if(!StrUtils.valiName(nick_name)){
-				message = "昵称必须只包含英文中文数字以及下划线";
-			}else {
+				message = userService.valiName(nick_name);
 				user.setNick_name(nick_name);
-			}
 		}else if("autoplay".equalsIgnoreCase(update_type)){
-			if(StrUtils.notEmpty(autoplay)){
-				user.setAutoplay(true);
-			}else {
-				user.setAutoplay(false);
-			}
+				user.setAutoplay(autoplay);
 		}else if("motto".equalsIgnoreCase(update_type)){
 				user.setMotto(motto);
 		}else if("details".equalsIgnoreCase(update_type)){
-			user.setBirthday(birthday);
-			user.setGender(gender);
-			user.setJob(job);
+			if(!StrUtils.valiPhone(phone)){
+				message = "请输入正确手机号";
+			}else if(!StringUtils.isNumeric(qq) || StringUtils.length(qq)>11 || StringUtils.length(qq)<5){
+				message = "请输入正确QQ号";
+			}else if(!StrUtils.simpleChar(wechat)){
+				message = "请输入正确微信号";
+				
+			}else{
+				user.setGender(gender);
+				user.setQq(qq);
+				user.setWechat(wechat);
+				user.setPhone(phone);
+				if(loginedUser.getAuthority() == 0){
+					user.setAuthority(level);
+				}
+				user.setBirthday(birthday);
+			}
 		}else if("password".equalsIgnoreCase(update_type)){
 			if(!StrUtils.simpleChar(password) || StrUtils.isEmpty(password) || password.length()<8 || password.length()>16 || !password.equals(user.getPassword())){
 				message = "原密码输入错误";
 			}else if(!StrUtils.simpleChar(newpassword) || StrUtils.isEmpty(newpassword) || newpassword.length()<8 || newpassword.length()>16){
 				message = "新密码必须由8到16位的字母和数字组成";
-				}else if(!user.getPassword().equals(psw_conf)){
+				}else if(!newpassword.equals(psw_conf)){
 				message = "两次输入密码不同";
 			}else{
 				user.setPassword(newpassword);
 			}
+		}else if("portrait".equalsIgnoreCase(update_type)){
+			if(!portrait.equals(user.getPortrait())){
+	    		ImageUtils.deleteImg(user.getPortrait());
+	    		portrait = ImageUtils.cut(portrait, w, h, x, y,ImageUtils.PORTRAIT);
+	    		user.setPortrait(portrait);
+	    	}
 		}else if("binding".equalsIgnoreCase(update_type)){
 			
 		}
 		if(StrUtils.isEmpty(message)){
-			isGood = "true";
-			SqlUtils.executeInsert(user);
+			isGood = true;
+			userService.update(user);
 		}
-		return "done";
+		return MsgConstants.DONE;
 	}
 	
+	
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	public String getUpdate_type() {
 		return update_type;
 	}
@@ -191,10 +220,10 @@ public class LoginAction {
 	public void setQq(String qq) {
 		this.qq = qq;
 	}
-	public String getAutoplay() {
+	public boolean isAutoplay() {
 		return autoplay;
 	}
-	public void setAutoplay(String autoplay) {
+	public void setAutoplay(boolean autoplay) {
 		this.autoplay = autoplay;
 	}
 	public String getNewpassword() {
@@ -203,11 +232,17 @@ public class LoginAction {
 	public void setNewpassword(String newpassword) {
 		this.newpassword = newpassword;
 	}
-	public String getJob() {
-		return job;
+ 	public String getPhone() {
+		return phone;
 	}
-	public void setJob(String job) {
-		this.job = job;
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getWechat() {
+		return wechat;
+	}
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
 	}
 	public char getGender() {
 		return gender;
@@ -227,6 +262,30 @@ public class LoginAction {
 	
 	public String getSelf() {
 		return self;
+	}
+	public float getW() {
+		return w;
+	}
+	public void setW(float w) {
+		this.w = w;
+	}
+	public float getH() {
+		return h;
+	}
+	public void setH(float h) {
+		this.h = h;
+	}
+	public float getX() {
+		return x;
+	}
+	public void setX(float x) {
+		this.x = x;
+	}
+	public float getY() {
+		return y;
+	}
+	public void setY(float y) {
+		this.y = y;
 	}
 	public void setSelf(String self) {
 		this.self = self;
@@ -250,6 +309,7 @@ public class LoginAction {
 		this.device = device;
 	}
 	
+	@JSON(serialize=false)
 	public String getToken() {
 		return token;
 	}
@@ -262,12 +322,14 @@ public class LoginAction {
 	public void setRule(String rule) {
 		this.rule = rule;
 	}
+	@JSON(serialize=false)
 	public String getPsw_conf() {
 		return psw_conf;
 	}
 	public void setPsw_conf(String psw_conf) {
 		this.psw_conf = psw_conf;
 	}
+	@JSON(serialize=false)
 	public User getUser() {
 		return user;
 	}
@@ -298,6 +360,7 @@ public class LoginAction {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@JSON(serialize=false)
 	public String getPassword() {
 		return password;
 	}
@@ -322,17 +385,25 @@ public class LoginAction {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getIsGood() {
+	public boolean getIsGood() {
 		return isGood;
 	}
-	public void setIsGood(String isGood) {
+	public void setGood(boolean isGood) {
 		this.isGood = isGood;
 	}
+	@JSON(serialize=false)
 	public UserService getUserService() {
 		return userService;
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	@JSON(serialize=false)
+	public RecordService getRecordService() {
+		return recordService;
+	}
+	public void setRecordService(RecordService recordService) {
+		this.recordService = recordService;
 	}
 
 

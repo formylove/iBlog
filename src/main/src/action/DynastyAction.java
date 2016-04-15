@@ -27,7 +27,7 @@ public class DynastyAction {
 	    }else{
 	    	dynastyService.update(dynasty);
 	    }
-		return MsgConstants.DISPLAY;
+		return MsgConstants.OK;
 }
 	
 public String load(){
