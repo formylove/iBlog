@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class TimeManager {
 	public static SimpleDateFormat fullFormatter=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public static SimpleDateFormat fullFormatterNoYear=new SimpleDateFormat("MM-dd HH:mm");
 	public static SimpleDateFormat dayFormatter=new SimpleDateFormat("yyyy-MM-dd");
 	public static SimpleDateFormat timeFormatter=new SimpleDateFormat("HH:mm");
 	public static String getDate(){
@@ -28,6 +29,14 @@ public class TimeManager {
 		Date date=new Date();
 		return timeFormatter.format(date);
 	}
+		public static String  getNow(){
+			Date date=new Date();
+			return fullFormatter.format(date);
+	}
+		public static String  getNowNoYear(){
+			Date date=new Date();
+			return fullFormatterNoYear.format(date);
+		}
 	public static String  getTimeDif(String day,String time){
 		Date full = null;
 		try {

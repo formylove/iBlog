@@ -3,7 +3,7 @@
 		<div class="about-wrapper">
 			<h4 class="foot-item-head">关于</h4>
 			<p><a class="ln-about" target="_blank" href="about/">关于树</a></p>
-				<p><a class="ln-about" href="javascript:;" id="feedback">反馈建议</a></p>
+				<p><a class="ln-about" href="javascript:;" id="contactMe">反馈建议</a></p>
 		</div>
 
 		<div class="sns-wrapper">

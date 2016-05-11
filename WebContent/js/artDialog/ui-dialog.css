@@ -99,7 +99,7 @@
     cursor: default;
 }
 .ui-dialog-body {
-    padding: 20px;
+    padding:0 20px 20px 20px;
     text-align: center;
 }
 .ui-dialog-content {

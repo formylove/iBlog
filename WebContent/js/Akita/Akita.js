@@ -1,6 +1,7 @@
 var defaultAvatar ="img/common/avatar.gif";
 var defaultImgPath ="img/depot/";
 var defaultProfilePath ="user/profile/";
+var domain ="hachi.space";
 function extend(des, src, override){
    if(src instanceof Array){
        for(var i = 0, len = src.length; i < len; i++)
@@ -37,6 +38,14 @@ function arrive_timer_format(s) {
 	}
 	return t;
 	}
+function formatTime(date) {
+	var day = (date.getDate()>9)?date.getDate():"0"+date.getDate();
+	var month = (date.getMonth()>9)?date.getMonth():"0"+date.getMonth();
+	var minutes = (date.getMinutes()>9)?date.getMinutes():"0"+date.getMinutes();
+	var hours = (date.getHours()>9)?date.getHours():"0"+date.getHours();
+	var year = 1900 + date.getYear();
+	return month+"-"+day+" "+hours+":"+minutes
+}
 function clearForm(){
 			$('form').form('clear');
 		}

@@ -1,8 +1,3 @@
-function showSiblings($me){
-$myFather = $me.parent().parent().parent();
-$myFather.hide();
-$myFather.siblings().show();
-}
 function setNav(data){
 	$(".logged-in-wrapper .ln-account").html("<img src='img/depot/"+data.portrait+"' alt='"+data.nick_name+"' class='avatar'>&nbsp;<span>" + data.nick_name+"</span>");
 	$(".link-uc").attr("href",defaultProfilePath+data.id);
@@ -24,6 +19,7 @@ function clearNav(){
 	$(".logged-in-wrapper").removeAttr("data-level");//仅能删除缓存内值
 }
 //         绑定
+
 $(function(){
 	if($("input[name='document_details']")){
 		var type =$("input[name='document_details']").data("type");
@@ -157,6 +153,7 @@ $(function(){
                 	    		    $(this).ajaxSubmit({
                 	    	    			type:"post",
                 	    	    			dataType:'json',
+                	    	    			data:{wSessionId:websocket.sessionId},
                 	    	    		    success: function(data) {
                 	    	                  $(".qtip #login_submit").hide();
                 	    	                  $(".qtip span[name=error_placement]").text(data.message);
@@ -187,7 +184,7 @@ $(function(){
                 	    	                  	$(".qtip #register_submit").show();
                 	    	                  	$('form[name=register_form] input:not(:submit)').val("");
                 	    	                  	confirm("注册成功,登录邮箱激活");
-                	    	                  	window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nick_name+"/",'_blank')
+                	    	                  	window.open($("base").attr("href") + "user/prompt/"+data.email+"/"+data.nickName+"/",'_blank')
                 	    	    		      }
                 	    	    		    } });
                 	    		    return false;
@@ -249,25 +246,7 @@ $(function(){
  $("#loggedOutWrapper .ln-top-login").qtip(options6);
  //为登录名添加qtip
  $(".logged-in-wrapper").qtip(options7);
-//$("button[data-tipid='commentSubmitDialog']").qtip({
-//content:$(".total").html() ,
-//			show:{
-//			solo:true,
-//			event: 'click',
-//			effect:{type:'slide'},
-//			length:2000
-//			},
-//			hide:'unfocus',
-//        position: {
-//          my: 'top center',
-//          at: 'bottom center'
-//        },
-//
-//        style: {
-//          classes: 'qtip-luoo'
-//        }
-//
-//      });
+
  if($.cookie('device') == null){//设置userAgent,放入cookie
 	 $.getScript("js/agent/agent.js",function(){
 		 $.getScript(getAgentJS(),function(){
@@ -296,4 +275,10 @@ $(function(){
  }), $(".qq-group").mouseenter(function() {
      clearTimeout(qqint), $(this).show()
  });
+ 
+
+ 
+ 
+ 
+ 
 	  });

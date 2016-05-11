@@ -1,6 +1,7 @@
 package main.src.service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.EndpointConfig;
 
 import main.src.entity.User;
 import main.src.service.base.BaseService;
@@ -8,7 +9,7 @@ import main.src.service.base.BaseService;
 public interface UserService extends BaseService<User>{
 
 	User getcurLoginUser(HttpServletRequest request);
-
+	User getcurLoginUser(EndpointConfig config);
 	boolean hasRegistered(String email);
 
 	String loginDetect(String email, String password);
@@ -27,7 +28,7 @@ public interface UserService extends BaseService<User>{
 
 	int getDurationForRegister(String token);
 
-	boolean logout();
+	User logout();
 	
 	User getUserByMail(String email);
 

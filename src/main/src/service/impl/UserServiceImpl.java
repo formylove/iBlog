@@ -1,10 +1,15 @@
 package main.src.service.impl;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.EndpointConfig;
+import javax.websocket.Session;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.StrutsStatics;
@@ -176,24 +181,7 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 	}
-	@Override
-	 public boolean login(User user,String remember){
-		if(remember == null){
-			ActionContext.getContext().getSession().put("logined_user", user.getId());
-		}else{
-			HttpServletResponse res = (HttpServletResponse) ActionContext.getContext().get(StrutsStatics.HTTP_RESPONSE);
-			Cookie c = new Cookie("night_user_id",String.valueOf(user.getId()));
-			c.setMaxAge(Max_Age);
-			c.setPath("/");//不设置路径无法保存设置的cookie
-			res.addCookie(c);
-		}
-		return true;
-	}
-	 public User login(String email,String remember){
-		User user = getUserByMail(email);
-		login(user, remember);
-		return user;
-	}
+
 	 @Override
 	 public User getUserByMail(String email){
 		 email = email.trim();
@@ -234,15 +222,38 @@ public class UserServiceImpl implements UserService {
 				.uniqueResult();
 		return duration;
 	}
+		@Override
+		 public boolean login(User user,String remember){
+			if(remember == null){
+				ActionContext.getContext().getSession().put("logined_user", user.getId());
+			}else{
+				HttpServletResponse res = (HttpServletResponse) ActionContext.getContext().get(StrutsStatics.HTTP_RESPONSE);
+				Cookie c = new Cookie("night_user_id",String.valueOf(user.getId()));
+				c.setMaxAge(Max_Age);
+				c.setPath("/");//不设置路径无法保存设置的cookie
+				res.addCookie(c);
+			}
+			return true;
+		}
+		 public User login(String email,String remember){
+			User user = getUserByMail(email);
+			login(user, remember);
+			return user;
+		}
 	 @Override
-	 public boolean logout(){
+	 public User logout(){
+		 //获得当前用户
+		 	User curUser = null;
+		 	HttpServletRequest req = (HttpServletRequest) ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+		 	curUser = getcurLoginUser(req);
+		 	//删掉登录信息
 			ActionContext.getContext().getSession().put("logined_user", null);
 			HttpServletResponse res = (HttpServletResponse) ActionContext.getContext().get(StrutsStatics.HTTP_RESPONSE);
 			Cookie c = new Cookie("night_user_id","");
 			c.setMaxAge(0);
 			c.setPath("/");
 			res.addCookie(c);
-		return true;
+		return curUser;
 	}
 	@Override
 	 public User getcurLoginUser(HttpServletRequest request){
@@ -262,6 +273,28 @@ public class UserServiceImpl implements UserService {
 			return get(Integer.parseInt(user_id));
 		}
 			return null;
+	}
+	@Override
+	public User getcurLoginUser(EndpointConfig config){
+		User user = null;
+		Integer user_id = 0;
+		HttpSession hSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
+		if(hSession!=null){
+			user_id = (Integer)hSession.getAttribute("logined_user");
+		}
+		if(user_id != null && user_id != 0 ){
+			return get(user_id);
+		}
+		String cookies = (String) config.getUserProperties().get("cookie");
+		final String cookieValueReg = "(?<=logined_user=).*?(?=;)";
+		Matcher match = Pattern.compile(cookieValueReg).matcher(cookies+";");
+		if(match.find()){
+			user_id = Integer.valueOf(match.group());
+		}
+		if(user_id != null){
+			return get(user_id);
+		}
+		return null;
 	}
 
 	@Override

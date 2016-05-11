@@ -12,6 +12,7 @@ if(importParams.indexOf("general")>=0){ %>
 <script type="text/javascript" src="js/validate/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js/autocomplete/jquery.mailAutoComplete-4.0.js"></script>
 <script type="text/javascript" src="js/Akita/nav.js"></script>
+<script type="text/javascript" src="js/Akita/websocket.js"></script>
 <script type="text/javascript" src="js/cookie/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/artDialog/dialog-min.js"></script>
 <link href="js/artDialog/ui-dialog.css" type="text/css" rel="stylesheet">

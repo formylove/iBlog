@@ -1,5 +1,31 @@
 <!-- back to top -->
+<div id="backTop">&nbsp;</div> 
 <!-- back to top End-->
+<!-- chat -->
+<div class="common-dialog-wrapper hide">
+		<form id="frmFeedback" action="/feedback/" class="form-ajax">
+				<div class="chatbox rounded">
+				<ul id="tabs">
+   				 <li  id="tab_console" class="hide tab"><a href="#" title="控制台">控制台</a></li>
+   				 <li  id="tab_"  class="current tab adminTab"><a href="#" title="管理员">管理员<sub><i style="color: bisque;"></i></sub></a></li>
+				</ul>
+
+				<div id="console" contenteditable='true' class="console hide" autofocus>
+				</div>
+				<div id="chatGroups"> 
+				<div id="chatbox_" class="msgScreen adminScreen"></div>
+				<div id="toolkit" class="toolkit"></div>
+				<textarea id="messageBox" class="msgBox rounded" spellcheck="false"></textarea>
+				<p class="fb-group">
+				<a href="javascript:;" rel="nofollow" class="btn btn-positive" id="msgSubmit">提交</a>
+				<a href="javascript:;" rel="nofollow" class="btn btn-negative" id="msgClear">清空聊天窗口</a>
+				<a href="javascript:;" rel="nofollow" class="btn btn-negative" id="msgCancel">取消</a>
+				</p>
+				</div>
+				</div>
+		</form>
+	</div>
+<!-- chat End-->
 <!-- login-->
 <a id='hopCast' class="hidden" onClick="" target="_blank"></a>
 <div class="total hidden">

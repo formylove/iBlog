@@ -65,7 +65,7 @@ Cookie:night_user_id=3; JSESSIONID=90880E47779F563AA7D4DE0DDA48E848
 cookie值包含在了request里
 include-coda 会为每个jsp添加
 <s:set name="importParams" value="'generalessay.css|comment|end'" scope="request"/> 加单引号
-去上下文：打开右侧服务器配置，server.xml文件中<Context docBase="iBlog" path="" reloadable="true" source="org.eclipse.jst.jee.server:iBlog"/></Host>
+去上下文：打开左侧服务器配置，server.xml文件中<Context docBase="iBlog" path="" reloadable="true" source="org.eclipse.jst.jee.server:iBlog"/></Host>
 将path清空，并将端口该文80
 	192.168.1.102	hachi.space host修改无需重启立即生效
 schemaLocation引入顺序会导致错误
@@ -120,3 +120,6 @@ ${st.index}
 </s:iterater> 这样使用可以的
 audio#music_0 是dom对象  jQuery.fn.jQuery.init[1] jquery对象
 ($('#classes').length 判断获得dom是否为空
+ ContextLoader.getCurrentWebApplicationContext();  获得spring上下文
+ width只是指content,不包括padding
+ intValue是对象方法,parseInt,valueOf是静态方法

@@ -12,7 +12,7 @@
 <div class="section-ct clearfix">
 				<div class="vol-item-lg">
 					<audio id="music_0" data-order="0" src="music/${musics[0].url }" 
-					<%if(((User)request.getAttribute("loginedUser")).isAutoplay()){%>autoplay<%} %>
+					<%if(request.getAttribute("loginedUser") != null && ((User)request.getAttribute("loginedUser")).isAutoplay()){%>autoplay<%} %>
 					></audio>
 					<a href="javascript:void(0);" class="cover-wrapper cover-wrapper-lg">
 						<img src="img/depot/${musics[0].bcover }" alt="${musics[0].name }" class="cover-lg rounded">

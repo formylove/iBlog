@@ -22,6 +22,7 @@ import main.src.entity.Record;
 import main.src.entity.User;
 import main.src.service.RecordService;
 import main.src.service.UserService;
+import main.src.websocket.ChatEndpoint;
 
 public class LoginAction {
 	@Resource(name = "userService")
@@ -30,6 +31,7 @@ public class LoginAction {
 	private RecordService recordService;
 	private User user;
 	private String email;
+	private String wSessionId;
 	private String password;
 	private String newpassword;
 	private String psw_conf;
@@ -63,17 +65,18 @@ public class LoginAction {
 	public String login(){
 		message = userService.loginDetect(email, password);
 		if(message != null){
-			return "done";
+			return MsgConstants.DONE;
 		}
 		message = "登录成功！";
 		user = userService.login(email.toLowerCase(),remember);
+		ChatEndpoint.activateSession(wSessionId, user);//登陆后激活session
 		setPortrait(user.getPortrait());
 		setNick_name(user.getNick_name());
 		setMotto(user.getMotto());
 		setId(user.getId());
 		setLevel(user.getAuthority());
 		isGood = true;
-		return "done";
+		return MsgConstants.DONE;
 	}
 	public String register() {
 		HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
@@ -110,7 +113,7 @@ public class LoginAction {
 		}
 	}
 	public String logout() {
-		userService.logout();
+		ChatEndpoint.appendSession(userService.logout());
 		return null;
 	}
 	public String load() {
@@ -404,6 +407,12 @@ public class LoginAction {
 	}
 	public void setRecordService(RecordService recordService) {
 		this.recordService = recordService;
+	}
+	public String getWSessionId() {
+		return wSessionId;
+	}
+	public void setWSessionId(String wSessionId) {
+		this.wSessionId = wSessionId;
 	}
 
 
